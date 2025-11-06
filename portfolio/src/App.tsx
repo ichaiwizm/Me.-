@@ -1,23 +1,31 @@
-﻿import { Button } from "@/components/ui/button";
+﻿import { useState } from "react";
 import { Header } from "@/components/Header";
+import { ChatPreview } from "@/components/chat/ChatPreview";
+import { PromptBar } from "@/components/chat/PromptBar";
+import { sendMessage } from "@/lib/api";
 
 function App() {
+  const [agentText, setAgentText] = useState("");
+  const [expanded, setExpanded] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(message: string) {
+    try {
+      setLoading(true);
+      const content = await sendMessage(message);
+      setAgentText(content || "");
+    } catch (e) {
+      setAgentText("(Erreur lors de la requête)");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <Header />
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4">
-        <div className="mb-2 text-center text-sm text-muted-foreground">
-          Salut, comment puis-je vous aider ?
-        </div>
-        <div className="flex items-center gap-2 rounded-full border bg-background px-2 py-1.5 shadow-sm focus-within:ring-2 focus-within:ring-ring">
-          <input
-            type="text"
-            placeholder="Écrivez votre demande..."
-            className="flex-1 bg-transparent px-3 py-2 text-sm outline-none"
-          />
-          <Button size="sm">Envoyer</Button>
-        </div>
-      </div>
+      <ChatPreview text={agentText} expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
+      <PromptBar onSubmit={handleSubmit} loading={loading} />
     </>
   );
 }
