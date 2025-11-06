@@ -1,11 +1,11 @@
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
 import FloatingWindow from "@/components/windows/FloatingWindow";
 
-export type WindowSpec = { title: string; contentHtml: string; width?: number; height?: number };
+export type WindowSpec = { title: string; contentHtml: string; width?: number; height?: number; key?: string };
 export type WindowManagerHandle = { createWindow: (spec: WindowSpec) => void };
 
 type Item = {
-  id: string; title: string; contentHtml: string; width: number; height: number;
+  id: string; title: string; contentHtml: string; width: number; height: number; key?: string;
   x: number; y: number; z: number; minimized: boolean;
 };
 
@@ -24,11 +24,21 @@ export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) =
   }, [nextZ]);
 
   const createWindow = useCallback((spec: WindowSpec) => {
+    // If a key is provided and an item exists with that key, restore/focus it instead of creating a new one
+    if (spec.key) {
+      const existing = items.find(i => i.key === spec.key);
+      if (existing) {
+        setItems(ws => ws.map(i => i.id === existing.id ? { ...i, minimized: false } : i));
+        const z = nextZ + 1; setNextZ(z);
+        setItems(ws => ws.map(i => i.id === existing.id ? { ...i, z } : i));
+        return;
+      }
+    }
     const id = makeId(); const width = spec.width ?? 480; const height = spec.height ?? 320;
     const offset = items.filter(i=>!i.minimized).length * 20;
     const x = 80 + (offset % 200); const y = 80 + (offset % 160);
     const z = nextZ + 1; setNextZ(z);
-    setItems(ws => [...ws, { id, title: spec.title, contentHtml: spec.contentHtml, width, height, x, y, z, minimized: false }]);
+    setItems(ws => [...ws, { id, key: spec.key, title: spec.title, contentHtml: spec.contentHtml, width, height, x, y, z, minimized: false }]);
   }, [items, nextZ]);
 
   useImperativeHandle(ref, () => ({ createWindow }), [createWindow]);

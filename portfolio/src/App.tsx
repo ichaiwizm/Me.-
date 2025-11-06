@@ -37,6 +37,7 @@ function App() {
               title: "Fenêtre A",
               width: 420,
               height: 300,
+              key: "test-window-a",
               contentHtml:
                 '<div><h3>Fenêtre A</h3><button id="btnA">Click</button><div id="logA"></div><style>h3{margin-bottom:8px}button{padding:6px 10px;border:1px solid #888;border-radius:6px}#logA{margin-top:8px}</style><script>var b=document.getElementById("btnA");var l=document.getElementById("logA");var n=0;b&&b.addEventListener("click",function(){n++;l&&(l.textContent="Clicks: "+n);});</script></div>',
             })
@@ -51,6 +52,7 @@ function App() {
               title: "Fenêtre B",
               width: 520,
               height: 360,
+              key: "test-window-b",
               contentHtml:
                 '<div><h3>Fenêtre B</h3><div class="box"></div><style>.box{width:60px;height:60px;background:#7c3aed;border-radius:8px;animation:spin 2s linear infinite}@keyframes spin{to{transform:rotate(1turn)}}</style><script>console.log("B script ok")</script></div>',
             })
