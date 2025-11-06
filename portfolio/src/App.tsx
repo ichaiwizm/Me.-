@@ -5,6 +5,7 @@ import { PromptBar } from "@/components/chat/PromptBar";
 import { sendChat } from "@/lib/api";
 import type { ChatMessage } from "@/lib/api";
 import WindowManager, { type WindowManagerHandle } from "@/components/windows/WindowManager";
+import { Button } from "@/components/ui/button";
 
 function App() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -30,8 +31,9 @@ function App() {
     <>
       <Header />
       <div className="px-4 py-2 mt-20 flex gap-3">
-        <button
-          className="px-4 py-2.5 rounded-lg border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-sm font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
+        <Button
+          variant="outline"
+          className="cursor-pointer px-4 py-2.5 rounded-lg border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-sm font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
           onClick={() =>
             wmRef.current?.createWindow({
               title: "Fenêtre A",
@@ -39,14 +41,15 @@ function App() {
               height: 300,
               key: "test-window-a",
               contentHtml:
-                '<div><h3>Fenêtre A</h3><button id="btnA">Click</button><div id="logA"></div><style>h3{margin-bottom:8px}button{padding:6px 10px;border:1px solid #888;border-radius:6px}#logA{margin-top:8px}</style><script>var b=document.getElementById("btnA");var l=document.getElementById("logA");var n=0;b&&b.addEventListener("click",function(){n++;l&&(l.textContent="Clicks: "+n);});</script></div>',
+                '<div><h3>Fenêtre A</h3><button id="btnA">Click</button><div id="logA"></div><style>h3{margin-bottom:8px}button{padding:6px 10px;border:1px solid #888;border-radius:6px;cursor:pointer}#logA{margin-top:8px}</style><script>var b=document.getElementById("btnA");var l=document.getElementById("logA");var n=0;b&&b.addEventListener("click",function(){n++;l&&(l.textContent="Clicks: "+n);});</script></div>',
             })
           }
         >
           🪟 Créer fenêtre A
-        </button>
-        <button
-          className="px-4 py-2.5 rounded-lg border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-sm font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
+        </Button>
+        <Button
+          variant="outline"
+          className="cursor-pointer px-4 py-2.5 rounded-lg border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-sm font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
           onClick={() =>
             wmRef.current?.createWindow({
               title: "Fenêtre B",
@@ -59,7 +62,7 @@ function App() {
           }
         >
           ✨ Créer fenêtre B
-        </button>
+        </Button>
       </div>
       <ChatPreview messages={messages} expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
       <PromptBar onSubmit={handleSubmit} loading={loading} />

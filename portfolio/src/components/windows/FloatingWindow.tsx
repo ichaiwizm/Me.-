@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { renderHtmlWithScripts } from "@/components/windows/htmlInjection";
+import SandboxedContent from "@/components/windows/SandboxedContent";
 
 type Pos = { x: number; y: number };
 type Props = {
@@ -19,11 +19,8 @@ type Props = {
 export function FloatingWindow({ id, title, zIndex, initialPos, width = 480, height = 320, contentHtml, onClose, onMinimize, onFocus, onMove }: Props) {
   const [pos, setPos] = useState<Pos>(initialPos);
   const [dragOffset, setDragOffset] = useState<Pos | null>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const posRef = useRef<Pos>(pos);
   useEffect(() => { posRef.current = pos; }, [pos]);
-
-  useEffect(() => { if (contentRef.current) renderHtmlWithScripts(contentRef.current, contentHtml); }, [contentHtml]);
 
   useEffect(() => {
     if (!dragOffset) return;
@@ -81,7 +78,9 @@ export function FloatingWindow({ id, title, zIndex, initialPos, width = 480, hei
           <span className="text-sm font-semibold truncate text-foreground/90 tracking-tight">{title}</span>
         </div>
       </div>
-      <div ref={contentRef} style={{ height: "calc(100% - 56px)" }} className="overflow-auto p-5 bg-gradient-to-br from-background/30 to-background/10" />
+      <div style={{ height: "calc(100% - 56px)" }} className="bg-gradient-to-br from-background/30 to-background/10">
+        <SandboxedContent html={contentHtml} className="w-full h-full" />
+      </div>
     </div>
   );
 }
