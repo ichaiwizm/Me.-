@@ -5,17 +5,17 @@ function App() {
   return (
     <>
       <Header />
-      <div className="flex min-h-svh flex-col items-center justify-center pt-16">
-        <h1 className="mb-4 text-5xl font-bold tracking-tight">
-          Portfolio
-        </h1>
-        <p className="mb-8 text-muted-foreground">
-          Système de thèmes élaboré et extensible ✨
-        </p>
-        <div className="flex gap-3">
-          <Button>Bouton Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4">
+        <div className="mb-2 text-center text-sm text-muted-foreground">
+          Salut, comment puis-je vous aider ?
+        </div>
+        <div className="flex items-center gap-2 rounded-full border bg-background px-2 py-1.5 shadow-sm focus-within:ring-2 focus-within:ring-ring">
+          <input
+            type="text"
+            placeholder="Écrivez votre demande..."
+            className="flex-1 bg-transparent px-3 py-2 text-sm outline-none"
+          />
+          <Button size="sm">Envoyer</Button>
         </div>
       </div>
     </>
