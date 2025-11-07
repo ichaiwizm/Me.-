@@ -12,6 +12,7 @@ function App() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [expanded, setExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [windowCount, setWindowCount] = useState(0);
   const wmRef = useRef<WindowManagerHandle>(null);
 
   async function handleSubmit(message: string) {
@@ -21,14 +22,22 @@ function App() {
       setMessages(next);
       const content = await sendChat(next);
 
-      // Parse window commands from LLM response
-      const { displayContent, windows } = parseWindowCommands(content || "");
+      // Parse window commands from LLM response with current window count
+      const { originalContent, windows, errors } = parseWindowCommands(content || "", windowCount);
 
       // Create windows automatically
-      windows.forEach(w => wmRef.current?.createWindow(w));
+      windows.forEach(w => {
+        wmRef.current?.createWindow(w);
+        setWindowCount(c => c + 1);
+      });
 
-      // Display cleaned content
-      setMessages((prev) => [...prev, { role: "assistant", content: displayContent }]);
+      // Log errors for debugging
+      if (errors.length > 0) {
+        console.warn("Window creation errors:", errors);
+      }
+
+      // Store ORIGINAL content in history (for LLM context)
+      setMessages((prev) => [...prev, { role: "assistant", content: originalContent }]);
     } catch (e) {
       setMessages((prev) => [...prev, { role: "assistant", content: "(Erreur lors de la requête)" }]);
     } finally {

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react"
+import { replaceWindowCommandsInText } from "@/lib/windowParser"
 
 type ChatMessage = { role: "user" | "assistant"; content: string }
 
@@ -8,9 +9,12 @@ type ChatPreviewProps = {
   onToggle: () => void
 }
 
-function softenContent(input: string): string {
-  // Minimiser l'impact visuel du markdown: retirer titres, gras, code inline, listes lourdes
-  return input
+function formatContent(input: string): string {
+  // First, replace window commands with titles/errors
+  let content = replaceWindowCommandsInText(input);
+
+  // Then soften markdown: remove headers, bold, inline code, heavy lists
+  return content
     .replace(/^#+\s+/gm, "")
     .replace(/\*\*(.*?)\*\*/g, "$1")
     .replace(/`([^`]+)`/g, "$1")
@@ -46,7 +50,7 @@ export function ChatPreview({ messages, expanded, onToggle }: ChatPreviewProps) 
                       " max-w-[80%] whitespace-pre-wrap"
                     }
                   >
-                    {softenContent(m.content)}
+                    {formatContent(m.content)}
                   </p>
                 </div>
               )

@@ -44,7 +44,7 @@ export function FloatingWindow({ id, title, zIndex, initialPos, width = 480, hei
       ref={rootRef}
       onMouseDown={() => onFocus(id)}
       style={{ position: "fixed", left: pos.x, top: pos.y, width, height, zIndex }}
-      className="rounded-xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] bg-gradient-to-br from-card via-card to-card/95 text-card-foreground overflow-hidden border border-primary/20 backdrop-blur-xl ring-1 ring-white/10"
+      className="rounded-xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] bg-gradient-to-br from-card via-card to-card/95 text-card-foreground overflow-hidden border border-primary/20 backdrop-blur-xl ring-1 ring-white/10 animate-in fade-in zoom-in-95 duration-300"
     >
       <div
         className={`flex items-center justify-between bg-gradient-to-r from-primary/15 via-primary/10 to-transparent px-5 py-3 select-none border-b border-primary/20 backdrop-blur-sm ${dragOffset ? "cursor-grabbing" : "cursor-grab"}`}
