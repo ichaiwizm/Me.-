@@ -3,7 +3,11 @@ import FloatingWindow from "@/components/windows/FloatingWindow";
 import { WindowDock } from "@/components/windows/WindowDock";
 
 export type WindowSpec = { title: string; contentHtml: string; width?: number; height?: number; key?: string };
-export type WindowManagerHandle = { createWindow: (spec: WindowSpec) => void };
+export type WindowManagerHandle = {
+  createWindow: (spec: WindowSpec) => void;
+  closeWindow: (key: string) => void;
+  modifyWindow: (key: string, contentHtml: string) => void;
+};
 
 type Item = {
   id: string; title: string; contentHtml: string; width: number; height: number; key?: string;
@@ -41,7 +45,15 @@ export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) =
     setItems(ws => [...ws, { id, key: spec.key, title: spec.title, contentHtml: spec.contentHtml, width, height, x, y, z, minimized: false }]);
   }, [items, nextZ]);
 
-  useImperativeHandle(ref, () => ({ createWindow }), [createWindow]);
+  const closeWindow = useCallback((key: string) => {
+    setItems(ws => ws.filter(i => i.key !== key));
+  }, []);
+
+  const modifyWindow = useCallback((key: string, contentHtml: string) => {
+    setItems(ws => ws.map(i => i.key === key ? { ...i, contentHtml } : i));
+  }, []);
+
+  useImperativeHandle(ref, () => ({ createWindow, closeWindow, modifyWindow }), [createWindow, closeWindow, modifyWindow]);
 
   const docked = useMemo(() => items.filter(w=>w.minimized), [items]);
 

@@ -1,15 +1,10 @@
-export type WindowCommand = {
-  title: string;
-  width?: number;
-  height?: number;
-  key?: string;
-  contentHtml: string;
-};
+import type { Command } from "./commandExecutor";
+import { validateCommand } from "./commandExecutor";
 
 export type ParseResult = {
   originalContent: string;
   displayContent: string;
-  windows: WindowCommand[];
+  commands: Command[];
   errors: string[];
 };
 
@@ -30,8 +25,29 @@ export function validateWindowCommand(cmd: any): { valid: boolean; error?: strin
   return { valid: true };
 }
 
+function getCommandDisplayText(cmd: Command): string {
+  switch (cmd.type) {
+    case "create_window":
+      return `✨ Fenêtre créée: "${cmd.window.title}"`;
+    case "change_theme":
+      return `🎨 Thème changé: ${cmd.theme}`;
+    case "change_background":
+      return `🖼️ Background modifié`;
+    case "show_toast":
+      return `💬 ${cmd.message}`;
+    case "close_window":
+      return `❌ Fenêtre fermée: ${cmd.key}`;
+    case "modify_window":
+      return `🔧 Fenêtre modifiée: ${cmd.key}`;
+    case "set_ui":
+      return `⚙️ Interface mise à jour`;
+    default:
+      return `✓ Commande exécutée`;
+  }
+}
+
 export function parseWindowCommands(content: string, currentWindowCount = 0): ParseResult {
-  const windows: WindowCommand[] = [];
+  const commands: Command[] = [];
   const errors: string[] = [];
   let displayContent = content;
 
@@ -42,29 +58,39 @@ export function parseWindowCommands(content: string, currentWindowCount = 0): Pa
   matches.forEach((match, index) => {
     try {
       const parsed = JSON.parse(match[1]);
-      if (parsed.type === "create_window" && parsed.window) {
-        // Check window limit
-        if (currentWindowCount + windows.length >= MAX_WINDOWS) {
+
+      // Validate command structure
+      const validation = validateCommand(parsed);
+      if (!validation.valid) {
+        errors.push(`Commande ${index + 1}: ${validation.error}`);
+        displayContent = displayContent.replace(match[0], `_❌ ${validation.error}_`);
+        return;
+      }
+
+      // Additional validation for create_window
+      if (parsed.type === "create_window") {
+        if (currentWindowCount + commands.filter(c => c.type === "create_window").length >= MAX_WINDOWS) {
           errors.push(`Limite de ${MAX_WINDOWS} fenêtres atteinte`);
           displayContent = displayContent.replace(match[0], `_❌ Limite de fenêtres atteinte_`);
           return;
         }
-
-        const validation = validateWindowCommand(parsed.window);
-        if (validation.valid) {
-          windows.push(parsed.window);
-          displayContent = displayContent.replace(match[0], `_✨ Fenêtre créée: "${parsed.window.title}"_`);
-        } else {
-          errors.push(`Fenêtre ${index + 1}: ${validation.error}`);
-          displayContent = displayContent.replace(match[0], `_❌ ${validation.error}_`);
+        const windowValidation = validateWindowCommand(parsed.window);
+        if (!windowValidation.valid) {
+          errors.push(`Fenêtre ${index + 1}: ${windowValidation.error}`);
+          displayContent = displayContent.replace(match[0], `_❌ ${windowValidation.error}_`);
+          return;
         }
       }
+
+      // Command is valid, add it
+      commands.push(parsed as Command);
+      displayContent = displayContent.replace(match[0], `_${getCommandDisplayText(parsed as Command)}_`);
     } catch (e) {
-      errors.push(`JSON invalide (fenêtre ${index + 1})`);
+      errors.push(`JSON invalide (commande ${index + 1})`);
     }
   });
 
-  return { originalContent: content, displayContent, windows, errors };
+  return { originalContent: content, displayContent, commands, errors };
 }
 
 export function replaceWindowCommandsInText(content: string): string {
