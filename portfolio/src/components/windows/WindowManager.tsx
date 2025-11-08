@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
 import FloatingWindow from "@/components/windows/FloatingWindow";
 import { WindowDock } from "@/components/windows/WindowDock";
 
@@ -19,7 +19,7 @@ const makeId = () => `w_${Date.now().toString(36)}_${Math.random().toString(36).
 
 export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) => {
   const [items, setItems] = useState<Item[]>([]);
-  const [nextZ, setNextZ] = useState(1000);
+  const [, setNextZ] = useState(1000);
 
   const bringFront = useCallback((id: string) => {
     // Use functional updates to avoid stale closure issues

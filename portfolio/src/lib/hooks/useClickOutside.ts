@@ -1,7 +1,7 @@
 import React from "react";
 
 export function useClickOutside(
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
   handler: () => void
 ): void {
   React.useEffect(() => {
@@ -15,4 +15,3 @@ export function useClickOutside(
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [ref, handler]);
 }
-

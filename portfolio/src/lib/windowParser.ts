@@ -1,5 +1,5 @@
-import type { Command } from "./commandExecutor";
-import { validateCommand } from "./commandExecutor";
+import type { Command } from "./commands/types";
+import { validateCommand } from "./commands/validator";
 
 export type ParseResult = {
   originalContent: string;

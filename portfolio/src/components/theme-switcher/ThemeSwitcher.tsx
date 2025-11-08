@@ -2,7 +2,7 @@ import React from "react";
 import { useTheme } from "@/theme";
 import { ThemeSwitcherButton } from "./ThemeSwitcherButton";
 import { ThemeMenu } from "./ThemeMenu";
-import { useClickOutside } from "./useClickOutside";
+import { useClickOutside } from "@/lib/hooks/useClickOutside";
 
 export function ThemeSwitcher() {
   const { themeId, setThemeId, themes } = useTheme();

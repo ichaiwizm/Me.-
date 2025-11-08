@@ -15,14 +15,6 @@ type ThemeMenuProps = {
 };
 
 export function ThemeMenu({ themes, activeThemeId, onSelectTheme }: ThemeMenuProps) {
-  const groupedThemes = themes.reduce(
-    (acc, theme) => {
-      acc[theme.category].push(theme);
-      return acc;
-    },
-    { apaisant: [], energique: [], sophistique: [] } as Record<string, Theme[]>
-  );
-
   return (
     <div className="absolute right-0 top-full mt-2 w-64 rounded-lg border bg-popover p-2 text-popover-foreground shadow-lg">
       <div className="mb-2 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
