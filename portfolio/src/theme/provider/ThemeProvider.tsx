@@ -15,7 +15,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const setThemeId = React.useCallback((id: ThemeId) => {
     setThemeIdState(id);
     saveThemeToStorage(id);
-    applyThemeToDocument(id);
+    // Theme application handled by useEffect below to avoid double application
   }, []);
 
   // Application initiale du thème

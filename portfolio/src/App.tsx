@@ -24,43 +24,84 @@ function App() {
   useEffect(() => {
     if (bgStyle) {
       document.body.style.background = bgStyle;
+    } else {
+      document.body.style.background = "";
     }
   }, [bgStyle]);
+
+  // Reset to default state
+  function resetToDefault() {
+    // Close all windows
+    wmRef.current?.resetAll();
+
+    // Reset theme to default
+    setThemeId("crepuscule-dore");
+
+    // Clear background
+    setBgStyle("");
+
+    // Clear chat messages
+    setMessages([]);
+
+    // Reset UI state
+    setExpanded(false);
+    setWindowCount(0);
+  }
 
   async function handleSubmit(message: string) {
     try {
       setLoading(true);
-      const next: ChatMessage[] = [...messages, { role: "user", content: message }];
-      setMessages(next);
-      const content = await sendChat(next);
 
-      // Parse all commands from LLM response
-      const { originalContent, commands, errors } = parseWindowCommands(content || "", windowCount);
+      // Use functional form for state updates to avoid race conditions
+      setMessages(prev => [...prev, { role: "user", content: message }]);
 
-      // Create executor context
-      const ctx: ExecutorContext = {
-        createWindow: (spec) => {
-          wmRef.current?.createWindow(spec);
-          setWindowCount(c => c + 1);
-        },
-        closeWindow: (key) => wmRef.current?.closeWindow(key),
-        modifyWindow: (key, html) => wmRef.current?.modifyWindow(key, html),
-        changeTheme: (theme) => setThemeId(theme as any),
-        setBackground: (style) => setBgStyle(style),
-        setChatExpanded: (exp) => setExpanded(exp),
-      };
+      // Get updated messages for API call
+      const messagesWithUser = [...messages, { role: "user", content: message }];
+      const content = await sendChat(messagesWithUser);
 
-      // Execute all commands
-      commands.forEach(cmd => executeCommand(cmd, ctx));
+      // Wrap command parsing and execution in try-catch to prevent crashes
+      try {
+        // Parse all commands from LLM response
+        const { originalContent, commands, errors } = parseWindowCommands(content || "", windowCount);
 
-      // Log errors for debugging
-      if (errors.length > 0) {
-        console.warn("Command execution errors:", errors);
+        // Create executor context
+        const ctx: ExecutorContext = {
+          createWindow: (spec) => {
+            wmRef.current?.createWindow(spec);
+            setWindowCount(c => c + 1);
+          },
+          closeWindow: (key) => wmRef.current?.closeWindow(key),
+          modifyWindow: (key, html) => wmRef.current?.modifyWindow(key, html),
+          changeTheme: (theme) => {
+            // Validate theme ID before applying
+            const validThemes = ["lumiere", "nuit", "foret-emeraude", "ocean-profond", "crepuscule-dore", "lavande-zen", "feu-dragon"];
+            if (validThemes.includes(theme)) {
+              setThemeId(theme as any);
+            } else {
+              console.error(`Invalid theme ID: ${theme}`);
+            }
+          },
+          setBackground: (style) => setBgStyle(style),
+          setChatExpanded: (exp) => setExpanded(exp),
+        };
+
+        // Execute all commands
+        commands.forEach(cmd => executeCommand(cmd, ctx));
+
+        // Log errors for debugging
+        if (errors.length > 0) {
+          console.warn("Command parsing errors:", errors);
+        }
+
+        // Store ORIGINAL content in history (for LLM context)
+        setMessages((prev) => [...prev, { role: "assistant", content: originalContent }]);
+      } catch (commandError) {
+        console.error("Error parsing/executing commands:", commandError);
+        // Still add the raw content to chat even if command execution fails
+        setMessages((prev) => [...prev, { role: "assistant", content: content || "" }]);
       }
-
-      // Store ORIGINAL content in history (for LLM context)
-      setMessages((prev) => [...prev, { role: "assistant", content: originalContent }]);
     } catch (e) {
+      console.error("Error in handleSubmit:", e);
       setMessages((prev) => [...prev, { role: "assistant", content: "(Erreur lors de la requête)" }]);
     } finally {
       setLoading(false);
@@ -69,7 +110,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header onReset={resetToDefault} />
       <TestButtons wmRef={wmRef} />
       <ChatPreview messages={messages} expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
       <PromptBar onSubmit={handleSubmit} loading={loading} />

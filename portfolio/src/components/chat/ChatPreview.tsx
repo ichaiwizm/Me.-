@@ -10,17 +10,28 @@ type ChatPreviewProps = {
 }
 
 function formatContent(input: string): string {
-  // First, replace window commands with titles/errors
-  let content = replaceWindowCommandsInText(input);
+  try {
+    // Validate input
+    if (!input || typeof input !== "string") {
+      return "";
+    }
 
-  // Then soften markdown: remove headers, bold, inline code, heavy lists
-  return content
-    .replace(/^#+\s+/gm, "")
-    .replace(/\*\*(.*?)\*\*/g, "$1")
-    .replace(/`([^`]+)`/g, "$1")
-    .replace(/^\s*[-*]\s+/gm, "• ")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim()
+    // First, replace window commands with titles/errors
+    let content = replaceWindowCommandsInText(input);
+
+    // Then soften markdown: remove headers, bold, inline code, heavy lists
+    return content
+      .replace(/^#+\s+/gm, "")
+      .replace(/\*\*(.*?)\*\*/g, "$1")
+      .replace(/`([^`]+)`/g, "$1")
+      .replace(/^\s*[-*]\s+/gm, "• ")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  } catch (error) {
+    console.error("Error formatting content:", error);
+    // Return original input as fallback
+    return input || "";
+  }
 }
 
 export function ChatPreview({ messages, expanded, onToggle }: ChatPreviewProps) {

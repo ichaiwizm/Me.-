@@ -7,6 +7,7 @@ export type WindowManagerHandle = {
   createWindow: (spec: WindowSpec) => void;
   closeWindow: (key: string) => void;
   modifyWindow: (key: string, contentHtml: string) => void;
+  resetAll: () => void;
 };
 
 type Item = {
@@ -21,29 +22,62 @@ export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) =
   const [nextZ, setNextZ] = useState(1000);
 
   const bringFront = useCallback((id: string) => {
-    setItems((ws) => {
-      const z = nextZ + 1; setNextZ(z);
-      return ws.map(w => w.id === id ? { ...w, z } : w);
+    // Use functional updates to avoid stale closure issues
+    setNextZ(z => {
+      const newZ = z + 1;
+      setItems((ws) => ws.map(w => w.id === id ? { ...w, z: newZ } : w));
+      return newZ;
     });
-  }, [nextZ]);
+  }, []);
 
   const createWindow = useCallback((spec: WindowSpec) => {
-    // If a key is provided and an item exists with that key, restore/focus it instead of creating a new one
-    if (spec.key) {
-      const existing = items.find(i => i.key === spec.key);
-      if (existing) {
-        setItems(ws => ws.map(i => i.id === existing.id ? { ...i, minimized: false } : i));
-        const z = nextZ + 1; setNextZ(z);
-        setItems(ws => ws.map(i => i.id === existing.id ? { ...i, z } : i));
-        return;
+    // Use functional updates to avoid race conditions
+    setItems(ws => {
+      // Check if a window with this key already exists
+      if (spec.key) {
+        const existing = ws.find(i => i.key === spec.key);
+        if (existing) {
+          // Restore and bring to front
+          setNextZ(z => {
+            const newZ = z + 1;
+            setItems(items => items.map(i =>
+              i.id === existing.id
+                ? { ...i, minimized: false, z: newZ }
+                : i
+            ));
+            return newZ;
+          });
+          // Return current state unchanged (will be updated by setNextZ callback)
+          return ws;
+        }
       }
-    }
-    const id = makeId(); const width = spec.width ?? 480; const height = spec.height ?? 320;
-    const offset = items.filter(i=>!i.minimized).length * 20;
-    const x = 80 + (offset % 200); const y = 80 + (offset % 160);
-    const z = nextZ + 1; setNextZ(z);
-    setItems(ws => [...ws, { id, key: spec.key, title: spec.title, contentHtml: spec.contentHtml, width, height, x, y, z, minimized: false }]);
-  }, [items, nextZ]);
+
+      // Create new window
+      const id = makeId();
+      const width = spec.width ?? 480;
+      const height = spec.height ?? 320;
+      const offset = ws.filter(i => !i.minimized).length * 20;
+      const x = 80 + (offset % 200);
+      const y = 80 + (offset % 160);
+
+      // Update z-index and add window
+      setNextZ(z => z + 1);
+      const newZ = Date.now(); // Use timestamp as temporary z-index
+
+      return [...ws, {
+        id,
+        key: spec.key,
+        title: spec.title,
+        contentHtml: spec.contentHtml,
+        width,
+        height,
+        x,
+        y,
+        z: newZ,
+        minimized: false
+      }];
+    });
+  }, []);
 
   const closeWindow = useCallback((key: string) => {
     setItems(ws => ws.filter(i => i.key !== key));
@@ -53,7 +87,12 @@ export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) =
     setItems(ws => ws.map(i => i.key === key ? { ...i, contentHtml } : i));
   }, []);
 
-  useImperativeHandle(ref, () => ({ createWindow, closeWindow, modifyWindow }), [createWindow, closeWindow, modifyWindow]);
+  const resetAll = useCallback(() => {
+    setItems([]);
+    setNextZ(1000);
+  }, []);
+
+  useImperativeHandle(ref, () => ({ createWindow, closeWindow, modifyWindow, resetAll }), [createWindow, closeWindow, modifyWindow, resetAll]);
 
   const docked = useMemo(() => items.filter(w=>w.minimized), [items]);
 

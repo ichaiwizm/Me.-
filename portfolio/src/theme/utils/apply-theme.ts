@@ -6,20 +6,29 @@ export function applyThemeToDocument(themeId: ThemeId): void {
   const theme = getThemeById(themeId);
   const root = document.documentElement;
 
-  // Nettoyer les classes de thèmes précédentes
-  ALL_THEME_CLASSNAMES.forEach((cls) => root.classList.remove(cls));
-  root.classList.remove("dark");
+  // Use requestAnimationFrame to batch DOM operations and prevent flash
+  requestAnimationFrame(() => {
+    // Add new theme class FIRST to ensure CSS variables are always defined
+    root.classList.add(theme.className);
+    if (theme.isDark) {
+      root.classList.add("dark");
+    }
 
-  // Appliquer le nouveau thème
-  root.classList.add(theme.className);
+    // Then remove old theme classes (excluding the one we just added)
+    ALL_THEME_CLASSNAMES.forEach((cls) => {
+      if (cls !== theme.className) {
+        root.classList.remove(cls);
+      }
+    });
 
-  // Ajouter .dark pour les thèmes sombres (compatibilité Tailwind)
-  if (theme.isDark) {
-    root.classList.add("dark");
-  }
+    // Clean up dark class if new theme is not dark
+    if (!theme.isDark) {
+      root.classList.remove("dark");
+    }
 
-  // Attribut data pour débogage et CSS custom
-  root.setAttribute("data-theme", theme.id);
-  root.setAttribute("data-theme-category", theme.category);
+    // Set data attributes for debugging and custom CSS
+    root.setAttribute("data-theme", theme.id);
+    root.setAttribute("data-theme-category", theme.category);
+  });
 }
 

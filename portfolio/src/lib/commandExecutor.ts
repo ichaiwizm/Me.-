@@ -19,12 +19,30 @@ export type ExecutorContext = {
   setChatExpanded: (expanded: boolean) => void;
 };
 
+// Valid theme IDs from theme-definitions.ts
+const VALID_THEME_IDS = [
+  "lumiere",
+  "nuit",
+  "foret-emeraude",
+  "ocean-profond",
+  "crepuscule-dore",
+  "lavande-zen",
+  "feu-dragon",
+];
+
 export function validateCommand(cmd: any): { valid: boolean; error?: string } {
   if (!cmd?.type) return { valid: false, error: "Commande invalide" };
 
   const t = cmd.type;
-  if (t === "change_theme" && (!cmd.theme || typeof cmd.theme !== "string"))
-    return { valid: false, error: "Thème invalide" };
+  if (t === "change_theme") {
+    if (!cmd.theme || typeof cmd.theme !== "string") {
+      return { valid: false, error: "Thème invalide" };
+    }
+    // Strict validation against known theme IDs
+    if (!VALID_THEME_IDS.includes(cmd.theme)) {
+      return { valid: false, error: `Thème inconnu: ${cmd.theme}. Thèmes valides: ${VALID_THEME_IDS.join(", ")}` };
+    }
+  }
 
   if (t === "change_background") {
     if (!["solid", "gradient"].includes(cmd.style)) return { valid: false, error: "Style invalide" };
@@ -49,39 +67,44 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
 }
 
 export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
-  switch (cmd.type) {
-    case "create_window":
-      ctx.createWindow(cmd.window);
-      break;
-    case "change_theme":
-      ctx.changeTheme(cmd.theme);
-      toast.success(`Thème changé: ${cmd.theme}`);
-      break;
-    case "change_background":
-      const bgStyle = cmd.style === "gradient"
-        ? `linear-gradient(135deg, ${cmd.colors!.join(", ")})`
-        : cmd.color!;
-      ctx.setBackground(bgStyle);
-      toast.success("Background modifié");
-      break;
-    case "show_toast":
-      const variant = cmd.variant || "info";
-      if (variant === "success") toast.success(cmd.message);
-      else if (variant === "error") toast.error(cmd.message);
-      else toast(cmd.message);
-      break;
-    case "close_window":
-      ctx.closeWindow(cmd.key);
-      toast.success("Fenêtre fermée");
-      break;
-    case "modify_window":
-      ctx.modifyWindow(cmd.key, cmd.contentHtml);
-      toast.success("Fenêtre modifiée");
-      break;
-    case "set_ui":
-      if (cmd.chatExpanded !== undefined) {
-        ctx.setChatExpanded(cmd.chatExpanded);
-      }
-      break;
+  try {
+    switch (cmd.type) {
+      case "create_window":
+        ctx.createWindow(cmd.window);
+        break;
+      case "change_theme":
+        ctx.changeTheme(cmd.theme);
+        toast.success(`Thème changé: ${cmd.theme}`);
+        break;
+      case "change_background":
+        const bgStyle = cmd.style === "gradient"
+          ? `linear-gradient(135deg, ${cmd.colors!.join(", ")})`
+          : cmd.color!;
+        ctx.setBackground(bgStyle);
+        toast.success("Background modifié");
+        break;
+      case "show_toast":
+        const variant = cmd.variant || "info";
+        if (variant === "success") toast.success(cmd.message);
+        else if (variant === "error") toast.error(cmd.message);
+        else toast(cmd.message);
+        break;
+      case "close_window":
+        ctx.closeWindow(cmd.key);
+        toast.success("Fenêtre fermée");
+        break;
+      case "modify_window":
+        ctx.modifyWindow(cmd.key, cmd.contentHtml);
+        toast.success("Fenêtre modifiée");
+        break;
+      case "set_ui":
+        if (cmd.chatExpanded !== undefined) {
+          ctx.setChatExpanded(cmd.chatExpanded);
+        }
+        break;
+    }
+  } catch (error) {
+    console.error(`Error executing command ${cmd.type}:`, error);
+    toast.error(`Erreur lors de l'exécution de la commande: ${cmd.type}`);
   }
 }
