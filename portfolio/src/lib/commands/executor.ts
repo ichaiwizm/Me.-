@@ -16,9 +16,16 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         toast.success(`Thème changé: ${cmd.theme}`);
         break;
       case "change_background":
-        const bgStyle = cmd.style === "gradient"
-          ? `linear-gradient(135deg, ${cmd.colors!.join(", ")})`
-          : cmd.color!;
+        let bgStyle: string;
+        if (cmd.style === "gradient") {
+          bgStyle = `linear-gradient(135deg, ${cmd.colors!.join(", ")})`;
+        } else if (cmd.style === "image") {
+          const imageUrl = cmd.imageUrl || `/images/${cmd.imageId}.jpg`;
+          const imageStyleProps = cmd.imageStyle || "cover";
+          bgStyle = `url('${imageUrl}') ${imageStyleProps}`;
+        } else {
+          bgStyle = cmd.color!;
+        }
         ctx.setBackground(bgStyle);
         toast.success("Background modifié");
         break;
@@ -40,6 +47,29 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         if (cmd.chatExpanded !== undefined) {
           ctx.setChatExpanded(cmd.chatExpanded);
         }
+        break;
+      case "display_image":
+        const imgUrl = cmd.imageUrl || `/images/${cmd.imageId}.jpg`;
+        const transforms = cmd.transforms || "";
+        const imgTitle = cmd.title || "Image";
+
+        if (cmd.inWindow !== false) {
+          const imgHtml = `
+            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000;">
+              <img src="${imgUrl}" alt="${imgTitle}" style="max-width: 100%; max-height: 100%; object-fit: contain; ${transforms}" />
+            </div>
+          `;
+          ctx.createWindow({
+            title: imgTitle,
+            contentHtml: imgHtml,
+            width: cmd.width || 600,
+            height: cmd.height || 400,
+          });
+        } else {
+          const imgStyle = `url('${imgUrl}') center/cover`;
+          ctx.setBackground(imgStyle);
+        }
+        toast.success("Image affichée");
         break;
     }
   } catch (error) {

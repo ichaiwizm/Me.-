@@ -1,4 +1,4 @@
-import { VALID_THEME_IDS } from "./types";
+import { VALID_THEME_IDS, AVAILABLE_IMAGES } from "./types";
 
 export function validateCommand(cmd: any): { valid: boolean; error?: string } {
   if (!cmd?.type) return { valid: false, error: "Commande invalide" };
@@ -17,14 +17,23 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
   }
 
   if (t === "change_background") {
-    if (!["solid", "gradient"].includes(cmd.style)) {
-      return { valid: false, error: "Style invalide" };
+    if (!["solid", "gradient", "image"].includes(cmd.style)) {
+      return { valid: false, error: "Style invalide (solid, gradient, image)" };
     }
     if (cmd.style === "solid" && !cmd.color) {
       return { valid: false, error: "Couleur manquante" };
     }
     if (cmd.style === "gradient" && (!cmd.colors || cmd.colors.length < 2)) {
       return { valid: false, error: "Couleurs manquantes (min 2)" };
+    }
+    if (cmd.style === "image") {
+      if (!cmd.imageId && !cmd.imageUrl) {
+        return { valid: false, error: "imageId ou imageUrl requis pour style image" };
+      }
+      if (cmd.imageId && !AVAILABLE_IMAGES.find(img => img.id === cmd.imageId)) {
+        const validIds = AVAILABLE_IMAGES.map(img => img.id).join(", ");
+        return { valid: false, error: `Image inconnue: ${cmd.imageId}. Images disponibles: ${validIds}` };
+      }
     }
   }
 
@@ -55,6 +64,22 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
 
   if (t === "set_ui" && cmd.chatExpanded !== undefined && typeof cmd.chatExpanded !== "boolean") {
     return { valid: false, error: "chatExpanded invalide" };
+  }
+
+  if (t === "display_image") {
+    if (!cmd.imageId && !cmd.imageUrl) {
+      return { valid: false, error: "imageId ou imageUrl requis" };
+    }
+    if (cmd.imageId && !AVAILABLE_IMAGES.find(img => img.id === cmd.imageId)) {
+      const validIds = AVAILABLE_IMAGES.map(img => img.id).join(", ");
+      return { valid: false, error: `Image inconnue: ${cmd.imageId}. Images disponibles: ${validIds}` };
+    }
+    if (cmd.width !== undefined && (typeof cmd.width !== "number" || cmd.width < 100 || cmd.width > 2000)) {
+      return { valid: false, error: "Largeur invalide (100-2000px)" };
+    }
+    if (cmd.height !== undefined && (typeof cmd.height !== "number" || cmd.height < 100 || cmd.height > 1500)) {
+      return { valid: false, error: "Hauteur invalide (100-1500px)" };
+    }
   }
 
   return { valid: true };

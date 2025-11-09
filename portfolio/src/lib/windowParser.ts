@@ -41,6 +41,8 @@ function getCommandDisplayText(cmd: Command): string {
       return `❌ Fenêtre fermée: ${cmd.key}`;
     case "modify_window":
       return `🔧 Fenêtre modifiée: ${cmd.key}`;
+    case "display_image":
+      return `🖼️ Image affichée: ${cmd.title || cmd.imageId || "image"}`;
     case "set_ui":
       return `⚙️ Interface mise à jour`;
     default:

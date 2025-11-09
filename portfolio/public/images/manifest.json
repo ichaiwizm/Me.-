@@ -1,0 +1,39 @@
+{
+  "images": [
+    {
+      "id": "landscape-1",
+      "name": "Paysage montagneux",
+      "path": "/images/landscape-1.jpg",
+      "category": "nature",
+      "tags": ["montagne", "paysage", "nature"]
+    },
+    {
+      "id": "abstract-1",
+      "name": "Art abstrait coloré",
+      "path": "/images/abstract-1.jpg",
+      "category": "abstract",
+      "tags": ["abstrait", "coloré", "art"]
+    },
+    {
+      "id": "city-1",
+      "name": "Ville moderne",
+      "path": "/images/city-1.jpg",
+      "category": "urban",
+      "tags": ["ville", "urbain", "moderne"]
+    },
+    {
+      "id": "pattern-1",
+      "name": "Motif géométrique",
+      "path": "/images/pattern-1.jpg",
+      "category": "pattern",
+      "tags": ["motif", "géométrique", "design"]
+    },
+    {
+      "id": "nature-1",
+      "name": "Forêt luxuriante",
+      "path": "/images/nature-1.jpg",
+      "category": "nature",
+      "tags": ["forêt", "nature", "vert"]
+    }
+  ]
+}
