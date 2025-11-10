@@ -1,7 +1,13 @@
 export type ChatMessage = { role: "user" | "assistant"; content: string }
 
 export async function sendChat(messages: ChatMessage[]): Promise<string> {
-  const baseUrl = (import.meta as any).env?.VITE_SERVER_URL || "http://localhost:3001"
+  const baseUrl =
+    (import.meta as any).env?.VITE_SERVER_URL ||
+    // En dev local (Vite), on pointe sur l'Express local
+    (import.meta as any).env?.DEV
+      ? "http://localhost:3001"
+      // En production (Vercel), on utilise le chemin relatif vers la Function
+      : ""
   const res = await fetch(`${baseUrl}/api/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
