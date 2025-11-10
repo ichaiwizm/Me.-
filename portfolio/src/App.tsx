@@ -86,14 +86,20 @@ function App() {
         {renderPage()}
       </main>
 
-      <ChatPreview
-        messages={messages}
-        expanded={expanded}
-        onToggle={() => setExpanded((v) => !v)}
-        loading={loading}
-      />
-      <PromptBar onSubmit={handleSubmit} loading={loading} />
-      <PromptSuggestions onSelectSuggestion={handleSubmit} loading={loading} />
+      {/* Tout le système de chat n'apparaît que sur la page d'accueil */}
+      {currentPage === "accueil" && (
+        <>
+          <ChatPreview
+            messages={messages}
+            expanded={expanded}
+            onToggle={() => setExpanded((v) => !v)}
+            loading={loading}
+          />
+          <PromptBar onSubmit={handleSubmit} loading={loading} />
+          <PromptSuggestions onSelectSuggestion={handleSubmit} loading={loading} />
+        </>
+      )}
+
       <WindowManager ref={wmRef} />
       <Toaster position="top-right" richColors />
     </>

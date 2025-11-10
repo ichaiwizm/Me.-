@@ -1,6 +1,7 @@
 import { PERSONAL_INFO } from "@/data/personal-info";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Mail, Phone, MapPin, Github, Linkedin, CircleDot } from "lucide-react";
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -39,10 +40,10 @@ export function ContactPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Me contacter
           </h1>
-          <p className="text-lg text-foreground/60">
+          <p className="text-lg text-foreground/60" style={{ fontFamily: "'Inter', sans-serif" }}>
             N'hésitez pas à me contacter pour toute opportunité ou question
           </p>
         </div>
@@ -50,7 +51,7 @@ export function ContactPage() {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Formulaire */}
           <div className="bg-card border border-border rounded-xl p-8">
-            <h2 className="text-2xl font-bold mb-6 text-foreground">
+            <h2 className="text-2xl font-bold mb-6 text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Envoyez-moi un message
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -58,6 +59,7 @@ export function ContactPage() {
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium text-foreground/80 mb-2"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   Votre nom
                 </label>
@@ -68,6 +70,7 @@ export function ContactPage() {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                   placeholder="Jean Dupont"
                   required
                 />
@@ -77,6 +80,7 @@ export function ContactPage() {
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium text-foreground/80 mb-2"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   Votre email
                 </label>
@@ -87,6 +91,7 @@ export function ContactPage() {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                   placeholder="jean@example.com"
                   required
                 />
@@ -96,6 +101,7 @@ export function ContactPage() {
                 <label
                   htmlFor="message"
                   className="block text-sm font-medium text-foreground/80 mb-2"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   Votre message
                 </label>
@@ -106,6 +112,7 @@ export function ContactPage() {
                   onChange={handleChange}
                   rows={6}
                   className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all resize-none"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                   placeholder="Bonjour, je souhaiterais..."
                   required
                 />
@@ -113,9 +120,11 @@ export function ContactPage() {
 
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
+                className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                Envoyer le message ✉️
+                <Mail className="w-5 h-5" />
+                Envoyer le message
               </button>
             </form>
           </div>
@@ -123,20 +132,21 @@ export function ContactPage() {
           {/* Informations de contact */}
           <div className="space-y-6">
             <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl p-8">
-              <h2 className="text-2xl font-bold mb-6 text-foreground">
+              <h2 className="text-2xl font-bold mb-6 text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Coordonnées directes
               </h2>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">✉️</span>
+                    <Mail className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Email</p>
+                    <p className="font-semibold text-foreground" style={{ fontFamily: "'Inter', sans-serif" }}>Email</p>
                     <a
                       href={`mailto:${PERSONAL_INFO.contact.email}`}
                       className="text-purple-600 hover:underline"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
                     >
                       {PERSONAL_INFO.contact.email}
                     </a>
@@ -145,13 +155,14 @@ export function ContactPage() {
 
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">📞</span>
+                    <Phone className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Téléphone</p>
+                    <p className="font-semibold text-foreground" style={{ fontFamily: "'Inter', sans-serif" }}>Téléphone</p>
                     <a
                       href={`tel:${PERSONAL_INFO.contact.phone.replace(/\s/g, "")}`}
                       className="text-purple-600 hover:underline"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
                     >
                       {PERSONAL_INFO.contact.phone}
                     </a>
@@ -160,11 +171,11 @@ export function ContactPage() {
 
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">📍</span>
+                    <MapPin className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Localisation</p>
-                    <p className="text-foreground/70">{PERSONAL_INFO.contact.location}</p>
+                    <p className="font-semibold text-foreground" style={{ fontFamily: "'Inter', sans-serif" }}>Localisation</p>
+                    <p className="text-foreground/70" style={{ fontFamily: "'Inter', sans-serif" }}>{PERSONAL_INFO.contact.location}</p>
                   </div>
                 </div>
               </div>
@@ -172,7 +183,7 @@ export function ContactPage() {
 
             {/* Réseaux sociaux */}
             <div className="bg-card border border-border rounded-xl p-8">
-              <h3 className="text-xl font-bold mb-4 text-foreground">
+              <h3 className="text-xl font-bold mb-4 text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Retrouvez-moi aussi sur
               </h3>
               <div className="space-y-3">
@@ -182,8 +193,8 @@ export function ContactPage() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 bg-muted rounded-lg hover:bg-purple-500/10 transition-colors"
                 >
-                  <span className="text-2xl">🐙</span>
-                  <span className="font-medium text-foreground">GitHub</span>
+                  <Github className="w-6 h-6" />
+                  <span className="font-medium text-foreground" style={{ fontFamily: "'Inter', sans-serif" }}>GitHub</span>
                 </a>
                 <a
                   href={PERSONAL_INFO.social.linkedin}
@@ -191,17 +202,20 @@ export function ContactPage() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 bg-muted rounded-lg hover:bg-purple-500/10 transition-colors"
                 >
-                  <span className="text-2xl">💼</span>
-                  <span className="font-medium text-foreground">LinkedIn</span>
+                  <Linkedin className="w-6 h-6" />
+                  <span className="font-medium text-foreground" style={{ fontFamily: "'Inter', sans-serif" }}>LinkedIn</span>
                 </a>
               </div>
             </div>
 
             {/* Disponibilité */}
-            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-6 text-center">
-              <p className="text-green-700 dark:text-green-400 font-semibold">
-                🟢 Disponible pour des opportunités d'alternance et de projets
-              </p>
+            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-6">
+              <div className="flex items-center justify-center gap-2 text-green-700 dark:text-green-400 font-semibold">
+                <CircleDot className="w-5 h-5" />
+                <p style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Disponible pour des opportunités d'alternance et de projets
+                </p>
+              </div>
             </div>
           </div>
         </div>

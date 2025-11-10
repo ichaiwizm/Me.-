@@ -27,10 +27,10 @@ export const PERSONAL_INFO = {
   },
 
   qualities: [
-    { trait: "Persévérante", icon: "💪" },
-    { trait: "Organisée", icon: "📋" },
-    { trait: "Autonome", icon: "🚀" },
-    { trait: "Polyvalente", icon: "🎯" },
+    { trait: "Persévérante", icon: "Zap" },
+    { trait: "Organisée", icon: "ClipboardList" },
+    { trait: "Autonome", icon: "Rocket" },
+    { trait: "Polyvalente", icon: "Target" },
   ],
 
   languages: [

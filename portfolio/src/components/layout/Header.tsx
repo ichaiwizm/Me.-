@@ -31,7 +31,7 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
           <div className="flex flex-col">
             <button
               onClick={(e) => handleNavClick(e, "accueil")}
-              className="text-2xl font-bold tracking-tight hover:opacity-80 transition-opacity text-left"
+              className="text-2xl font-bold tracking-tight hover:opacity-80 transition-opacity text-left cursor-pointer"
             >
               Levana Wizman
             </button>
@@ -46,7 +46,7 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
               <button
                 key={item.id}
                 onClick={(e) => handleNavClick(e, item.id)}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-medium transition-colors cursor-pointer ${
                   currentPage === item.id
                     ? "text-purple-600 font-semibold"
                     : "text-foreground/80 hover:text-foreground"
