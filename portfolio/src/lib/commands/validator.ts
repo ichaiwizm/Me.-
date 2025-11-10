@@ -84,5 +84,20 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
     }
   }
 
+  if (t === "display_gallery") {
+    if (cmd.limit !== undefined) {
+      const n = Number(cmd.limit);
+      if (!Number.isFinite(n) || n < 1 || n > 24) {
+        return { valid: false, error: "Limite invalide (1-24)" };
+      }
+    }
+    if (cmd.category && typeof cmd.category !== "string") {
+      return { valid: false, error: "Catégorie invalide" };
+    }
+    if (cmd.tag && typeof cmd.tag !== "string") {
+      return { valid: false, error: "Tag invalide" };
+    }
+  }
+
   return { valid: true };
 }

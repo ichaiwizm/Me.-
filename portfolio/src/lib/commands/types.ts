@@ -11,6 +11,7 @@ export type Command =
   | { type: "modify_window"; key: string; contentHtml: string }
   | { type: "resize_window"; key: string; width?: number; height?: number }
   | { type: "display_image"; imageId?: string; imageUrl?: string; transforms?: string; inWindow?: boolean; title?: string; width?: number; height?: number }
+  | { type: "display_gallery"; title?: string; tag?: string; category?: string; limit?: number; inWindow?: boolean; width?: number; height?: number }
   | { type: "set_ui"; chatExpanded?: boolean }
   | { type: "navigate"; page: PageId };
 

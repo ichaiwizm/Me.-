@@ -17,7 +17,7 @@ export type ParseResult = {
 };
 
 export function validateWindowCommand(cmd: any): { valid: boolean; error?: string } {
-  if (!cmd || typeof cmd !== 'object') return { valid: false, error: 'Objet invalide' };
+  if (!cmd || typeof cmd !== 'object') return { valid: false, error: "Fenêtre manquante (clé 'window'). Utilise display_image ou display_gallery pour les photos, ou fournis {title, contentHtml}." };
   if (!cmd.title || typeof cmd.title !== 'string') return { valid: false, error: 'Titre manquant' };
   if (!cmd.contentHtml || typeof cmd.contentHtml !== 'string') return { valid: false, error: 'HTML manquant' };
   if (cmd.contentHtml.length > MAX_HTML_SIZE) return { valid: false, error: `HTML trop large (max ${MAX_HTML_SIZE/1000}KB)` };
@@ -48,8 +48,20 @@ function getCommandDisplayText(cmd: Command): string {
       return `🔧 Fenêtre modifiée: ${cmd.key}`;
     case "display_image":
       return `🖼️ Image affichée: ${cmd.title || cmd.imageId || "image"}`;
+    case "display_gallery":
+      return `🖼️ Galerie affichée`;
     case "set_ui":
       return `⚙️ Interface mise à jour`;
+    case "navigate": {
+      const pageNames: Record<string, string> = {
+        accueil: "Accueil",
+        projets: "Projets",
+        competences: "Compétences",
+        "a-propos": "À propos",
+        contact: "Contact",
+      };
+      return `➡️ Navigation vers ${pageNames[cmd.page] || cmd.page}`;
+    }
     default:
       return `✓ Commande exécutée`;
   }

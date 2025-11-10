@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react"
 import { replaceWindowCommandsInText } from "@/lib/commands/parser"
+import type { PageId } from "@/lib/commands/types"
+import type { ReactNode } from "react"
 
 type ChatMessage = { role: "user" | "assistant"; content: string }
 
@@ -10,28 +12,53 @@ type ChatPreviewProps = {
   loading?: boolean
 }
 
-function formatContent(input: string): string {
+function formatContentToNodes(input: string): ReactNode[] {
   try {
     // Validate input
     if (!input || typeof input !== "string") {
-      return "";
+      return [];
     }
 
     // First, replace window commands with titles/errors
     let content = replaceWindowCommandsInText(input);
 
     // Then soften markdown: remove headers, bold, inline code, heavy lists
-    return content
+    content = content
       .replace(/^#+\s+/gm, "")
       .replace(/\*\*(.*?)\*\*/g, "$1")
       .replace(/`([^`]+)`/g, "$1")
       .replace(/^\s*[-*]\s+/gm, "• ")
       .replace(/\n{3,}/g, "\n\n")
       .trim();
+
+    // Convert markdown links [label](projets) to clickable buttons that navigate
+    const parts: ReactNode[] = [];
+    const linkRe = /\[([^\]]+)\]\((accueil|projets|competences|a-propos|contact)\)/g;
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = linkRe.exec(content))) {
+      const [full, label, page] = match;
+      if (match.index > lastIndex) parts.push(content.slice(lastIndex, match.index));
+      const pageId = page as PageId;
+      parts.push(
+        <button
+          key={`${page}-${match.index}`}
+          className="underline underline-offset-2 text-primary hover:opacity-80 cursor-pointer"
+          onClick={() => {
+            window.dispatchEvent(new CustomEvent("app:navigate", { detail: { page: pageId } }));
+          }}
+        >
+          {label}
+        </button>
+      );
+      lastIndex = match.index + full.length;
+    }
+    if (lastIndex < content.length) parts.push(content.slice(lastIndex));
+    return parts.length ? parts : [content];
   } catch (error) {
     console.error("Error formatting content:", error);
     // Return original input as fallback
-    return input || "";
+    return [input || ""];
   }
 }
 
@@ -65,7 +92,9 @@ export function ChatPreview({ messages, expanded, onToggle, loading }: ChatPrevi
                       " max-w-[85%] whitespace-pre-wrap pl-3"
                     }
                   >
-                    {formatContent(m.content)}
+                    {formatContentToNodes(m.content).map((node, idx) => (
+                      typeof node === "string" ? <span key={idx}>{node}</span> : node
+                    ))}
                   </p>
                 </div>
               )

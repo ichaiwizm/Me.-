@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { ChatPreview } from "@/components/chat/ChatPreview";
 import { PromptBar } from "@/components/chat/PromptBar";
@@ -55,6 +55,17 @@ function App() {
     setExpanded(false);
     setCurrentPage("accueil");
   }
+
+  // Listen to navigation events emitted by ChatPreview's link buttons
+  useEffect(() => {
+    const handler = (e: any) => {
+      const page = e?.detail?.page as PageId | undefined;
+      if (!page) return;
+      ctx.navigateToPage(page);
+    };
+    window.addEventListener("app:navigate", handler as any);
+    return () => window.removeEventListener("app:navigate", handler as any);
+  }, [ctx]);
 
   // Render la page actuelle
   const renderPage = () => {

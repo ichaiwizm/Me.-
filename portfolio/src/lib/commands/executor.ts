@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 import type { Command, ExecutorContext } from "./types";
+import { AVAILABLE_IMAGES } from "./types";
 
 export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
   try {
@@ -71,6 +72,43 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         }
         toast.success("Image affichée");
         break;
+      case "display_gallery": {
+        // Build a simple responsive gallery from AVAILABLE_IMAGES
+        // Optional filters: tag, category, limit
+        let imgs = [...(AVAILABLE_IMAGES as unknown as Array<{ id: string; name: string; category: string }> )];
+        if (cmd.category) imgs = imgs.filter((i) => i.category === cmd.category);
+        if (cmd.tag) {
+          // best-effort contains in name; tags are only in public manifest, so approximate here
+          const t = String(cmd.tag).toLowerCase();
+          imgs = imgs.filter((i) => i.name.toLowerCase().includes(t) || i.id.toLowerCase().includes(t));
+        }
+        if (!imgs.length) {
+          toast.error("Aucune image correspondante");
+          break;
+        }
+        const limited = typeof cmd.limit === "number" ? imgs.slice(0, cmd.limit) : imgs;
+        const grid = limited
+          .map((i) => {
+            const url = `/images/${i.id}.jpg`;
+            return `<figure style=\"margin:0;\"><img src=\"${url}\" alt=\"${i.name}\" style=\"width:100%;height:160px;object-fit:cover;border-radius:8px;\" /><figcaption style=\"margin-top:6px;font-size:11px;color:#bbb;\">${i.name}</figcaption></figure>`;
+          })
+          .join("");
+        const html = `
+          <div style="padding:12px;background:#0a0a0a;color:#eaeaea;height:100%;overflow:auto;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;">
+              ${grid}
+            </div>
+          </div>
+        `;
+        ctx.createWindow({
+          title: cmd.title || "Galerie",
+          contentHtml: html,
+          width: cmd.width || 720,
+          height: cmd.height || 520,
+        });
+        toast.success("Galerie affichée");
+        break;
+      }
       case "navigate":
         ctx.navigateToPage(cmd.page);
         const pageNames: Record<string, string> = {
