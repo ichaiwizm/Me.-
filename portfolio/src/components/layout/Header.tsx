@@ -1,21 +1,40 @@
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import type { PageId } from "@/lib/commands/types";
 
 type HeaderProps = {
   onReset?: () => void;
+  currentPage?: PageId;
+  onNavigate?: (page: PageId) => void;
 };
 
-export function Header({ onReset }: HeaderProps) {
+export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderProps) {
+  const handleNavClick = (e: React.MouseEvent, page: PageId) => {
+    e.preventDefault();
+    onNavigate?.(page);
+  };
+
+  const navItems: { id: PageId; label: string }[] = [
+    { id: "accueil", label: "Accueil" },
+    { id: "projets", label: "Projets" },
+    { id: "competences", label: "Compétences" },
+    { id: "a-propos", label: "À propos" },
+    { id: "contact", label: "Contact" },
+  ];
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b bg-background/80 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo / Nom */}
           <div className="flex flex-col">
-            <a href="#" className="text-2xl font-bold tracking-tight hover:opacity-80 transition-opacity">
+            <button
+              onClick={(e) => handleNavClick(e, "accueil")}
+              className="text-2xl font-bold tracking-tight hover:opacity-80 transition-opacity text-left"
+            >
               Levana Wizman
-            </a>
+            </button>
             <span className="text-xs text-foreground/60 tracking-wide">
               Développeuse Full-Stack
             </span>
@@ -23,36 +42,19 @@ export function Header({ onReset }: HeaderProps) {
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a
-              href="#accueil"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-            >
-              Accueil
-            </a>
-            <a
-              href="#projets"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-            >
-              Projets
-            </a>
-            <a
-              href="#competences"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-            >
-              Compétences
-            </a>
-            <a
-              href="#a-propos"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-            >
-              À propos
-            </a>
-            <a
-              href="#contact"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-            >
-              Contact
-            </a>
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={(e) => handleNavClick(e, item.id)}
+                className={`text-sm font-medium transition-colors ${
+                  currentPage === item.id
+                    ? "text-purple-600 font-semibold"
+                    : "text-foreground/80 hover:text-foreground"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
           </nav>
 
           {/* Actions à droite */}

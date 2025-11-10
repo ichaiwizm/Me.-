@@ -10,10 +10,12 @@ import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
 import { isValidThemeId } from "@/theme/config/theme-registry";
-import type { ExecutorContext } from "@/lib/commands/types";
+import type { ExecutorContext, PageId } from "@/lib/commands/types";
+import { HomePage, ProjectsPage, SkillsPage, AboutPage, ContactPage } from "@/components/pages";
 
 function App() {
   const [expanded, setExpanded] = useState(false);
+  const [currentPage, setCurrentPage] = useState<PageId>("accueil");
   const { setThemeId } = useTheme();
 
   const { wmRef, windowCount, createWindow, closeWindow, modifyWindow, resizeWindow, resetAll } =
@@ -34,6 +36,11 @@ function App() {
     },
     setBackground,
     setChatExpanded: setExpanded,
+    navigateToPage: (page: PageId) => {
+      setCurrentPage(page);
+      // Scroll to top when navigating
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
   };
 
   const { messages, loading, handleSubmit, clearMessages } =
@@ -45,11 +52,40 @@ function App() {
     clearBackground();
     clearMessages();
     setExpanded(false);
+    setCurrentPage("accueil");
   }
+
+  // Render la page actuelle
+  const renderPage = () => {
+    switch (currentPage) {
+      case "accueil":
+        return <HomePage />;
+      case "projets":
+        return <ProjectsPage />;
+      case "competences":
+        return <SkillsPage />;
+      case "a-propos":
+        return <AboutPage />;
+      case "contact":
+        return <ContactPage />;
+      default:
+        return <HomePage />;
+    }
+  };
 
   return (
     <>
-      <Header onReset={resetToDefault} />
+      <Header
+        onReset={resetToDefault}
+        currentPage={currentPage}
+        onNavigate={(page) => ctx.navigateToPage(page)}
+      />
+
+      {/* Page principale */}
+      <main className="relative">
+        {renderPage()}
+      </main>
+
       <ChatPreview
         messages={messages}
         expanded={expanded}

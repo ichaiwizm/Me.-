@@ -1,5 +1,7 @@
 import type { WindowSpec } from "@/components/windows/WindowManager";
 
+export type PageId = "accueil" | "projets" | "competences" | "a-propos" | "contact";
+
 export type Command =
   | { type: "create_window"; window: WindowSpec }
   | { type: "change_theme"; theme: string }
@@ -9,7 +11,8 @@ export type Command =
   | { type: "modify_window"; key: string; contentHtml: string }
   | { type: "resize_window"; key: string; width?: number; height?: number }
   | { type: "display_image"; imageId?: string; imageUrl?: string; transforms?: string; inWindow?: boolean; title?: string; width?: number; height?: number }
-  | { type: "set_ui"; chatExpanded?: boolean };
+  | { type: "set_ui"; chatExpanded?: boolean }
+  | { type: "navigate"; page: PageId };
 
 export type ExecutorContext = {
   createWindow: (spec: WindowSpec) => void;
@@ -19,6 +22,7 @@ export type ExecutorContext = {
   changeTheme: (theme: string) => void;
   setBackground: (style: string) => void;
   setChatExpanded: (expanded: boolean) => void;
+  navigateToPage: (page: PageId) => void;
 };
 
 export const AVAILABLE_IMAGES = [

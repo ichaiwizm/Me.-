@@ -71,6 +71,17 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         }
         toast.success("Image affichée");
         break;
+      case "navigate":
+        ctx.navigateToPage(cmd.page);
+        const pageNames: Record<string, string> = {
+          accueil: "Accueil",
+          projets: "Projets",
+          competences: "Compétences",
+          "a-propos": "À propos",
+          contact: "Contact",
+        };
+        toast.success(`Navigation vers ${pageNames[cmd.page]}`);
+        break;
     }
   } catch (error) {
     console.error(`Error executing command ${cmd.type}:`, error);
