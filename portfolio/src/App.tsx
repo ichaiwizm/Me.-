@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { ChatPreview } from "@/components/chat/ChatPreview";
 import { PromptBar } from "@/components/chat/PromptBar";
+import { PromptSuggestions } from "@/components/chat/PromptSuggestions";
 import WindowManager from "@/components/windows/WindowManager";
 import { Toaster } from "sonner";
 import { useTheme } from "@/theme/provider/ThemeContext";
@@ -56,6 +57,7 @@ function App() {
         loading={loading}
       />
       <PromptBar onSubmit={handleSubmit} loading={loading} />
+      <PromptSuggestions onSelectSuggestion={handleSubmit} loading={loading} />
       <WindowManager ref={wmRef} />
       <Toaster position="top-right" richColors />
     </>
