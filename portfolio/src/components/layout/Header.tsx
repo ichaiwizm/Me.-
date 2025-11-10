@@ -48,8 +48,8 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
                 onClick={(e) => handleNavClick(e, item.id)}
                 className={`text-sm font-medium transition-colors cursor-pointer ${
                   currentPage === item.id
-                    ? "text-purple-600 font-semibold"
-                    : "text-foreground/80 hover:text-foreground"
+                    ? "text-foreground font-semibold border-b-2 border-foreground pb-1"
+                    : "text-foreground/60 hover:text-foreground"
                 }`}
               >
                 {item.label}
