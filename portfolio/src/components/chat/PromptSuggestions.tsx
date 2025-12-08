@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lightbulb, RefreshCw, X } from "lucide-react";
+import { Lightbulb, RefreshCw, X, ChevronDown, ChevronUp } from "lucide-react";
 import { SUGGESTIONS, type Suggestion } from "@/lib/constants/suggestions";
+import { cn } from "@/lib/utils";
 
 type PromptSuggestionsProps = {
   onSelectSuggestion: (text: string) => void;
   loading?: boolean;
+  /** Layout variant: 'floating' (fixed position) or 'inline' (within container) */
+  variant?: "floating" | "inline";
 };
 
 // Category colors mapping
@@ -40,16 +43,23 @@ function groupByCategory(suggestions: Suggestion[]): Record<string, Suggestion[]
   }, {} as Record<string, Suggestion[]>);
 }
 
-export function PromptSuggestions({ onSelectSuggestion, loading }: PromptSuggestionsProps) {
+export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floating" }: PromptSuggestionsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [shuffleKey, setShuffleKey] = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  const isInline = variant === "inline";
+
   // Get shuffled suggestions grouped by category
   const groupedSuggestions = useMemo(() => {
     const shuffled = shuffleArray(SUGGESTIONS);
     return groupByCategory(shuffled);
+  }, [shuffleKey]);
+
+  // Flat list for inline mode (take first 6)
+  const flatSuggestions = useMemo(() => {
+    return shuffleArray(SUGGESTIONS).slice(0, 6);
   }, [shuffleKey]);
 
   // Close menu when clicking outside
@@ -65,11 +75,11 @@ export function PromptSuggestions({ onSelectSuggestion, loading }: PromptSuggest
       }
     }
 
-    if (isOpen) {
+    if (isOpen && !isInline) {
       document.addEventListener("mousedown", handleClickOutside);
       return () => document.removeEventListener("mousedown", handleClickOutside);
     }
-  }, [isOpen]);
+  }, [isOpen, isInline]);
 
   // Handle suggestion click
   const handleSelect = (text: string) => {
@@ -85,6 +95,76 @@ export function PromptSuggestions({ onSelectSuggestion, loading }: PromptSuggest
 
   if (loading) return null;
 
+  // Inline variant - horizontal scrollable chips inside panel
+  if (isInline) {
+    return (
+      <div className="px-4 pt-3 pb-1">
+        {/* Header with toggle */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center gap-1.5 text-xs text-foreground/50 hover:text-foreground/70 transition-colors mb-2"
+        >
+          <Lightbulb className="w-3.5 h-3.5" />
+          <span>Suggestions</span>
+          {isOpen ? (
+            <ChevronUp className="w-3.5 h-3.5" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5" />
+          )}
+        </button>
+
+        {/* Collapsible suggestions */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="flex flex-wrap gap-1.5 pb-2">
+                {flatSuggestions.map((suggestion, index) => {
+                  const colors = categoryColors[suggestion.category] || defaultColors;
+                  return (
+                    <motion.button
+                      key={suggestion.text}
+                      onClick={() => handleSelect(suggestion.text)}
+                      className={cn(
+                        "px-2.5 py-1 rounded-full text-xs border transition-colors",
+                        colors.border,
+                        colors.bg,
+                        "text-foreground/70 hover:text-foreground"
+                      )}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.03 }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {suggestion.text.length > 30
+                        ? suggestion.text.slice(0, 30) + "..."
+                        : suggestion.text}
+                    </motion.button>
+                  );
+                })}
+                <motion.button
+                  onClick={handleShuffle}
+                  className="px-2.5 py-1 rounded-full text-xs border border-foreground/10 text-foreground/40 hover:text-foreground/60 hover:bg-foreground/5 transition-colors"
+                  whileHover={{ rotate: 180 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <RefreshCw className="w-3 h-3" />
+                </motion.button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  }
+
+  // Floating variant - original fixed position popup
   return (
     <div className="fixed bottom-7 left-4 z-40">
       {/* Trigger button - positioned to the left of the prompt bar */}

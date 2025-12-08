@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
-import { ChatPreview } from "@/components/chat/ChatPreview";
-import { PromptBar } from "@/components/chat/PromptBar";
-import { PromptSuggestions } from "@/components/chat/PromptSuggestions";
+import { ChatSidePanel } from "@/components/chat/ChatSidePanel";
 import WindowManager from "@/components/windows/WindowManager";
 import { Toaster } from "sonner";
 import { CustomCursor } from "@/components/ui/CustomCursor";
@@ -43,7 +41,6 @@ const pageTransition = {
 };
 
 function App() {
-  const [expanded, setExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState<PageId>("accueil");
   const { setThemeId } = useTheme();
 
@@ -64,7 +61,7 @@ function App() {
       }
     },
     setBackground,
-    setChatExpanded: setExpanded,
+    setChatExpanded: () => {}, // No longer used, kept for compatibility
     navigateToPage: (page: PageId) => {
       setCurrentPage(page);
       // Scroll to top when navigating
@@ -80,7 +77,6 @@ function App() {
     setThemeId("crepuscule-dore");
     clearBackground();
     clearMessages();
-    setExpanded(false);
     setCurrentPage("accueil");
   }
 
@@ -134,18 +130,13 @@ function App() {
         {renderPage()}
       </main>
 
-      {/* Tout le système de chat n'apparaît que sur la page d'accueil */}
+      {/* Chat side panel - only on home page */}
       {currentPage === "accueil" && (
-        <>
-          <ChatPreview
-            messages={messages}
-            expanded={expanded}
-            onToggle={() => setExpanded((v) => !v)}
-            loading={loading}
-          />
-          <PromptBar onSubmit={handleSubmit} loading={loading} />
-          <PromptSuggestions onSelectSuggestion={handleSubmit} loading={loading} />
-        </>
+        <ChatSidePanel
+          messages={messages}
+          loading={loading}
+          onSubmit={handleSubmit}
+        />
       )}
 
       <WindowManager ref={wmRef} />

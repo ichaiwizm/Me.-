@@ -213,6 +213,36 @@
     @apply bg-background/40 backdrop-blur-lg border border-foreground/5;
   }
 
+  /* Side panel utilities */
+  .side-panel {
+    @apply bg-background/80 backdrop-blur-xl
+           border-l border-foreground/10
+           shadow-[-10px_0_40px_-15px_rgba(0,0,0,0.15)];
+  }
+
+  .panel-backdrop {
+    @apply bg-black/40 backdrop-blur-sm;
+  }
+
+  .panel-toggle-tab {
+    @apply fixed right-0 top-1/2 -translate-y-1/2
+           w-10 h-24 rounded-l-xl
+           bg-background/80 backdrop-blur-md
+           border border-r-0 border-foreground/10
+           shadow-lg cursor-pointer
+           flex items-center justify-center
+           hover:bg-background/90 transition-colors;
+  }
+
+  /* Z-index for chat panel layer */
+  .z-44 {
+    z-index: 44;
+  }
+
+  .z-45 {
+    z-index: 45;
+  }
+
   /* Gradient text */
   .gradient-text {
     background-clip: text;
