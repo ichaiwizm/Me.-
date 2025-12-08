@@ -1,3 +1,5 @@
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { useState } from "react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +12,13 @@ type HeaderProps = {
 };
 
 export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderProps) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 50);
+  });
+
   const handleNavClick = (e: React.MouseEvent, page: PageId) => {
     e.preventDefault();
     onNavigate?.(page);
@@ -24,57 +33,128 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b bg-background/80 backdrop-blur-sm">
+    <motion.header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled
+          ? "py-2 bg-background/90 backdrop-blur-xl border-b border-foreground/10 shadow-sm"
+          : "py-4 bg-transparent backdrop-blur-none border-b border-transparent"
+      }`}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+    >
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-12 items-center justify-between">
           {/* Logo / Nom */}
-          <div className="flex flex-col">
+          <motion.div
+            className="flex flex-col"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
             <button
               onClick={(e) => handleNavClick(e, "accueil")}
-              className="text-2xl font-bold tracking-tight hover:opacity-80 transition-opacity text-left cursor-pointer"
+              className="group text-left cursor-pointer"
             >
-              Ichai Wizman
-            </button>
-            <span className="text-xs text-foreground/60 tracking-wide">
-              Ingénieur Full-Stack
-            </span>
-          </div>
-
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={(e) => handleNavClick(e, item.id)}
-                className={`text-sm font-medium transition-colors cursor-pointer ${
-                  currentPage === item.id
-                    ? "text-foreground font-semibold border-b-2 border-foreground pb-1"
-                    : "text-foreground/60 hover:text-foreground"
+              <span
+                className={`font-bold tracking-tight transition-all duration-300 ${
+                  isScrolled ? "text-xl" : "text-2xl"
                 }`}
               >
-                {item.label}
-              </button>
-            ))}
+                <span className="relative">
+                  Ichai
+                  <motion.span
+                    className="absolute -bottom-0.5 left-0 h-0.5 bg-primary"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: "100%" }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </span>{" "}
+                <span className="text-primary">Wizman</span>
+              </span>
+            </button>
+            <motion.span
+              className="text-xs text-foreground/60 tracking-wide"
+              animate={{
+                opacity: isScrolled ? 0 : 1,
+                height: isScrolled ? 0 : "auto",
+                marginTop: isScrolled ? 0 : 2,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              Ingénieur Full-Stack
+            </motion.span>
+          </motion.div>
+
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => {
+              const isActive = currentPage === item.id;
+
+              return (
+                <motion.button
+                  key={item.id}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleNavClick(e, item.id)}
+                  className={`relative px-4 py-2 text-sm font-medium cursor-pointer transition-colors ${
+                    isActive
+                      ? "text-foreground"
+                      : "text-foreground/60 hover:text-foreground"
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  {item.label}
+
+                  {/* Active indicator with layoutId for smooth transitions */}
+                  {isActive && (
+                    <motion.div
+                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full"
+                      layoutId="nav-indicator"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+
+                  {/* Hover underline for non-active items */}
+                  {!isActive && (
+                    <motion.div
+                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-foreground/30 rounded-full origin-left"
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                    />
+                  )}
+                </motion.button>
+              );
+            })}
           </nav>
 
           {/* Actions à droite */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             {onReset && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onReset}
-                aria-label="Tout réinitialiser"
-                title="Tout réinitialiser"
-                className="text-foreground/60 hover:text-foreground"
+              <motion.div
+                whileHover={{ rotate: -180 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
               >
-                <RotateCcw className="h-4 w-4" />
-              </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={onReset}
+                  aria-label="Tout réinitialiser"
+                  title="Tout réinitialiser"
+                  className="text-foreground/60 hover:text-foreground hover:bg-foreground/5"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                </Button>
+              </motion.div>
             )}
             <ThemeSwitcher />
           </div>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

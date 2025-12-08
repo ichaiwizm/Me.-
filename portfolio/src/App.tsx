@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { ChatPreview } from "@/components/chat/ChatPreview";
 import { PromptBar } from "@/components/chat/PromptBar";
@@ -13,6 +14,33 @@ import { useChatState } from "@/lib/hooks/useChatState";
 import { isValidThemeId } from "@/theme/config/theme-registry";
 import type { ExecutorContext, PageId } from "@/lib/commands/types";
 import { HomePage, ProjectsPage, SkillsPage, AboutPage, ContactPage } from "@/components/pages";
+
+// Page transition variants
+const pageTransition = {
+  initial: {
+    opacity: 0,
+    y: 20,
+    filter: "blur(8px)",
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    filter: "blur(4px)",
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut",
+    },
+  },
+};
 
 function App() {
   const [expanded, setExpanded] = useState(false);
@@ -67,22 +95,29 @@ function App() {
     return () => window.removeEventListener("app:navigate", handler as any);
   }, [ctx]);
 
-  // Render la page actuelle
+  // Render la page actuelle with animation wrapper
   const renderPage = () => {
-    switch (currentPage) {
-      case "accueil":
-        return <HomePage />;
-      case "projets":
-        return <ProjectsPage />;
-      case "competences":
-        return <SkillsPage />;
-      case "a-propos":
-        return <AboutPage />;
-      case "contact":
-        return <ContactPage />;
-      default:
-        return <HomePage />;
-    }
+    const pages: Record<PageId, React.ReactNode> = {
+      accueil: <HomePage />,
+      projets: <ProjectsPage />,
+      competences: <SkillsPage />,
+      "a-propos": <AboutPage />,
+      contact: <ContactPage />,
+    };
+
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentPage}
+          variants={pageTransition}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          {pages[currentPage] || <HomePage />}
+        </motion.div>
+      </AnimatePresence>
+    );
   };
 
   return (
