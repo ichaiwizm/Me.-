@@ -325,33 +325,6 @@ export function SkillsPage() {
           </p>
         </FadeInView>
 
-        {/* Legend */}
-        <motion.div
-          className="mb-12 flex flex-wrap items-center gap-4 p-4 rounded-xl glass"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <span className="text-tiny text-foreground/50 font-medium">
-            Niveaux :
-          </span>
-          <div className="flex flex-wrap gap-3">
-            {[
-              { label: "Expert", level: 90, color: "bg-[var(--color-level-expert)]" },
-              { label: "Avancé", level: 75, color: "bg-[var(--color-level-advanced)]" },
-              { label: "Intermédiaire", level: 60, color: "bg-[var(--color-level-intermediate)]" },
-              { label: "Fondamental", level: 40, color: "bg-[var(--color-level-fundamental)]" },
-            ].map((item) => (
-              <div key={item.label} className="flex items-center gap-2">
-                <div className={`w-2.5 h-2.5 rounded-full ${item.color}`} />
-                <span className="text-tiny text-foreground/70">
-                  {item.label} ({item.level}%+)
-                </span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
         {/* Skills by Category */}
         <div className="space-y-16">
           {Object.entries(byCategory).map(([category, skills], index) => (
