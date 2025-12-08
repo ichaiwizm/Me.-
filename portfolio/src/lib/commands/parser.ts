@@ -30,40 +30,34 @@ export function validateWindowCommand(cmd: any): { valid: boolean; error?: strin
   return { valid: true };
 }
 
-function getCommandDisplayText(cmd: Command): string {
+// Returns a marker that ChatPreview can parse: [[CMD:type:detail]]
+function getCommandMarker(cmd: Command): string {
   switch (cmd.type) {
     case "create_window":
-      return `✨ Fenêtre créée: "${cmd.window.title}"`;
+      return `[[CMD:create_window:${cmd.window.title}]]`;
     case "resize_window":
-      return `📐 Fenêtre redimensionnée: ${cmd.key}`;
+      return `[[CMD:resize_window:${cmd.key}]]`;
     case "change_theme":
-      return `🎨 Thème changé: ${cmd.theme}`;
+      return `[[CMD:change_theme:${cmd.theme}]]`;
     case "change_background":
-      return `🖼️ Background modifié`;
+      return `[[CMD:change_background:]]`;
     case "show_toast":
-      return `💬 ${cmd.message}`;
+      // Toast messages should be hidden from chat - the toast itself shows
+      return "";
     case "close_window":
-      return `❌ Fenêtre fermée: ${cmd.key}`;
+      return `[[CMD:close_window:${cmd.key}]]`;
     case "modify_window":
-      return `🔧 Fenêtre modifiée: ${cmd.key}`;
+      return `[[CMD:modify_window:${cmd.key}]]`;
     case "display_image":
-      return `🖼️ Image affichée: ${cmd.title || cmd.imageId || "image"}`;
+      return `[[CMD:display_image:${cmd.title || cmd.imageId || "image"}]]`;
     case "display_gallery":
-      return `🖼️ Galerie affichée`;
+      return `[[CMD:display_gallery:${cmd.title || "Galerie"}]]`;
     case "set_ui":
-      return `⚙️ Interface mise à jour`;
-    case "navigate": {
-      const pageNames: Record<string, string> = {
-        accueil: "Accueil",
-        projets: "Projets",
-        competences: "Compétences",
-        "a-propos": "À propos",
-        contact: "Contact",
-      };
-      return `➡️ Navigation vers ${pageNames[cmd.page] || cmd.page}`;
-    }
+      return ""; // UI changes are silent
+    case "navigate":
+      return `[[CMD:navigate:${cmd.page}]]`;
     default:
-      return `✓ Commande exécutée`;
+      return "";
   }
 }
 
@@ -129,7 +123,8 @@ export function parseWindowCommands(content: string, currentWindowCount = 0): Pa
 
       // Command is valid, add it
       commands.push(parsed as Command);
-      displayContent = displayContent.replace(match[0], `_${getCommandDisplayText(parsed as Command)}_`);
+      const marker = getCommandMarker(parsed as Command);
+      displayContent = displayContent.replace(match[0], marker);
     } catch (e) {
       errors.push(`JSON invalide (commande ${index + 1})`);
     }

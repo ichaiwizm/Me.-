@@ -1,29 +1,51 @@
-import { useEffect, useRef } from "react"
-import { replaceWindowCommandsInText } from "@/lib/commands/parser"
-import type { PageId } from "@/lib/commands/types"
-import type { ReactNode } from "react"
+import { useEffect, useRef, Fragment } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { replaceWindowCommandsInText } from "@/lib/commands/parser";
+import { CommandChip, NavigationCard } from "./ChatElements";
+import type { PageId } from "@/lib/commands/types";
+import type { ReactNode } from "react";
 
-type ChatMessage = { role: "user" | "assistant"; content: string }
+type ChatMessage = { role: "user" | "assistant"; content: string };
 
 type ChatPreviewProps = {
-  messages: ChatMessage[]
-  expanded: boolean
-  onToggle: () => void
-  loading?: boolean
+  messages: ChatMessage[];
+  expanded: boolean;
+  onToggle: () => void;
+  loading?: boolean;
+};
+
+// Parse command markers [[CMD:type:detail]] into structured data
+type CommandMarker = { type: string; detail: string };
+
+function extractCommandMarkers(content: string): { text: string; commands: CommandMarker[] } {
+  const commands: CommandMarker[] = [];
+  const markerRegex = /\[\[CMD:([^:]+):([^\]]*)\]\]/g;
+  let text = content;
+  let match;
+
+  while ((match = markerRegex.exec(content))) {
+    commands.push({ type: match[1], detail: match[2] });
+  }
+
+  // Remove markers from text
+  text = text.replace(markerRegex, "").trim();
+
+  return { text, commands };
 }
 
-function formatContentToNodes(input: string): ReactNode[] {
+// Parse navigation links [label](page) and return structured nodes
+function parseContent(input: string): ReactNode[] {
   try {
-    // Validate input
-    if (!input || typeof input !== "string") {
-      return [];
-    }
+    if (!input || typeof input !== "string") return [];
 
-    // First, replace window commands with titles/errors
+    // First, replace window commands with markers
     let content = replaceWindowCommandsInText(input);
 
-    // Then soften markdown: remove headers, bold, inline code, heavy lists
-    content = content
+    // Extract command markers
+    const { text, commands } = extractCommandMarkers(content);
+
+    // Soften markdown
+    let cleanText = text
       .replace(/^#+\s+/gm, "")
       .replace(/\*\*(.*?)\*\*/g, "$1")
       .replace(/`([^`]+)`/g, "$1")
@@ -31,104 +53,184 @@ function formatContentToNodes(input: string): ReactNode[] {
       .replace(/\n{3,}/g, "\n\n")
       .trim();
 
-    // Convert markdown links [label](projets) to clickable buttons that navigate
+    // Parse markdown links [label](page) into navigation cards
     const parts: ReactNode[] = [];
     const linkRe = /\[([^\]]+)\]\((accueil|projets|competences|a-propos|contact)\)/g;
     let lastIndex = 0;
-    let match: RegExpExecArray | null;
-    while ((match = linkRe.exec(content))) {
-      const [full, label, page] = match;
-      if (match.index > lastIndex) parts.push(content.slice(lastIndex, match.index));
-      const pageId = page as PageId;
-      parts.push(
-        <button
-          key={`${page}-${match.index}`}
-          className="underline underline-offset-2 text-primary hover:opacity-80 cursor-pointer"
-          onClick={() => {
-            window.dispatchEvent(new CustomEvent("app:navigate", { detail: { page: pageId } }));
-          }}
-        >
-          {label}
-        </button>
-      );
-      lastIndex = match.index + full.length;
+    let linkMatch: RegExpExecArray | null;
+    const navigationCards: { label: string; page: PageId }[] = [];
+
+    while ((linkMatch = linkRe.exec(cleanText))) {
+      const [full, label, page] = linkMatch;
+      if (linkMatch.index > lastIndex) {
+        parts.push(cleanText.slice(lastIndex, linkMatch.index));
+      }
+      // Collect navigation links to render as cards at the end
+      navigationCards.push({ label, page: page as PageId });
+      lastIndex = linkMatch.index + full.length;
     }
-    if (lastIndex < content.length) parts.push(content.slice(lastIndex));
-    return parts.length ? parts : [content];
+
+    if (lastIndex < cleanText.length) {
+      parts.push(cleanText.slice(lastIndex));
+    }
+
+    // Build final output with text, then command chips, then navigation cards
+    const result: ReactNode[] = [];
+
+    // Add text content
+    if (parts.length > 0) {
+      result.push(
+        <span key="text" className="block">
+          {parts.map((p, i) => (typeof p === "string" ? <Fragment key={i}>{p}</Fragment> : p))}
+        </span>
+      );
+    }
+
+    // Add command chips (compact row)
+    if (commands.length > 0) {
+      result.push(
+        <div key="commands" className="flex flex-wrap gap-1.5 mt-2">
+          {commands.map((cmd, i) => (
+            <CommandChip key={i} commandType={cmd.type} detail={cmd.detail || undefined} />
+          ))}
+        </div>
+      );
+    }
+
+    // Add navigation cards
+    if (navigationCards.length > 0) {
+      result.push(
+        <div key="nav" className="flex flex-col gap-1.5 mt-2.5">
+          {navigationCards.map((nav, i) => (
+            <NavigationCard key={i} page={nav.page} label={nav.label} />
+          ))}
+        </div>
+      );
+    }
+
+    return result.length ? result : [cleanText];
   } catch (error) {
-    console.error("Error formatting content:", error);
-    // Return original input as fallback
+    console.error("Error parsing content:", error);
     return [input || ""];
   }
 }
 
 export function ChatPreview({ messages, expanded, onToggle, loading }: ChatPreviewProps) {
-  const endRef = useRef<HTMLDivElement | null>(null)
+  const endRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ block: "end", behavior: "smooth" })
-  }, [messages.length, expanded])
+    endRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
+  }, [messages.length, expanded]);
 
   return (
     <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-30 w-full max-w-xl px-4">
-      <div className="relative rounded-xl border bg-background/50 p-2 shadow-sm backdrop-blur-sm text-sm text-foreground/80">
-        <div className={expanded ? "max-h-48 overflow-y-auto pr-2" : "max-h-20 overflow-y-auto pr-2"} aria-live="polite">
-          <div className="flex flex-col gap-1.5 leading-snug">
+      <motion.div
+        layout
+        className="relative rounded-2xl border border-foreground/10 bg-background/70
+                   shadow-lg shadow-black/5 backdrop-blur-md overflow-hidden"
+      >
+        {/* Chat content */}
+        <div
+          ref={containerRef}
+          className={`${expanded ? "max-h-72" : "max-h-28"} overflow-y-auto px-4 py-3
+                      transition-[max-height] duration-300 ease-out`}
+          aria-live="polite"
+        >
+          <div className="flex flex-col gap-4">
+            {/* Welcome message */}
             {messages.length === 0 && (
-              <p className="italic text-foreground/60">
-                Bonjour ! Je suis Ichai, ingénieur full-stack.
-                Posez-moi des questions sur mes projets, compétences ou expérience !
-              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-foreground/60 text-sm leading-relaxed"
+              >
+                <p>Bonjour ! Je suis l'assistant d'Ichai, ingénieur full-stack.</p>
+                <p className="mt-1 text-foreground/40">
+                  Pose-moi des questions sur ses projets, compétences ou parcours.
+                </p>
+              </motion.div>
             )}
-            {messages.map((m, i) => {
-              const isUser = m.role === "user"
-              return (
-                <div key={i} className={isUser ? "flex justify-end" : "flex justify-start"}>
-                  <p
-                    className={
-                      (isUser
-                        ? "border-l-2 border-primary/60 text-foreground"
-                        : "border-l-2 border-foreground/20 text-foreground/80") +
-                      " max-w-[85%] whitespace-pre-wrap pl-3"
-                    }
-                  >
-                    {formatContentToNodes(m.content).map((node, idx) => (
-                      typeof node === "string" ? <span key={idx}>{node}</span> : node
-                    ))}
-                  </p>
-                </div>
-              )
-            })}
 
+            {/* Messages */}
+            <AnimatePresence mode="popLayout">
+              {messages.map((m, i) => {
+                const isUser = m.role === "user";
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2, delay: i * 0.03 }}
+                    className={`flex ${isUser ? "justify-end" : "justify-start"}`}
+                  >
+                    <div
+                      className={`max-w-[90%] text-sm leading-relaxed whitespace-pre-wrap
+                        ${isUser
+                          ? "bg-primary/10 text-foreground rounded-2xl rounded-br-md px-3.5 py-2"
+                          : "text-foreground/85"
+                        }`}
+                    >
+                      {isUser ? (
+                        m.content
+                      ) : (
+                        parseContent(m.content)
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+
+            {/* Loading indicator */}
             {loading && (
-              <div className="flex justify-start">
-                <div className="border-l-2 border-foreground/20 pl-3">
-                  <div className="flex items-center gap-1.5">
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-foreground/50 animate-bounce [animation-delay:-0.3s]" />
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-foreground/50 animate-bounce [animation-delay:-0.15s]" />
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-foreground/50 animate-bounce" />
-                  </div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex justify-start"
+              >
+                <div className="flex items-center gap-1.5 px-3 py-2">
+                  <motion.span
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+                    className="w-1.5 h-1.5 rounded-full bg-primary/60"
+                  />
+                  <motion.span
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 0.6, repeat: Infinity, delay: 0.15 }}
+                    className="w-1.5 h-1.5 rounded-full bg-primary/60"
+                  />
+                  <motion.span
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 0.6, repeat: Infinity, delay: 0.3 }}
+                    className="w-1.5 h-1.5 rounded-full bg-primary/60"
+                  />
                 </div>
-              </div>
+              </motion.div>
             )}
 
             <div ref={endRef} />
           </div>
         </div>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-background/70 via-background/30 to-transparent" />
-      </div>
-      <div className="mt-1 flex justify-end px-1">
+
+        {/* Fade gradient at bottom */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8
+                        bg-gradient-to-t from-background/80 to-transparent" />
+      </motion.div>
+
+      {/* Toggle button */}
+      <div className="mt-1.5 flex justify-end px-1">
         <button
           type="button"
           onClick={onToggle}
-          className="text-[11px] text-foreground/60 hover:text-foreground/80 underline-offset-2 hover:underline cursor-pointer"
+          className="text-[11px] text-foreground/50 hover:text-foreground/70
+                     transition-colors cursor-pointer"
           aria-label={expanded ? "Réduire" : "Afficher plus"}
         >
           {expanded ? "Réduire" : "Afficher plus"}
         </button>
       </div>
     </div>
-  )
+  );
 }
-
-

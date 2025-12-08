@@ -10,25 +10,22 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         break;
       case "resize_window":
         ctx.resizeWindow(cmd.key, cmd.width, cmd.height);
-        toast.success("Fenêtre redimensionnée");
         break;
       case "change_theme":
         ctx.changeTheme(cmd.theme);
-        toast.success(`Thème changé: ${cmd.theme}`);
         break;
       case "change_background":
         let bgStyle: string;
         if (cmd.style === "gradient") {
           bgStyle = `linear-gradient(135deg, ${cmd.colors!.join(", ")})`;
         } else if (cmd.style === "image") {
-          const imageUrl = cmd.imageUrl || `/images/${cmd.imageId}.jpg`;
+          const imageUrl = cmd.imageUrl || `/images/${cmd.imageId}.png`;
           const imageStyleProps = cmd.imageStyle || "cover";
           bgStyle = `url('${imageUrl}') ${imageStyleProps}`;
         } else {
           bgStyle = cmd.color!;
         }
         ctx.setBackground(bgStyle);
-        toast.success("Background modifié");
         break;
       case "show_toast":
         const variant = cmd.variant || "info";
@@ -38,11 +35,9 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         break;
       case "close_window":
         ctx.closeWindow(cmd.key);
-        toast.success("Fenêtre fermée");
         break;
       case "modify_window":
         ctx.modifyWindow(cmd.key, cmd.contentHtml);
-        toast.success("Fenêtre modifiée");
         break;
       case "set_ui":
         if (cmd.chatExpanded !== undefined) {
@@ -50,7 +45,7 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         }
         break;
       case "display_image":
-        const imgUrl = cmd.imageUrl || `/images/${cmd.imageId}.jpg`;
+        const imgUrl = cmd.imageUrl || `/images/${cmd.imageId}.png`;
         const transforms = cmd.transforms || "";
         const imgTitle = cmd.title || "Image";
 
@@ -70,7 +65,6 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
           const imgStyle = `url('${imgUrl}') center/cover`;
           ctx.setBackground(imgStyle);
         }
-        toast.success("Image affichée");
         break;
       case "display_gallery": {
         // Build a simple responsive gallery from AVAILABLE_IMAGES
@@ -89,7 +83,7 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         const limited = typeof cmd.limit === "number" ? imgs.slice(0, cmd.limit) : imgs;
         const grid = limited
           .map((i) => {
-            const url = `/images/${i.id}.jpg`;
+            const url = `/images/${i.id}.png`;
             return `<figure style=\"margin:0;\"><img src=\"${url}\" alt=\"${i.name}\" style=\"width:100%;height:160px;object-fit:cover;border-radius:8px;\" /><figcaption style=\"margin-top:6px;font-size:11px;color:#bbb;\">${i.name}</figcaption></figure>`;
           })
           .join("");
@@ -106,19 +100,10 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
           width: cmd.width || 720,
           height: cmd.height || 520,
         });
-        toast.success("Galerie affichée");
         break;
       }
       case "navigate":
         ctx.navigateToPage(cmd.page);
-        const pageNames: Record<string, string> = {
-          accueil: "Accueil",
-          projets: "Projets",
-          competences: "Compétences",
-          "a-propos": "À propos",
-          contact: "Contact",
-        };
-        toast.success(`Navigation vers ${pageNames[cmd.page]}`);
         break;
     }
   } catch (error) {
