@@ -1,7 +1,6 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { PERSONAL_INFO } from "@/data/personal-info";
-import { ChevronDown } from "lucide-react";
 
 // Typing effect hook
 function useTypingEffect(text: string, speed: number = 80, delay: number = 500) {
@@ -63,15 +62,6 @@ function FloatingShape({
 }
 
 export function HomePage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
   const { displayedText, isComplete } = useTypingEffect(PERSONAL_INFO.fullName, 100, 800);
 
   const titleVariants = {
@@ -88,10 +78,7 @@ export function HomePage() {
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="relative h-[calc(100vh-4rem)] flex items-center justify-center px-8 overflow-hidden"
-    >
+    <div className="relative h-[calc(100vh-4rem)] flex items-center justify-center px-8 overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Gradient orbs */}
@@ -111,7 +98,6 @@ export function HomePage() {
           className="absolute top-20 right-[15%] w-24 h-24 border border-foreground/10 rounded-2xl"
           animate={{ rotate: 360 }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          style={{ y }}
         />
         <motion.div
           className="absolute bottom-32 left-[10%] w-16 h-16 border border-primary/20 rounded-full"
@@ -143,10 +129,7 @@ export function HomePage() {
       </div>
 
       {/* Main content */}
-      <motion.div
-        className="relative max-w-4xl mx-auto text-center space-y-8"
-        style={{ opacity }}
-      >
+      <motion.div className="relative max-w-4xl mx-auto text-center space-y-8">
         {/* Name with typing effect */}
         <motion.h1
           className="text-monumental tracking-tight relative"
@@ -209,24 +192,6 @@ export function HomePage() {
         >
           {PERSONAL_INFO.bio.short}
         </motion.p>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2.5, duration: 0.5 }}
-      >
-        <span className="text-tiny text-foreground/40 uppercase tracking-widest">
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="w-5 h-5 text-foreground/40" />
-        </motion.div>
       </motion.div>
     </div>
   );
