@@ -76,8 +76,8 @@ export function ChatPreview({ messages, expanded, onToggle, loading }: ChatPrevi
           <div className="flex flex-col gap-1.5 leading-snug">
             {messages.length === 0 && (
               <p className="italic text-foreground/60">
-                Bonjour ! Je suis Levana, développeuse full-stack.
-                Posez-moi des questions sur mes projets, compétences ou expérience ! 👋
+                Bonjour ! Je suis Ichai, ingénieur full-stack.
+                Posez-moi des questions sur mes projets, compétences ou expérience !
               </p>
             )}
             {messages.map((m, i) => {

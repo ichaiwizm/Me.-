@@ -1,5 +1,5 @@
 /**
- * Constantes de couleurs et styles pour le portfolio de Levana
+ * Constantes de couleurs et styles pour le portfolio de Ichai
  */
 
 export const BRAND_COLORS = {

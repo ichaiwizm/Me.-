@@ -27,14 +27,9 @@ export type ExecutorContext = {
 };
 
 export const AVAILABLE_IMAGES = [
-  { id: "paris-proposal", name: "Demande en mariage - Levana & Haïm à Paris", category: "personal" },
-  { id: "nephew-yinone", name: "Avec Yinone, mon neveu", category: "personal" },
-  { id: "ichai-wedding-djellaba", name: "Mariage d'Ichai - Tenue djellaba avec Tsipora", category: "personal" },
-  { id: "childhood-yonathan", name: "Souvenirs d'enfance avec Yonathan", category: "personal" },
-  { id: "childhood-tata-johanna", name: "Avec Tata Johanna", category: "personal" },
-  { id: "kimono-chez-nanou", name: "Kimono japonais chez Nanou", category: "personal" },
-  { id: "bat-mitzvah-speech", name: "Discours de Bat Mitzvah", category: "personal" },
-  { id: "mountain-funicular", name: "Funiculaire à la montagne", category: "personal" },
-  { id: "childhood-ichai-siblings", name: "Câlin avec Ichai", category: "personal" },
-  { id: "venice-mood", name: "À Venise", category: "personal" },
+  { id: "family-event", name: "Moment en famille", category: "personal" },
+  { id: "rooftop-night", name: "Soirée sur le toit", category: "personal" },
+  { id: "park-moment", name: "Balade au parc", category: "personal" },
+  { id: "aquarium-fun", name: "Fun à l'aquarium", category: "personal" },
+  { id: "paris-champs-elysees", name: "Champs-Élysées, Paris", category: "personal" },
 ] as const;

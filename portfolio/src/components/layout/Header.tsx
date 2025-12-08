@@ -33,10 +33,10 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
               onClick={(e) => handleNavClick(e, "accueil")}
               className="text-2xl font-bold tracking-tight hover:opacity-80 transition-opacity text-left cursor-pointer"
             >
-              Levana Wizman
+              Ichai Wizman
             </button>
             <span className="text-xs text-foreground/60 tracking-wide">
-              Développeuse Full-Stack
+              Ingénieur Full-Stack
             </span>
           </div>
 

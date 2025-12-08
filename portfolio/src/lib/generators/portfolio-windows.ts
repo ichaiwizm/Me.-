@@ -1,5 +1,5 @@
 /**
- * Générateurs de fenêtres HTML pour le portfolio de Levana
+ * Générateurs de fenêtres HTML pour le portfolio de Ichai
  */
 
 import { PERSONAL_INFO } from "@/data/personal-info";
@@ -51,32 +51,20 @@ export function generateCVWindow() {
       <div style='background:white;color:#1f2937;padding:35px;border-radius:12px;box-shadow:0 20px 40px rgba(0,0,0,0.2);'>
         <div style='margin-bottom:28px;'>
           <h2 style='color:#8b5cf6;font-size:22px;margin-bottom:15px;border-bottom:3px solid #8b5cf6;padding-bottom:8px;font-weight:700;'>Formation</h2>
-          <div style='margin-bottom:12px;'>
-            <p style='font-weight:600;color:#1f2937;margin-bottom:4px;'>BTS SIO option SLAM - ORT Montreuil</p>
-            <p style='color:#6b7280;font-size:14px;'>2024-2026 (en cours) • Alternance chez BCDemarches</p>
-          </div>
-          <div style='margin-bottom:12px;'>
-            <p style='font-weight:600;color:#1f2937;margin-bottom:4px;'>L1 MIASHS - Université Paris Cité</p>
-            <p style='color:#6b7280;font-size:14px;'>2022-2024 • Maths & Informatique</p>
-          </div>
           <div>
-            <p style='font-weight:600;color:#1f2937;margin-bottom:4px;'>Baccalauréat - Lycée NR HATORAH</p>
-            <p style='color:#6b7280;font-size:14px;'>2021 • Mention Bien • Spé. Maths & Économie</p>
+            <p style='font-weight:600;color:#1f2937;margin-bottom:4px;'>WebSchool - Formation Développement Web Full-Stack</p>
+            <p style='color:#6b7280;font-size:14px;'>2019 • Bases solides front/back, premières applications</p>
           </div>
         </div>
         <div style='margin-bottom:28px;'>
           <h2 style='color:#8b5cf6;font-size:22px;margin-bottom:15px;border-bottom:3px solid #8b5cf6;padding-bottom:8px;font-weight:700;'>Expérience</h2>
           <div style='margin-bottom:12px;'>
-            <p style='font-weight:600;color:#1f2937;margin-bottom:4px;'>BCDemarches - Développeuse en alternance</p>
-            <p style='color:#6b7280;font-size:14px;'>Sept. 2024 - Présent • React, Node.js, MySQL</p>
-          </div>
-          <div style='margin-bottom:12px;'>
-            <p style='font-weight:600;color:#1f2937;margin-bottom:4px;'>ABC Liv - Secrétaire administrative</p>
-            <p style='color:#6b7280;font-size:14px;'>Mai-Août 2024 • Gestion administrative</p>
+            <p style='font-weight:600;color:#1f2937;margin-bottom:4px;'>PhoneGS - Ingénieur Logiciel Full-Stack</p>
+            <p style='color:#6b7280;font-size:14px;'>2023 - Présent • React, Node.js, Laravel, Asterisk, Docker</p>
           </div>
           <div>
-            <p style='font-weight:600;color:#1f2937;margin-bottom:4px;'>Association BZH YOMYOM - Trésorière bénévole</p>
-            <p style='color:#6b7280;font-size:14px;'>Depuis 2020 • Gestion financière</p>
+            <p style='font-weight:600;color:#1f2937;margin-bottom:4px;'>Freelance - Développeur Full-Stack</p>
+            <p style='color:#6b7280;font-size:14px;'>2020 - 2023 • Sites vitrines, SaaS, automatisations</p>
           </div>
         </div>
         <div>
@@ -98,13 +86,13 @@ export function generateContactWindow() {
         <input type='email' placeholder='Votre email' style='padding:14px;border:2px solid #e5e7eb;border-radius:10px;font-size:16px;transition:border-color 0.3s;' onfocus='this.style.borderColor="#8b5cf6"' onblur='this.style.borderColor="#e5e7eb"' required />
         <textarea placeholder='Votre message' rows='6' style='padding:14px;border:2px solid #e5e7eb;border-radius:10px;font-size:16px;resize:vertical;transition:border-color 0.3s;' onfocus='this.style.borderColor="#8b5cf6"' onblur='this.style.borderColor="#e5e7eb"' required></textarea>
         <button type='submit' style='padding:16px;background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:white;border:none;border-radius:10px;font-size:17px;font-weight:700;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 12px rgba(139,92,246,0.3);' onmouseover='this.style.transform="translateY(-2px)";this.style.boxShadow="0 6px 20px rgba(139,92,246,0.4)"' onmouseout='this.style.transform="translateY(0)";this.style.boxShadow="0 4px 12px rgba(139,92,246,0.3)"'>
-          Envoyer le message ✉️
+          Envoyer le message
         </button>
       </form>
       <div style='margin-top:30px;padding:25px;background:linear-gradient(135deg,#f9fafb,#f3f4f6);border-radius:12px;border-left:4px solid #8b5cf6;'>
         <h3 style='font-size:18px;margin-bottom:18px;color:#1f2937;font-weight:700;'>Coordonnées directes</h3>
-        <p style='margin-bottom:12px;color:#374151;font-size:15px;'><strong style='color:#8b5cf6;'>✉️ Email :</strong> ${PERSONAL_INFO.contact.email}</p>
-        <p style='color:#374151;font-size:15px;'><strong style='color:#8b5cf6;'>📞 Téléphone :</strong> ${PERSONAL_INFO.contact.phone}</p>
+        <p style='margin-bottom:12px;color:#374151;font-size:15px;'><strong style='color:#8b5cf6;'>Email :</strong> ${PERSONAL_INFO.contact.email}</p>
+        <p style='color:#374151;font-size:15px;'><strong style='color:#8b5cf6;'>Téléphone :</strong> ${PERSONAL_INFO.contact.phone}</p>
       </div>
     </div>
   `;
