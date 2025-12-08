@@ -1,11 +1,12 @@
 import { PERSONAL_INFO } from "@/data/personal-info";
 import { EXPERIENCES } from "@/data/experience";
 
-const typeLabels = {
+const typeLabels: Record<string, string> = {
   alternance: "Alternance",
   emploi: "Emploi",
   stage: "Stage",
   benevole: "Bénévolat",
+  freelance: "Freelance",
 };
 
 export function AboutPage() {
@@ -22,7 +23,7 @@ export function AboutPage() {
         <div className="mb-20">
           <h1 className="text-monumental tracking-tight mb-8">À propos</h1>
           <p className="text-headline text-foreground/70 leading-snug max-w-2xl">
-            Développeuse passionnée qui transforme la curiosité en code
+            Builder obsessionnel le jour, bon vivant la nuit
           </p>
         </div>
 
@@ -31,18 +32,20 @@ export function AboutPage() {
           <div className="border-l-2 border-foreground/20 pl-6">
             <h2 className="text-small-caps text-foreground/50 mb-3">Mon parcours</h2>
             <p className="text-body-large text-foreground/70 leading-relaxed">
-              Actuellement en alternance chez <strong>BCDemarches</strong> et étudiante en BTS SIO SLAM
-              à l'école <strong>ORT Montreuil</strong>. Je combine apprentissage théorique et expérience
-              pratique pour créer des applications web modernes et performantes.
+              Ingénieur logiciel full-stack chez <strong>PhoneGS</strong> à Jérusalem, je conçois
+              et développe des applications complètes — du front au backend en passant par l'infra.
+              Après plusieurs années en freelance entre Paris et Israël, j'ai acquis une vision 360°
+              du développement produit et une capacité à livrer vite et bien.
             </p>
           </div>
 
           <div className="border-l-2 border-foreground/20 pl-6">
             <h2 className="text-small-caps text-foreground/50 mb-3">Ma philosophie</h2>
             <p className="text-body-large text-foreground/70 leading-relaxed">
-              Mon parcours atypique — incluant une année de projet humanitaire et diverses
-              expériences — m'a appris la persévérance, l'adaptabilité et la valeur du travail
-              d'équipe. Des qualités que j'applique quotidiennement dans le développement.
+              Je suis passionné par l'IA et l'automatisation — je les intègre dans chaque projet
+              pour aller plus vite et livrer mieux. Mais la vie c'est pas que du code : famille,
+              voyages, pizza sur les toits avec vue sur la ville. C'est cet équilibre qui me garde
+              créatif. Quand je code pas, je code quand même — je suis lancé et je m'arrête pas.
             </p>
           </div>
         </div>

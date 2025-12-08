@@ -1,5 +1,5 @@
 /**
- * Projets de Levana Wizman
+ * Projets de Ichai Wizman
  */
 
 export type Project = {
@@ -7,7 +7,7 @@ export type Project = {
   title: string;
   description: string;
   technologies: string[];
-  category: "formation" | "personnel" | "alternance" | "academique";
+  category: "formation" | "personnel" | "alternance" | "academique" | "professionnel";
   date: string;
   imageId?: string;
   featured: boolean;
@@ -18,80 +18,65 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "mutuelles-v4",
+    title: "Mutuelles_v4 - Application Desktop d'Automatisation",
+    description: "Application desktop complète automatisant les plateformes d'assurance (mutuelles). Inclut workflows automatisés, gestion des dossiers, scraping intelligent et orchestration Playwright.",
+    technologies: ["Electron", "React", "Vite", "Playwright", "SQLite", "Node.js"],
+    category: "personnel",
+    date: "2024",
+    featured: true,
+    highlights: [
+      "Interface desktop solide avec Electron",
+      "Automatisation avancée via Playwright",
+      "Gestion intelligente des dossiers",
+      "Performance et fiabilité optimisées",
+    ],
+  },
+  {
+    id: "shoot",
+    title: "Shoot - Plateforme pour Photographes",
+    description: "Écosystème complet pour photographes professionnels : back-office admin puissant, dashboard client full-features, site vitrine personnalisable. Architecture robuste et UX clean.",
+    technologies: ["React", "Node.js", "Cloudflare Workers", "Neon DB"],
+    category: "personnel",
+    date: "2024",
+    featured: true,
+    liveUrl: "https://shoot.ichaiwizlol.workers.dev/",
+    highlights: [
+      "Back-office admin complet",
+      "Dashboard client riche en fonctionnalités",
+      "Site vitrine personnalisable",
+      "Automatisations et performances optimisées",
+    ],
+  },
+  {
+    id: "ai-blog",
+    title: "AI Blog - Apprentissage IA pour Développeurs",
+    description: "Blog éducatif pour développeurs : apprendre à maîtriser l'IA et booster son niveau grâce aux bons outils et bonnes pratiques. Contenu pédagogique, moderne et IA-oriented.",
+    technologies: ["Next.js", "Vercel", "React", "TypeScript"],
+    category: "personnel",
+    date: "2024",
+    featured: true,
+    liveUrl: "https://ai-blog-six-ashy.vercel.app/",
+    highlights: [
+      "Contenu pédagogique sur l'IA",
+      "Interface moderne et claire",
+      "Orienté développeurs",
+      "Déployé sur Vercel",
+    ],
+  },
+  {
     id: "portfolio-interactif",
     title: "Portfolio Interactif avec IA",
     description: "Portfolio personnel innovant avec interface conversationnelle alimentée par IA, permettant une navigation intuitive via commandes naturelles. Système de fenêtres flottantes interactives et thèmes dynamiques.",
-    technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "Node.js", "OpenAI API"],
+    technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "Node.js", "Claude API"],
     category: "personnel",
-    date: "2025-01",
+    date: "2025",
     featured: true,
-    imageId: "abstract-1",
     highlights: [
       "Interface conversationnelle avec IA",
       "Système de fenêtres interactives",
-      "7 thèmes personnalisables",
+      "Thèmes personnalisables",
       "Architecture modulaire et évolutive",
-    ],
-  },
-  {
-    id: "app-gestion-bcdemarches",
-    title: "Application de Gestion Interne",
-    description: "Développement d'une application web pour la gestion des processus administratifs de BCDemarches. Interface moderne avec dashboard, gestion de données et génération de rapports.",
-    technologies: ["React", "Node.js", "Express", "MySQL", "Chart.js"],
-    category: "alternance",
-    date: "2024-2025",
-    featured: true,
-    highlights: [
-      "Dashboard analytics en temps réel",
-      "Système CRUD complet",
-      "Authentification sécurisée",
-      "Export de données (PDF, Excel)",
-    ],
-  },
-  {
-    id: "projet-slam-ecommerce",
-    title: "Plateforme E-commerce",
-    description: "Projet BTS : création complète d'une plateforme e-commerce avec gestion de catalogue, panier, commandes et administration. Backend robuste avec API RESTful.",
-    technologies: ["PHP", "JavaScript", "MySQL", "Bootstrap", "jQuery"],
-    category: "formation",
-    date: "2024-11",
-    featured: true,
-    imageId: "city-1",
-    highlights: [
-      "Panier et gestion des commandes",
-      "Panel d'administration complet",
-      "API RESTful documentée",
-      "Sécurité et validation des données",
-    ],
-  },
-  {
-    id: "analyse-donnees-python",
-    title: "Outil d'Analyse de Données",
-    description: "Application Python développée durant la formation MIASHS pour l'analyse statistique et la visualisation de données. Traitement de datasets et génération de graphiques interactifs.",
-    technologies: ["Python", "Pandas", "NumPy", "Matplotlib", "Jupyter"],
-    category: "academique",
-    date: "2023-05",
-    featured: false,
-    highlights: [
-      "Nettoyage et traitement de données",
-      "Analyses statistiques avancées",
-      "Visualisations personnalisées",
-      "Rapports automatisés",
-    ],
-  },
-  {
-    id: "todo-app-react",
-    title: "Application Todo Moderne",
-    description: "Application de gestion de tâches avec React, démontrant les concepts modernes de hooks, context API et local storage. Interface élégante et responsive.",
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Local Storage"],
-    category: "personnel",
-    date: "2024-06",
-    featured: false,
-    highlights: [
-      "Hooks React personnalisés",
-      "Drag & drop pour réorganiser",
-      "Filtres et catégories",
-      "Sauvegarde locale persistante",
     ],
   },
 ];

@@ -15,13 +15,22 @@ export const SUGGESTIONS: Suggestion[] = [
   { text: "Formulaire de contact", category: "Contact" },
 
   // Expérience
-  { text: "Ton expérience chez BCDemarches", category: "Expérience" },
-  { text: "Raconte ton projet humanitaire", category: "Expérience" },
+  { text: "Ton expérience chez PhoneGS", category: "Expérience" },
+  { text: "Tes missions freelance", category: "Expérience" },
+
+  // Projets
+  { text: "Parle-moi de Mutuelles_v4", category: "Projets" },
+  { text: "Présente Shoot", category: "Projets" },
+  { text: "Ton blog sur l'IA", category: "Projets" },
+
+  // Photos perso
+  { text: "Montre-moi tes photos", category: "Photos" },
+  { text: "Photo de Paris", category: "Photos" },
+  { text: "La photo fun à l'aquarium", category: "Photos" },
 
   // Compétences techniques
-  { text: "Démonstration React", category: "Démo" },
   { text: "Visualise tes compétences", category: "Démo" },
-  { text: "Timeline de formation", category: "Démo" },
+  { text: "Tes technos préférées", category: "Démo" },
 
   // Personnalisation
   { text: "Change le thème en mode sombre", category: "Personnalisation" },

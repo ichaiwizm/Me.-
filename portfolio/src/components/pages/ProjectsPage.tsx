@@ -1,11 +1,12 @@
 import { PROJECTS } from "@/data/projects";
 import { useState } from "react";
 
-const categoryLabels = {
+const categoryLabels: Record<string, string> = {
   formation: "Formation",
   personnel: "Personnel",
   alternance: "Alternance",
   academique: "Académique",
+  professionnel: "Professionnel",
 };
 
 export function ProjectsPage() {

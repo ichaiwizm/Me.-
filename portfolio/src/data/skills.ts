@@ -1,9 +1,9 @@
 /**
- * Compétences techniques de Levana Wizman
+ * Compétences techniques de Ichai Wizman
  */
 
 import type { LucideIcon } from "lucide-react";
-import { Circle, Square, Diamond, Palette, Wind, Hexagon, Code, Code2, Coffee, Database, BarChart3, GitBranch, Github, Laptop, Terminal } from "lucide-react";
+import { Circle, Square, Diamond, Palette, Wind, Hexagon, Code, Code2, Database, BarChart3, GitBranch, Github, Laptop, Terminal, Box, Play, Phone, Server } from "lucide-react";
 
 export type Skill = {
   name: string;
@@ -14,27 +14,35 @@ export type Skill = {
 
 export const SKILLS: Skill[] = [
   // Frontend
-  { name: "React", level: 85, category: "frontend", icon: Circle },
-  { name: "JavaScript", level: 85, category: "frontend", icon: Square },
-  { name: "TypeScript", level: 75, category: "frontend", icon: Diamond },
+  { name: "React", level: 90, category: "frontend", icon: Circle },
+  { name: "JavaScript", level: 90, category: "frontend", icon: Square },
+  { name: "TypeScript", level: 80, category: "frontend", icon: Diamond },
   { name: "HTML/CSS", level: 90, category: "frontend", icon: Palette },
-  { name: "Tailwind CSS", level: 80, category: "frontend", icon: Wind },
+  { name: "Tailwind CSS", level: 85, category: "frontend", icon: Wind },
+  { name: "Next.js", level: 80, category: "frontend", icon: Circle },
 
   // Backend
-  { name: "Node.js", level: 75, category: "backend", icon: Hexagon },
-  { name: "PHP", level: 70, category: "backend", icon: Code },
-  { name: "Python", level: 75, category: "backend", icon: Code2 },
-  { name: "Java", level: 65, category: "backend", icon: Coffee },
+  { name: "Node.js", level: 90, category: "backend", icon: Hexagon },
+  { name: "PHP/Laravel", level: 80, category: "backend", icon: Code },
+  { name: "Python", level: 70, category: "backend", icon: Code2 },
 
   // Database
-  { name: "MySQL", level: 75, category: "database", icon: Database },
-  { name: "SQL", level: 80, category: "database", icon: BarChart3 },
+  { name: "MySQL", level: 85, category: "database", icon: Database },
+  { name: "SQLite", level: 80, category: "database", icon: Database },
+  { name: "PostgreSQL", level: 75, category: "database", icon: BarChart3 },
 
   // Tools
-  { name: "Git", level: 85, category: "tools", icon: GitBranch },
-  { name: "GitHub", level: 85, category: "tools", icon: Github },
-  { name: "VS Code", level: 90, category: "tools", icon: Laptop },
-  { name: "Linux/SSH", level: 70, category: "tools", icon: Terminal },
+  { name: "Git", level: 90, category: "tools", icon: GitBranch },
+  { name: "GitHub", level: 90, category: "tools", icon: Github },
+  { name: "Docker", level: 80, category: "tools", icon: Box },
+  { name: "VS Code", level: 95, category: "tools", icon: Laptop },
+  { name: "Linux", level: 85, category: "tools", icon: Terminal },
+
+  // Other
+  { name: "Electron", level: 85, category: "other", icon: Laptop },
+  { name: "Playwright", level: 85, category: "other", icon: Play },
+  { name: "WebRTC", level: 70, category: "other", icon: Phone },
+  { name: "Asterisk/VoIP", level: 75, category: "other", icon: Server },
 ];
 
 export const SKILL_CATEGORIES = {

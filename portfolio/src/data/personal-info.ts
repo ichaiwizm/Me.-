@@ -1,46 +1,48 @@
 /**
- * Informations personnelles de Levana Wizman
+ * Informations personnelles de Ichai Wizman
  */
 
 export const PERSONAL_INFO = {
-  fullName: "Levana Wizman",
-  title: "Développeuse Full-Stack",
-  subtitle: "Étudiante BTS SIO SLAM en alternance",
+  fullName: "Ichai Wizman",
+  title: "Ingénieur Logiciel Full-Stack",
+  subtitle: "Développeur chez PhoneGS",
 
   contact: {
-    email: "levanawizman25@gmail.com",
-    phone: "06 95 80 90 79",
-    location: "Paris, France",
+    email: "ichaiwizm@gmail.com",
+    phone: "+33 7 66 00 28 89",
+    location: "Jérusalem, Israël",
   },
 
   bio: {
-    short: "Développeuse passionnée en formation BTS SIO SLAM, spécialisée en développement web full-stack avec React, Node.js et bases de données.",
+    short: "Ingénieur Full-Stack passionné, obsédé par la création de produits puissants. Entre deux lignes de code, je profite de la famille et des bonnes pizzas sur les toits de Jérusalem.",
 
-    long: `Je suis Levana Wizman, étudiante en BTS SIO option SLAM à l'école ORT Montreuil,
-    où je développe mes compétences en développement logiciel. Actuellement en alternance chez
-    BCDemarches, je combine apprentissage théorique et expérience pratique pour créer des
-    applications web modernes et performantes.
+    long: `Je suis un ingénieur logiciel full-stack qui vit pour construire. Depuis plusieurs années,
+    je conçois, développe et scale des applications complètes — du front au backend en passant par l'infra.
+    Passionné par l'IA et l'automatisation, j'intègre ces technologies dans chacun de mes projets pour
+    aller plus vite, viser plus haut et livrer mieux.
 
-    Mon parcours atypique, incluant une année de projet humanitaire et diverses expériences
-    professionnelles, m'a appris la valeur du travail d'équipe, de la persévérance et de
-    l'adaptabilité - des qualités que j'applique quotidiennement dans le développement.`,
+    Mais la vie c'est pas que du code : j'accorde une place importante à la famille, aux voyages
+    (entre Paris et Jérusalem), et aux moments simples — une pizza sur le toit avec vue sur la ville,
+    une balade au parc, ou une photo fun à l'aquarium. C'est cet équilibre qui me garde motivé et créatif.
+
+    Quand je code pas, je code quand même — c'est simple : je suis lancé et je m'arrête pas.`,
   },
 
   qualities: [
-    { trait: "Persévérante", icon: "Zap" },
-    { trait: "Organisée", icon: "ClipboardList" },
+    { trait: "Builder", icon: "Zap" },
+    { trait: "Famille first", icon: "Heart" },
     { trait: "Autonome", icon: "Rocket" },
-    { trait: "Polyvalente", icon: "Target" },
+    { trait: "Fun", icon: "Smile" },
   ],
 
   languages: [
     { name: "Français", level: "Natif" },
     { name: "Anglais", level: "Courant" },
-    { name: "Hébreu", level: "Intermédiaire" },
+    { name: "Hébreu", level: "Débutant" },
   ],
 
   social: {
-    github: "https://github.com/levanawizman",
-    linkedin: "https://linkedin.com/in/levana-wizman",
+    github: "https://github.com/ichaiwizm",
+    linkedin: "https://www.linkedin.com/in/icha%C3%AF-wizman-892478323/",
   },
 } as const;

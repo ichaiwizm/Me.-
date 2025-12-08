@@ -3,15 +3,15 @@
  */
 
 export const WELCOME_MESSAGES = {
-  greeting: "Bonjour ! Je suis Levana, développeuse full-stack.",
-  subtext: "Posez-moi des questions sur mes projets, compétences ou expérience ! 👋",
+  greeting: "Bonjour ! Je suis Ichai, ingénieur full-stack.",
+  subtext: "Posez-moi des questions sur mes projets, compétences ou expérience !",
   fullGreeting:
-    "Bonjour ! Je suis Levana, développeuse full-stack. Posez-moi des questions sur mes projets, compétences ou expérience ! 👋",
+    "Bonjour ! Je suis Ichai, ingénieur full-stack. Posez-moi des questions sur mes projets, compétences ou expérience !",
 } as const;
 
 export const WINDOW_TITLES = {
   skills: "Compétences Techniques",
-  cv: "CV - Levana Wizman",
+  cv: "CV - Ichai Wizman",
   contact: "Me contacter",
   projects: "Mes Projets Phares",
   about: "À propos de moi",

@@ -1,74 +1,39 @@
 {
   "images": [
     {
-      "id": "paris-proposal",
-      "name": "Demande en mariage - Levana & Haïm à Paris",
-      "path": "/images/paris-proposal.jpg",
+      "id": "family-event",
+      "name": "Moment en famille",
+      "path": "/images/family-event.png",
       "category": "personal",
-      "tags": ["mariage", "paris", "tour eiffel", "haïm"]
+      "tags": ["famille", "enfant", "événement", "israël"]
     },
     {
-      "id": "nephew-yinone",
-      "name": "Avec Yinone, mon neveu",
-      "path": "/images/nephew-yinone.jpg",
+      "id": "rooftop-night",
+      "name": "Soirée sur le toit",
+      "path": "/images/rooftop-night.png",
       "category": "personal",
-      "tags": ["famille", "neveu", "yinone"]
+      "tags": ["nuit", "terrasse", "ville", "détente"]
     },
     {
-      "id": "ichai-wedding-djellaba",
-      "name": "Mariage d'Ichai - Tenue djellaba avec Tsipora",
-      "path": "/images/ichai-wedding-djellaba.jpg",
+      "id": "park-moment",
+      "name": "Balade au parc",
+      "path": "/images/park-moment.png",
       "category": "personal",
-      "tags": ["mariage", "ichai", "tsipora", "djellaba", "famille"]
+      "tags": ["parc", "famille", "nature", "détente"]
     },
     {
-      "id": "childhood-yonathan",
-      "name": "Souvenirs d'enfance avec Yonathan",
-      "path": "/images/childhood-yonathan.jpg",
+      "id": "aquarium-fun",
+      "name": "Fun à l'aquarium",
+      "path": "/images/aquarium-fun.png",
       "category": "personal",
-      "tags": ["enfance", "yonathan", "souvenirs"]
+      "tags": ["aquarium", "fun", "poissons", "aventure"]
     },
     {
-      "id": "childhood-tata-johanna",
-      "name": "Avec Tata Johanna",
-      "path": "/images/childhood-tata-johanna.jpg",
+      "id": "paris-champs-elysees",
+      "name": "Champs-Élysées, Paris",
+      "path": "/images/paris-champs-elysees.png",
       "category": "personal",
-      "tags": ["enfance", "tata johanna", "famille"]
-    },
-    {
-      "id": "kimono-chez-nanou",
-      "name": "Kimono japonais chez Nanou",
-      "path": "/images/kimono-chez-nanou.jpg",
-      "category": "personal",
-      "tags": ["enfance", "kimono", "nanou", "déguisement"]
-    },
-    {
-      "id": "bat-mitzvah-speech",
-      "name": "Discours de Bat Mitzvah",
-      "path": "/images/bat-mitzvah-speech.jpg",
-      "category": "personal",
-      "tags": ["bat mitzvah", "discours", "cérémonie"]
-    },
-    {
-      "id": "mountain-funicular",
-      "name": "Funiculaire à la montagne",
-      "path": "/images/mountain-funicular.jpg",
-      "category": "personal",
-      "tags": ["montagne", "funiculaire", "voyage"]
-    },
-    {
-      "id": "childhood-ichai-siblings",
-      "name": "Câlin avec Ichai",
-      "path": "/images/childhood-ichai-siblings.jpg",
-      "category": "personal",
-      "tags": ["enfance", "ichai", "frère", "fratrie"]
-    },
-    {
-      "id": "venice-mood",
-      "name": "À Venise",
-      "path": "/images/venice-mood.jpg",
-      "category": "personal",
-      "tags": ["venise", "voyage", "italie"]
+      "tags": ["paris", "voyage", "france", "arc de triomphe"]
     }
   ]
 }
