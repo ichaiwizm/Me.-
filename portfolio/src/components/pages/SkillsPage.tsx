@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { SKILLS, SKILL_CATEGORIES } from "@/data/skills";
 import { useState, useRef } from "react";
 import { FadeInView } from "@/components/animations";
+import { EASINGS, SPRINGS } from "@/lib/constants/animation";
 import {
   Code2,
   Database,
@@ -25,50 +26,56 @@ const categoryIcons: Record<string, React.ReactNode> = {
   other: <Zap className="w-5 h-5" />,
 };
 
-// Get color based on skill level
+// Get color based on skill level - using CSS variables for theme consistency
 function getLevelColor(level: number): {
   bg: string;
   fill: string;
   text: string;
   glow: string;
+  cssVar: string;
 } {
   if (level >= 90) {
     return {
-      bg: "bg-emerald-500/10",
-      fill: "from-emerald-500 to-emerald-400",
-      text: "text-emerald-500",
-      glow: "shadow-emerald-500/20",
+      bg: "bg-[var(--color-level-expert)]/10",
+      fill: "bg-[var(--color-level-expert)]",
+      text: "text-[var(--color-level-expert)]",
+      glow: "shadow-[var(--color-level-expert)]/20",
+      cssVar: "var(--color-level-expert)",
     };
   }
   if (level >= 75) {
     return {
-      bg: "bg-blue-500/10",
-      fill: "from-blue-500 to-blue-400",
-      text: "text-blue-500",
-      glow: "shadow-blue-500/20",
+      bg: "bg-[var(--color-level-advanced)]/10",
+      fill: "bg-[var(--color-level-advanced)]",
+      text: "text-[var(--color-level-advanced)]",
+      glow: "shadow-[var(--color-level-advanced)]/20",
+      cssVar: "var(--color-level-advanced)",
     };
   }
   if (level >= 60) {
     return {
-      bg: "bg-violet-500/10",
-      fill: "from-violet-500 to-violet-400",
-      text: "text-violet-500",
-      glow: "shadow-violet-500/20",
+      bg: "bg-[var(--color-level-intermediate)]/10",
+      fill: "bg-[var(--color-level-intermediate)]",
+      text: "text-[var(--color-level-intermediate)]",
+      glow: "shadow-[var(--color-level-intermediate)]/20",
+      cssVar: "var(--color-level-intermediate)",
     };
   }
   if (level >= 40) {
     return {
-      bg: "bg-amber-500/10",
-      fill: "from-amber-500 to-amber-400",
-      text: "text-amber-500",
-      glow: "shadow-amber-500/20",
+      bg: "bg-[var(--color-level-fundamental)]/10",
+      fill: "bg-[var(--color-level-fundamental)]",
+      text: "text-[var(--color-level-fundamental)]",
+      glow: "shadow-[var(--color-level-fundamental)]/20",
+      cssVar: "var(--color-level-fundamental)",
     };
   }
   return {
-    bg: "bg-rose-500/10",
-    fill: "from-rose-500 to-rose-400",
-    text: "text-rose-500",
-    glow: "shadow-rose-500/20",
+    bg: "bg-[var(--color-level-beginner)]/10",
+    fill: "bg-[var(--color-level-beginner)]",
+    text: "text-[var(--color-level-beginner)]",
+    glow: "shadow-[var(--color-level-beginner)]/20",
+    cssVar: "var(--color-level-beginner)",
   };
 }
 
@@ -102,7 +109,7 @@ function SkillBar({
       transition={{
         duration: 0.5,
         delay: index * 0.05,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: EASINGS.standard,
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -112,7 +119,7 @@ function SkillBar({
           isHovered ? `shadow-lg ${colors.glow}` : ""
         }`}
         whileHover={{ scale: 1.02, borderColor: "rgba(var(--primary), 0.2)" }}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        transition={{ type: "spring", ...SPRINGS.snappy }}
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
@@ -129,7 +136,7 @@ function SkillBar({
             <motion.span
               className={`text-tiny font-bold ${colors.text}`}
               animate={{ scale: isHovered ? 1.1 : 1 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              transition={{ type: "spring", ...SPRINGS.bouncy }}
             >
               {skill.level}%
             </motion.span>
@@ -149,19 +156,19 @@ function SkillBar({
 
           {/* Progress Fill */}
           <motion.div
-            className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${colors.fill}`}
+            className={`absolute inset-y-0 left-0 rounded-full ${colors.fill}`}
             initial={{ width: 0 }}
             animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
             transition={{
               duration: 1,
               delay: index * 0.05 + 0.3,
-              ease: [0.25, 0.46, 0.45, 0.94],
+              ease: EASINGS.standard,
             }}
           />
 
-          {/* Shimmer effect on hover */}
+          {/* Shimmer effect on hover - theme aware */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--shimmer-color)] to-transparent"
             initial={{ x: "-100%" }}
             animate={{ x: isHovered ? "100%" : "-100%" }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
@@ -175,7 +182,7 @@ function SkillBar({
               key={i}
               className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
                 i < Math.ceil(skill.level / 20)
-                  ? `bg-gradient-to-r ${colors.fill}`
+                  ? colors.fill
                   : "bg-foreground/10"
               }`}
               initial={{ scale: 0 }}
@@ -184,8 +191,7 @@ function SkillBar({
                 duration: 0.3,
                 delay: index * 0.05 + 0.5 + i * 0.1,
                 type: "spring",
-                stiffness: 400,
-                damping: 17,
+                ...SPRINGS.bouncy,
               }}
             />
           ))}
@@ -216,7 +222,7 @@ function CategorySection({
       transition={{
         duration: 0.6,
         delay: index * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: EASINGS.standard,
       }}
     >
       {/* Category Header */}
@@ -300,13 +306,13 @@ export function SkillsPage() {
                 <div className="text-tiny text-foreground/50">Technologies</div>
               </div>
               <div className="px-4 py-3 rounded-xl glass text-center">
-                <div className="text-title font-bold text-emerald-500">
+                <div className="text-title font-bold text-[var(--color-success)]">
                   {expertSkills}
                 </div>
                 <div className="text-tiny text-foreground/50">Expert</div>
               </div>
               <div className="px-4 py-3 rounded-xl glass text-center">
-                <div className="text-title font-bold text-blue-500">
+                <div className="text-title font-bold text-[var(--color-info)]">
                   {avgLevel}%
                 </div>
                 <div className="text-tiny text-foreground/50">Moyenne</div>
@@ -331,10 +337,10 @@ export function SkillsPage() {
           </span>
           <div className="flex flex-wrap gap-3">
             {[
-              { label: "Expert", level: 90, color: "bg-emerald-500" },
-              { label: "Avancé", level: 75, color: "bg-blue-500" },
-              { label: "Intermédiaire", level: 60, color: "bg-violet-500" },
-              { label: "Fondamental", level: 40, color: "bg-amber-500" },
+              { label: "Expert", level: 90, color: "bg-[var(--color-level-expert)]" },
+              { label: "Avancé", level: 75, color: "bg-[var(--color-level-advanced)]" },
+              { label: "Intermédiaire", level: 60, color: "bg-[var(--color-level-intermediate)]" },
+              { label: "Fondamental", level: 40, color: "bg-[var(--color-level-fundamental)]" },
             ].map((item) => (
               <div key={item.label} className="flex items-center gap-2">
                 <div className={`w-2.5 h-2.5 rounded-full ${item.color}`} />

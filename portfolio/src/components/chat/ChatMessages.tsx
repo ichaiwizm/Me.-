@@ -2,15 +2,20 @@ import { useEffect, useRef, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { replaceWindowCommandsInText } from "@/lib/commands/parser";
 import { CommandChip, NavigationCard } from "./ChatElements";
+import { LoadingIndicator } from "./LoadingIndicator";
 import type { PageId } from "@/lib/commands/types";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import type { ChatError } from "@/lib/api";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 type ChatMessagesProps = {
   messages: ChatMessage[];
   loading?: boolean;
+  error?: ChatError | null;
+  onCancel?: () => void;
+  onRetry?: () => void;
   className?: string;
 };
 
@@ -115,7 +120,14 @@ function parseContent(input: string): ReactNode[] {
   }
 }
 
-export function ChatMessages({ messages, loading, className }: ChatMessagesProps) {
+export function ChatMessages({
+  messages,
+  loading,
+  error: _error,
+  onCancel,
+  onRetry: _onRetry,
+  className
+}: ChatMessagesProps) {
   const endRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -175,32 +187,22 @@ export function ChatMessages({ messages, loading, className }: ChatMessagesProps
           })}
         </AnimatePresence>
 
-        {/* Loading indicator */}
-        {loading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex justify-start"
-          >
-            <div className="flex items-center gap-1.5 px-3 py-2">
-              <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                className="w-1.5 h-1.5 rounded-full bg-primary/60"
+        {/* Loading indicator with cancel */}
+        <AnimatePresence>
+          {loading && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="flex justify-start"
+            >
+              <LoadingIndicator
+                onCancel={onCancel}
+                showTimer={true}
               />
-              <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 0.6, repeat: Infinity, delay: 0.15 }}
-                className="w-1.5 h-1.5 rounded-full bg-primary/60"
-              />
-              <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 0.6, repeat: Infinity, delay: 0.3 }}
-                className="w-1.5 h-1.5 rounded-full bg-primary/60"
-              />
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div ref={endRef} />
       </div>

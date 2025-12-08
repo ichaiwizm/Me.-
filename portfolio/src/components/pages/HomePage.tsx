@@ -1,36 +1,7 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import { PERSONAL_INFO } from "@/data/personal-info";
-
-// Typing effect hook
-function useTypingEffect(text: string, speed: number = 80, delay: number = 500) {
-  const [displayedText, setDisplayedText] = useState("");
-  const [isComplete, setIsComplete] = useState(false);
-
-  useEffect(() => {
-    setDisplayedText("");
-    setIsComplete(false);
-
-    const timeout = setTimeout(() => {
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          setDisplayedText(text.slice(0, i + 1));
-          i++;
-        } else {
-          clearInterval(interval);
-          setIsComplete(true);
-        }
-      }, speed);
-
-      return () => clearInterval(interval);
-    }, delay);
-
-    return () => clearTimeout(timeout);
-  }, [text, speed, delay]);
-
-  return { displayedText, isComplete };
-}
+import { useTypeWriter } from "@/components/ui/TypeWriter";
+import { EASINGS } from "@/lib/constants/animation";
 
 // Floating shape component
 function FloatingShape({
@@ -62,7 +33,7 @@ function FloatingShape({
 }
 
 export function HomePage() {
-  const { displayedText, isComplete } = useTypingEffect(PERSONAL_INFO.fullName, 100, 800);
+  const { displayedText, isComplete } = useTypeWriter(PERSONAL_INFO.fullName, 100, 800);
 
   const titleVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -72,7 +43,7 @@ export function HomePage() {
       transition: {
         delay: 1.5 + i * 0.15,
         duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: EASINGS.standard,
       },
     }),
   };

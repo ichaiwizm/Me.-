@@ -40,5 +40,38 @@
   --chart-3: oklch(0.58 0.12 135);
   --chart-4: oklch(0.64 0.13 175);
   --chart-5: oklch(0.7 0.15 120);
+
+  /* =========================================
+     SEMANTIC COLORS
+     ========================================= */
+
+  /* Success - Bright emerald */
+  --color-success: oklch(0.72 0.18 155);
+  --color-success-muted: oklch(0.72 0.18 155 / 0.15);
+
+  /* Warning - Golden amber */
+  --color-warning: oklch(0.75 0.15 80);
+  --color-warning-muted: oklch(0.75 0.15 80 / 0.15);
+
+  /* Info - Forest teal */
+  --color-info: oklch(0.68 0.16 165);
+  --color-info-muted: oklch(0.68 0.16 165 / 0.15);
+
+  /* Error - Orange terre */
+  --color-error: oklch(0.6 0.2 40);
+  --color-error-muted: oklch(0.6 0.2 40 / 0.15);
+
+  /* Skill level colors */
+  --color-level-expert: oklch(0.72 0.18 155);
+  --color-level-advanced: oklch(0.68 0.16 165);
+  --color-level-intermediate: oklch(0.62 0.14 145);
+  --color-level-fundamental: oklch(0.75 0.15 80);
+  --color-level-beginner: oklch(0.7 0.15 120);
+
+  /* Shimmer effect */
+  --shimmer-color: oklch(1 0 0 / 0.1);
+
+  /* Image window background */
+  --image-bg: oklch(0.15 0.04 155);
 }
 

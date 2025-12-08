@@ -40,5 +40,38 @@
   --chart-3: oklch(0.62 0.2 60);
   --chart-4: oklch(0.6 0.24 15);
   --chart-5: oklch(0.66 0.2 350);
+
+  /* =========================================
+     SEMANTIC COLORS
+     ========================================= */
+
+  /* Success - Bright green (contrast with red theme) */
+  --color-success: oklch(0.7 0.2 145);
+  --color-success-muted: oklch(0.7 0.2 145 / 0.15);
+
+  /* Warning - Golden flame */
+  --color-warning: oklch(0.75 0.18 65);
+  --color-warning-muted: oklch(0.75 0.18 65 / 0.15);
+
+  /* Info - Fire orange (uses accent) */
+  --color-info: oklch(0.68 0.22 45);
+  --color-info-muted: oklch(0.68 0.22 45 / 0.15);
+
+  /* Error - Deep red */
+  --color-error: oklch(0.58 0.28 20);
+  --color-error-muted: oklch(0.58 0.28 20 / 0.15);
+
+  /* Skill level colors */
+  --color-level-expert: oklch(0.7 0.2 145);
+  --color-level-advanced: oklch(0.62 0.26 30);
+  --color-level-intermediate: oklch(0.68 0.22 45);
+  --color-level-fundamental: oklch(0.75 0.18 65);
+  --color-level-beginner: oklch(0.62 0.2 60);
+
+  /* Shimmer effect */
+  --shimmer-color: oklch(1 0 0 / 0.1);
+
+  /* Image window background */
+  --image-bg: oklch(0.11 0.03 30);
 }
 

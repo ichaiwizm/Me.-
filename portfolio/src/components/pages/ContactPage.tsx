@@ -3,6 +3,8 @@ import { PERSONAL_INFO } from "@/data/personal-info";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { FadeInView } from "@/components/animations";
+import { AnimatedInput } from "@/components/ui/AnimatedInput";
+import { SPRINGS } from "@/lib/constants/animation";
 import {
   Mail,
   Phone,
@@ -14,90 +16,6 @@ import {
   Loader2,
   ArrowRight,
 } from "lucide-react";
-
-// Animated Input Component with floating label
-function AnimatedInput({
-  label,
-  name,
-  type = "text",
-  value,
-  onChange,
-  placeholder,
-  required,
-  rows,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  placeholder?: string;
-  required?: boolean;
-  rows?: number;
-}) {
-  const [isFocused, setIsFocused] = useState(false);
-  const hasValue = value.length > 0;
-  const isActive = isFocused || hasValue;
-  const InputComponent = rows ? "textarea" : "input";
-
-  return (
-    <motion.div
-      className="relative"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      {/* Floating label */}
-      <motion.label
-        htmlFor={name}
-        className={`absolute left-4 pointer-events-none transition-all duration-200 ${
-          isActive
-            ? "top-2 text-tiny text-primary font-medium"
-            : "top-4 text-body text-foreground/50"
-        }`}
-        animate={{
-          y: isActive ? 0 : 4,
-        }}
-      >
-        {label}
-      </motion.label>
-
-      {/* Input field */}
-      <InputComponent
-        type={type}
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        className={`w-full bg-card/30 backdrop-blur-sm border rounded-xl px-4 text-body transition-all duration-300 resize-none
-          ${isActive ? "pt-7 pb-3" : "py-4"}
-          ${
-            isFocused
-              ? "border-primary/50 ring-4 ring-primary/10 shadow-lg shadow-primary/5"
-              : "border-foreground/10 hover:border-foreground/20"
-          }
-          focus:outline-none
-        `}
-        placeholder={isFocused ? placeholder : ""}
-        required={required}
-        rows={rows}
-      />
-
-      {/* Focus glow effect */}
-      <motion.div
-        className="absolute inset-0 rounded-xl pointer-events-none"
-        animate={{
-          boxShadow: isFocused
-            ? "0 0 30px -10px rgba(var(--primary), 0.3)"
-            : "0 0 0px 0px transparent",
-        }}
-        transition={{ duration: 0.3 }}
-      />
-    </motion.div>
-  );
-}
 
 // Contact info card component
 function ContactCard({
@@ -127,7 +45,7 @@ function ContactCard({
       <motion.div
         className="p-3 rounded-xl bg-primary/10 text-primary"
         whileHover={{ rotate: 5, scale: 1.1 }}
-        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        transition={{ type: "spring", ...SPRINGS.bouncy }}
       >
         <Icon className="w-5 h-5" />
       </motion.div>
@@ -316,7 +234,7 @@ export function ContactPage() {
                   transition={{ duration: 0.3 }}
                 >
                   <motion.div
-                    className="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center mb-6"
+                    className="w-20 h-20 rounded-full bg-[var(--color-success-muted)] flex items-center justify-center mb-6"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{
@@ -326,10 +244,10 @@ export function ContactPage() {
                       delay: 0.1,
                     }}
                   >
-                    <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+                    <CheckCircle2 className="w-10 h-10 text-[var(--color-success)]" />
                   </motion.div>
                   <motion.p
-                    className="text-title font-bold text-emerald-500"
+                    className="text-title font-bold text-[var(--color-success)]"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}

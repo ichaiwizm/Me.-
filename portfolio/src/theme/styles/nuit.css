@@ -40,5 +40,38 @@
   --chart-3: oklch(0.68 0.16 190);
   --chart-4: oklch(0.72 0.17 280);
   --chart-5: oklch(0.66 0.14 310);
+
+  /* =========================================
+     SEMANTIC COLORS
+     ========================================= */
+
+  /* Success - Green matching theme */
+  --color-success: oklch(0.72 0.19 145);
+  --color-success-muted: oklch(0.72 0.19 145 / 0.15);
+
+  /* Warning - Amber/Gold */
+  --color-warning: oklch(0.78 0.16 75);
+  --color-warning-muted: oklch(0.78 0.16 75 / 0.15);
+
+  /* Info - Uses primary blue */
+  --color-info: oklch(0.7 0.18 260);
+  --color-info-muted: oklch(0.7 0.18 260 / 0.15);
+
+  /* Error - Uses destructive */
+  --color-error: oklch(0.62 0.24 30);
+  --color-error-muted: oklch(0.62 0.24 30 / 0.15);
+
+  /* Skill level colors */
+  --color-level-expert: oklch(0.72 0.19 145);
+  --color-level-advanced: oklch(0.7 0.18 260);
+  --color-level-intermediate: oklch(0.65 0.15 220);
+  --color-level-fundamental: oklch(0.78 0.16 75);
+  --color-level-beginner: oklch(0.68 0.16 310);
+
+  /* Shimmer effect */
+  --shimmer-color: oklch(1 0 0 / 0.1);
+
+  /* Image window background */
+  --image-bg: oklch(0.12 0.02 250);
 }
 

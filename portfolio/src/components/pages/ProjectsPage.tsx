@@ -1,7 +1,9 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { PROJECTS } from "@/data/projects";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { FadeInView } from "@/components/animations";
+import { TiltCard } from "@/components/ui/TiltCard";
+import { EASINGS, SPRINGS } from "@/lib/constants/animation";
 import { ExternalLink, Github, Star, Calendar, Folder } from "lucide-react";
 
 const categoryLabels: Record<string, string> = {
@@ -19,59 +21,6 @@ const categoryColors: Record<string, string> = {
   academique: "from-amber-500/20 to-amber-600/20",
   professionnel: "from-rose-500/20 to-rose-600/20",
 };
-
-// 3D Tilt Card Component
-function TiltCard({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), {
-    stiffness: 300,
-    damping: 30,
-  });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), {
-    stiffness: 300,
-    damping: 30,
-  });
-
-  function handleMouse(e: React.MouseEvent<HTMLDivElement>) {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const xVal = (e.clientX - rect.left) / rect.width - 0.5;
-    const yVal = (e.clientY - rect.top) / rect.height - 0.5;
-    x.set(xVal);
-    y.set(yVal);
-  }
-
-  function handleMouseLeave() {
-    x.set(0);
-    y.set(0);
-  }
-
-  return (
-    <motion.div
-      ref={ref}
-      className={className}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-        perspective: 1000,
-      }}
-      onMouseMove={handleMouse}
-      onMouseLeave={handleMouseLeave}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 // Project Card Component
 function ProjectCard({
@@ -91,7 +40,7 @@ function ProjectCard({
       transition={{
         duration: 0.5,
         delay: index * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: EASINGS.standard,
       }}
     >
       <TiltCard>
@@ -124,7 +73,7 @@ function ProjectCard({
                   <motion.div
                     className="p-2 rounded-xl bg-primary/10 text-primary"
                     whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    transition={{ type: "spring", ...SPRINGS.bouncy }}
                   >
                     <Folder className="w-5 h-5" />
                   </motion.div>
@@ -134,16 +83,16 @@ function ProjectCard({
                 </div>
                 {project.featured && (
                   <motion.div
-                    className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30"
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--color-warning-muted)] border border-[var(--color-warning)]/30"
                     animate={{
                       boxShadow: isHovered
-                        ? "0 0 20px rgba(245, 158, 11, 0.3)"
-                        : "0 0 0px rgba(245, 158, 11, 0)",
+                        ? "0 0 20px var(--color-warning-muted)"
+                        : "0 0 0px transparent",
                     }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-                    <span className="text-tiny text-amber-600 font-medium">
+                    <Star className="w-3 h-3 text-[var(--color-warning)] fill-[var(--color-warning)]" />
+                    <span className="text-tiny text-[var(--color-warning)] font-medium">
                       Featured
                     </span>
                   </motion.div>

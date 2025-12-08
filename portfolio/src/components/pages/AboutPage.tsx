@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { PERSONAL_INFO } from "@/data/personal-info";
 import { EXPERIENCES } from "@/data/experience";
 import { FadeInView } from "@/components/animations";
+import { EASINGS, SPRINGS } from "@/lib/constants/animation";
 import {
   Briefcase,
   MapPin,
@@ -55,13 +56,13 @@ function ExperienceCard({
       transition={{
         duration: 0.5,
         delay: index * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: EASINGS.standard,
       }}
     >
       <motion.div
         className="group relative p-6 rounded-2xl glass overflow-hidden transition-all duration-300"
         whileHover={{ scale: 1.01, y: -2 }}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        transition={{ type: "spring", ...SPRINGS.snappy }}
       >
         {/* Type indicator bar */}
         <div
@@ -96,11 +97,11 @@ function ExperienceCard({
           </div>
           {exp.current && (
             <motion.span
-              className="flex items-center gap-1.5 text-tiny bg-emerald-500/10 text-emerald-600 px-3 py-1.5 rounded-full border border-emerald-500/20"
+              className="flex items-center gap-1.5 text-tiny bg-[var(--color-success-muted)] text-[var(--color-success)] px-3 py-1.5 rounded-full border border-[var(--color-success)]/20"
               animate={{ scale: [1, 1.02, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)] animate-pulse" />
               En cours
             </motion.span>
           )}
