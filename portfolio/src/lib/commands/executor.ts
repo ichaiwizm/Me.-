@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import type { Command, ExecutorContext } from "./types";
-import { AVAILABLE_IMAGES } from "./types";
+import { IMAGE_REGISTRY } from "@/lib/constants/images";
 
 export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
   try {
@@ -67,13 +67,17 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         }
         break;
       case "display_gallery": {
-        // Build a responsive gallery from AVAILABLE_IMAGES with clickable images
+        // Build a responsive gallery from IMAGE_REGISTRY with clickable images
         // Optional filters: tag, category, limit
-        let imgs = [...(AVAILABLE_IMAGES as unknown as Array<{ id: string; name: string; category: string }> )];
+        let imgs = [...IMAGE_REGISTRY];
         if (cmd.category) imgs = imgs.filter((i) => i.category === cmd.category);
         if (cmd.tag) {
           const t = String(cmd.tag).toLowerCase();
-          imgs = imgs.filter((i) => i.name.toLowerCase().includes(t) || i.id.toLowerCase().includes(t));
+          imgs = imgs.filter((i) =>
+            i.name.toLowerCase().includes(t) ||
+            i.id.toLowerCase().includes(t) ||
+            i.tags.some(tag => tag.toLowerCase().includes(t))
+          );
         }
         if (!imgs.length) {
           toast.error("Aucune image correspondante");
@@ -83,7 +87,6 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         const imageIds = JSON.stringify(limited.map(i => i.id));
         const grid = limited
           .map((i, idx) => {
-            const url = `/images/${i.id}.png`;
             return `
               <figure class="gallery-item" style="margin:0;cursor:pointer;transition:transform 0.2s ease;"
                       onclick="window.parent.postMessage({type:'lightbox',index:${idx},images:${imageIds}}, '*')"
@@ -93,7 +96,7 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
                             box-shadow:0 4px 12px rgba(0,0,0,0.25);transition:box-shadow 0.2s ease;"
                      onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.4)'"
                      onmouseout="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.25)'">
-                  <img src="${url}" alt="${i.name}"
+                  <img src="${i.path}" alt="${i.name}"
                        style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" />
                 </div>
                 <figcaption style="margin-top:10px;font-size:13px;opacity:0.8;font-weight:500;text-align:center;">
