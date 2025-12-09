@@ -1,16 +1,17 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { Check, ArrowRight, Image, Palette, Layout, Navigation, Sparkles } from "lucide-react";
 import type { PageId } from "@/lib/commands/types";
 
-// Command type to icon/label mapping
-const COMMAND_ICONS: Record<string, { icon: React.ReactNode; label: string }> = {
-  display_gallery: { icon: <Image className="w-3 h-3" />, label: "Galerie" },
-  display_image: { icon: <Image className="w-3 h-3" />, label: "Image" },
-  create_window: { icon: <Layout className="w-3 h-3" />, label: "Fenêtre" },
-  change_theme: { icon: <Palette className="w-3 h-3" />, label: "Thème" },
-  change_background: { icon: <Palette className="w-3 h-3" />, label: "Fond" },
-  navigate: { icon: <Navigation className="w-3 h-3" />, label: "Navigation" },
-  default: { icon: <Sparkles className="w-3 h-3" />, label: "Action" },
+// Command type to icon mapping (labels via i18n)
+const COMMAND_ICONS: Record<string, { icon: React.ReactNode; labelKey: string }> = {
+  display_gallery: { icon: <Image className="w-3 h-3" />, labelKey: "labels.gallery" },
+  display_image: { icon: <Image className="w-3 h-3" />, labelKey: "labels.image" },
+  create_window: { icon: <Layout className="w-3 h-3" />, labelKey: "labels.window" },
+  change_theme: { icon: <Palette className="w-3 h-3" />, labelKey: "labels.theme" },
+  change_background: { icon: <Palette className="w-3 h-3" />, labelKey: "labels.background" },
+  navigate: { icon: <Navigation className="w-3 h-3" />, labelKey: "labels.navigation" },
+  default: { icon: <Sparkles className="w-3 h-3" />, labelKey: "labels.action" },
 };
 
 type CommandChipProps = {
@@ -19,6 +20,7 @@ type CommandChipProps = {
 };
 
 export function CommandChip({ commandType, detail }: CommandChipProps) {
+  const { t } = useTranslation("common");
   const config = COMMAND_ICONS[commandType] || COMMAND_ICONS.default;
 
   return (
@@ -30,19 +32,19 @@ export function CommandChip({ commandType, detail }: CommandChipProps) {
                  border border-primary/15"
     >
       <span className="opacity-60">{config.icon}</span>
-      <span>{detail || config.label}</span>
+      <span>{detail || t(config.labelKey)}</span>
       <Check className="w-3 h-3 text-emerald-500/80" />
     </motion.div>
   );
 }
 
-// Page labels and icons
-const PAGE_CONFIG: Record<PageId, { label: string; description: string }> = {
-  accueil: { label: "Accueil", description: "Retour à la page principale" },
-  projets: { label: "Mes Projets", description: "Découvrir mon travail" },
-  competences: { label: "Compétences", description: "Ma stack technique" },
-  "a-propos": { label: "À propos", description: "Mon parcours" },
-  contact: { label: "Contact", description: "Me contacter" },
+// Page config keys mapping
+const PAGE_CONFIG_KEYS: Record<PageId, { titleKey: string; descKey: string }> = {
+  accueil: { titleKey: "cards.home.title", descKey: "cards.home.description" },
+  projets: { titleKey: "cards.skills.title", descKey: "cards.skills.description" },
+  competences: { titleKey: "cards.skills.title", descKey: "cards.skills.description" },
+  "a-propos": { titleKey: "cards.about.title", descKey: "cards.about.description" },
+  contact: { titleKey: "cards.contact.title", descKey: "cards.contact.description" },
 };
 
 type NavigationCardProps = {
@@ -52,7 +54,12 @@ type NavigationCardProps = {
 };
 
 export function NavigationCard({ page, label, onClick }: NavigationCardProps) {
-  const config = PAGE_CONFIG[page] || { label: page, description: "" };
+  const { t } = useTranslation("navigation");
+  const keys = PAGE_CONFIG_KEYS[page] || { titleKey: "", descKey: "" };
+  const config = {
+    label: keys.titleKey ? t(keys.titleKey) : page,
+    description: keys.descKey ? t(keys.descKey) : "",
+  };
 
   const handleClick = () => {
     if (onClick) {

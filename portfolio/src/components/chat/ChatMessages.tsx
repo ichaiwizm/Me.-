@@ -1,4 +1,5 @@
 import { useEffect, useRef, Fragment } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { replaceWindowCommandsInText } from "@/lib/commands/parser";
 import { CommandChip, NavigationCard } from "./ChatElements";
@@ -128,6 +129,7 @@ export function ChatMessages({
   onRetry: _onRetry,
   className
 }: ChatMessagesProps) {
+  const { t } = useTranslation("common");
   const endRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -149,9 +151,9 @@ export function ChatMessages({
             animate={{ opacity: 1, y: 0 }}
             className="text-foreground/60 text-sm leading-relaxed"
           >
-            <p>Bonjour ! Je suis l'assistant d'Ichai, ingénieur full-stack.</p>
+            <p>{t("chat.welcomeLine1")}</p>
             <p className="mt-1 text-foreground/40">
-              Pose-moi des questions sur ses projets, compétences ou parcours.
+              {t("chat.welcomeLine2")}
             </p>
           </motion.div>
         )}

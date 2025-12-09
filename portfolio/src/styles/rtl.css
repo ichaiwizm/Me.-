@@ -1,0 +1,251 @@
+/* ============================================
+   RTL BASE STYLES FOR HEBREW
+   ============================================ */
+
+/* Direction is set via JavaScript on <html> element */
+/* These styles apply when dir="rtl" is present */
+
+:root[dir="rtl"] {
+  --text-start: right;
+  --text-end: left;
+}
+
+:root[dir="ltr"] {
+  --text-start: left;
+  --text-end: right;
+}
+
+/* ============================================
+   CODE/URLs ALWAYS LTR
+   ============================================ */
+
+[dir="rtl"] code,
+[dir="rtl"] pre,
+[dir="rtl"] .preserve-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+
+/* URLs and email addresses */
+[dir="rtl"] input[type="email"],
+[dir="rtl"] input[type="url"],
+[dir="rtl"] input[type="tel"],
+[dir="rtl"] input[type="number"] {
+  direction: ltr;
+  text-align: right;
+}
+
+/* ============================================
+   ICON MIRRORING
+   ============================================ */
+
+/* Icons that should flip in RTL */
+[dir="rtl"] .icon-mirror {
+  transform: scaleX(-1);
+}
+
+/* Directional icons - arrows and chevrons */
+[dir="rtl"] .lucide-arrow-right,
+[dir="rtl"] .lucide-chevron-right,
+[dir="rtl"] .lucide-arrow-left,
+[dir="rtl"] .lucide-chevron-left {
+  transform: scaleX(-1);
+}
+
+/* Icons that should NOT flip */
+[dir="rtl"] .icon-no-mirror {
+  transform: none !important;
+}
+
+/* ============================================
+   CHAT SIDE PANEL RTL
+   ============================================ */
+
+[dir="rtl"] .chat-side-panel {
+  right: auto;
+  left: 0;
+  border-right: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  border-left: none;
+}
+
+[dir="rtl"] .chat-toggle-button {
+  right: auto;
+  left: 0;
+  border-radius: 0 0.75rem 0.75rem 0;
+  border-left: none;
+  border-right: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+}
+
+/* ============================================
+   HEADER RTL
+   ============================================ */
+
+[dir="rtl"] .header-nav {
+  flex-direction: row-reverse;
+}
+
+/* ============================================
+   FLOATING WINDOWS RTL
+   ============================================ */
+
+[dir="rtl"] .window-header-actions {
+  flex-direction: row-reverse;
+}
+
+/* ============================================
+   TIMELINE RTL (About page)
+   ============================================ */
+
+[dir="rtl"] .timeline-line {
+  left: auto;
+  right: 1.5rem;
+}
+
+[dir="rtl"] .timeline-dot {
+  left: auto;
+  right: 1.25rem;
+}
+
+[dir="rtl"] .timeline-content {
+  margin-left: 0;
+  margin-right: 3rem;
+}
+
+/* ============================================
+   SKILL BARS RTL
+   ============================================ */
+
+[dir="rtl"] .skill-bar-fill {
+  transform-origin: right;
+}
+
+/* ============================================
+   ANIMATIONS RTL
+   ============================================ */
+
+/* Underline animations */
+[dir="rtl"] .underline-slide::after {
+  transform-origin: right;
+}
+
+/* Nav indicator origin */
+[dir="rtl"] .nav-underline {
+  transform-origin: right;
+}
+
+/* ============================================
+   FORM ELEMENTS RTL
+   ============================================ */
+
+[dir="rtl"] input:not([type="email"]):not([type="url"]):not([type="tel"]):not([type="number"]),
+[dir="rtl"] textarea {
+  text-align: right;
+}
+
+/* Input with icon */
+[dir="rtl"] .input-with-icon-left {
+  padding-left: 1rem;
+  padding-right: 2.5rem;
+}
+
+[dir="rtl"] .input-icon-left {
+  left: auto;
+  right: 0.75rem;
+}
+
+/* ============================================
+   DECORATIVE ELEMENTS RTL
+   ============================================ */
+
+[dir="rtl"] .decorative-line-left {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .decorative-line-right {
+  right: auto;
+  left: 0;
+}
+
+/* Gradient lines */
+[dir="rtl"] .line-gradient-to-right {
+  background: linear-gradient(to left, transparent, var(--foreground-30, rgba(0, 0, 0, 0.3)));
+}
+
+/* ============================================
+   FIXED POSITION ELEMENTS RTL
+   ============================================ */
+
+[dir="rtl"] .fixed-right {
+  right: auto;
+  left: var(--fixed-offset, 1rem);
+}
+
+[dir="rtl"] .fixed-left {
+  left: auto;
+  right: var(--fixed-offset, 1rem);
+}
+
+/* ============================================
+   FLEXBOX/GRID RTL UTILITIES
+   ============================================ */
+
+/* Reverse flex on RTL */
+[dir="rtl"] .flex-row-ltr {
+  flex-direction: row-reverse;
+}
+
+/* Keep some elements LTR even in RTL context */
+[dir="rtl"] .force-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* ============================================
+   CARDS AND LIST ITEMS RTL
+   ============================================ */
+
+[dir="rtl"] .card-with-icon {
+  flex-direction: row-reverse;
+}
+
+/* ============================================
+   SCROLLBAR RTL
+   ============================================ */
+
+/* Scrollbar follows direction automatically in modern browsers */
+/* Custom scrollbar implementations may need manual adjustment */
+
+/* ============================================
+   GRADIENTS RTL
+   ============================================ */
+
+/* Flip horizontal gradients */
+[dir="rtl"] .gradient-to-right {
+  --tw-gradient-from-position: 100%;
+  --tw-gradient-to-position: 0%;
+}
+
+/* ============================================
+   MESSAGES/CHAT BUBBLES RTL
+   ============================================ */
+
+[dir="rtl"] .message-user {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+[dir="rtl"] .message-assistant {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* ============================================
+   WINDOW DOCK RTL
+   ============================================ */
+
+[dir="rtl"] .window-dock {
+  right: auto;
+  left: 1rem;
+}

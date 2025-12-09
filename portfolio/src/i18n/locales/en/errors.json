@@ -1,0 +1,40 @@
+{
+  "api": {
+    "timeout": "Request timeout",
+    "network": "Network error",
+    "server": "Server error",
+    "aborted": "Request cancelled",
+    "unknown": "Unknown error"
+  },
+  "validation": {
+    "invalidCommand": "Invalid command",
+    "invalidTheme": "Invalid theme",
+    "unknownTheme": "Unknown theme: {{theme}}",
+    "invalidStyle": "Invalid style (solid, gradient, image)",
+    "missingColor": "Missing color",
+    "missingColors": "Missing colors (min 2)",
+    "imageRequired": "imageId or imageUrl required for image style",
+    "unknownImage": "Unknown image: {{id}}",
+    "missingMessage": "Missing message",
+    "missingKey": "Missing key",
+    "noDimensions": "No dimensions provided",
+    "invalidLimit": "Invalid limit (1-24)",
+    "invalidCategory": "Invalid category",
+    "invalidTag": "Invalid tag"
+  },
+  "parser": {
+    "missingWindow": "Missing window (key 'window').",
+    "missingTitle": "Missing title",
+    "missingHtml": "Missing HTML",
+    "htmlTooLarge": "HTML too large (max {{max}}kb)",
+    "invalidWidth": "Invalid width ({{min}}-{{max}} px)",
+    "invalidHeight": "Invalid height ({{min}}-{{max}} px)",
+    "windowLimit": "Limit of {{limit}} windows reached",
+    "windowError": "Window {{index}}: {{error}}",
+    "invalidJson": "Invalid JSON (command {{type}})"
+  },
+  "executor": {
+    "noMatchingImage": "No matching image",
+    "executionError": "Error executing command: {{type}}"
+  }
+}

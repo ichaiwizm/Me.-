@@ -1,0 +1,28 @@
+{
+  "items": {
+    "home": "בית",
+    "projects": "פרויקטים",
+    "skills": "כישורים",
+    "about": "אודות",
+    "contact": "צור קשר"
+  },
+  "subtitle": "מהנדס פול-סטאק",
+  "cards": {
+    "home": {
+      "title": "בית",
+      "description": "הפרויקטים שלי"
+    },
+    "skills": {
+      "title": "כישורים",
+      "description": "הטכנולוגיות שלי"
+    },
+    "about": {
+      "title": "אודות",
+      "description": "המסע שלי"
+    },
+    "contact": {
+      "title": "צור קשר",
+      "description": "ליצור קשר"
+    }
+  }
+}

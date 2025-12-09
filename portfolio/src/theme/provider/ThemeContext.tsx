@@ -1,14 +1,12 @@
 import React from "react";
-import type { ThemeId } from "../config/theme-definitions";
+import type { ThemeId, ThemeCategory } from "../config/theme-definitions";
 
 export type ThemeContextValue = {
   themeId: ThemeId;
   setThemeId: (id: ThemeId) => void;
   themes: Array<{
     id: ThemeId;
-    label: string;
-    description: string;
-    category: "apaisant" | "energique" | "sophistique";
+    category: ThemeCategory;
   }>;
 };
 
@@ -17,8 +15,7 @@ export const ThemeContext = React.createContext<ThemeContextValue | undefined>(u
 export function useTheme(): ThemeContextValue {
   const context = React.useContext(ThemeContext);
   if (!context) {
-    throw new Error("useTheme doit être utilisé dans un ThemeProvider");
+    throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;
 }
-

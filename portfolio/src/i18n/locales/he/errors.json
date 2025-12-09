@@ -1,0 +1,40 @@
+{
+  "api": {
+    "timeout": "פג זמן הבקשה",
+    "network": "שגיאת רשת",
+    "server": "שגיאת שרת",
+    "aborted": "הבקשה בוטלה",
+    "unknown": "שגיאה לא ידועה"
+  },
+  "validation": {
+    "invalidCommand": "פקודה לא תקינה",
+    "invalidTheme": "ערכת נושא לא תקינה",
+    "unknownTheme": "{{theme}} :ערכת נושא לא ידועה",
+    "invalidStyle": "(solid, gradient, image) סגנון לא תקין",
+    "missingColor": "חסר צבע",
+    "missingColors": "(מינימום 2) חסרים צבעים",
+    "imageRequired": "נדרש imageId או imageUrl לסגנון תמונה",
+    "unknownImage": "{{id}} :תמונה לא ידועה",
+    "missingMessage": "חסרה הודעה",
+    "missingKey": "חסר מפתח",
+    "noDimensions": "לא סופקו ממדים",
+    "invalidLimit": "(1-24) גבול לא תקין",
+    "invalidCategory": "קטגוריה לא תקינה",
+    "invalidTag": "תג לא תקין"
+  },
+  "parser": {
+    "missingWindow": ".('window' חסר חלון (מפתח",
+    "missingTitle": "חסר כותרת",
+    "missingHtml": "חסר HTML",
+    "htmlTooLarge": "({{max}}kb מקסימום) HTML גדול מדי",
+    "invalidWidth": "({{min}}-{{max}} px) רוחב לא תקין",
+    "invalidHeight": "({{min}}-{{max}} px) גובה לא תקין",
+    "windowLimit": "הגעת למגבלה של {{limit}} חלונות",
+    "windowError": "{{error}} :{{index}} חלון",
+    "invalidJson": "({{type}} פקודה) JSON לא תקין"
+  },
+  "executor": {
+    "noMatchingImage": "אין תמונה מתאימה",
+    "executionError": "{{type}} :שגיאה בביצוע הפקודה"
+  }
+}

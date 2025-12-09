@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
@@ -12,6 +13,7 @@ type PromptBarProps = {
 }
 
 export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptBarProps) {
+  const { t } = useTranslation("common")
   const [value, setValue] = useState("")
 
   async function handleSubmit(e: React.FormEvent) {
@@ -19,7 +21,7 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
     const trimmed = value.trim()
     if (!trimmed || loading) return
 
-    // Vider le champ immédiatement après l'envoi
+    // Clear field immediately after submit
     setValue("")
     await onSubmit(trimmed)
   }
@@ -44,14 +46,14 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
         <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Écrivez votre demande..."
+          placeholder={t("placeholders.chatInput")}
           aria-label="Prompt"
           className="flex-1 bg-transparent border-0 focus-visible:ring-0"
         />
         <Button
           type="submit"
           size="icon"
-          aria-label="Envoyer"
+          aria-label={t("aria.sendMessage")}
           disabled={loading}
           className={cn(isPanel ? "rounded-lg" : "rounded-full")}
         >

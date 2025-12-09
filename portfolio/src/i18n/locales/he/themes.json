@@ -1,0 +1,38 @@
+{
+  "header": "ערכות נושא",
+  "themes": {
+    "lumiere": {
+      "label": "אור",
+      "description": "בהירות ופשטות"
+    },
+    "nuit": {
+      "label": "ליל כוכבים",
+      "description": "אלגנטיות לילית"
+    },
+    "foret-emeraude": {
+      "label": "יער אמרלד",
+      "description": "טבע ושלווה"
+    },
+    "ocean-profond": {
+      "label": "אוקיינוס עמוק",
+      "description": "רוגע ועומק"
+    },
+    "crepuscule-dore": {
+      "label": "דמדומים זהובים",
+      "description": "חום והרמוניה"
+    },
+    "lavande-zen": {
+      "label": "לבנדר זן",
+      "description": "רכות ומדיטציה"
+    },
+    "feu-dragon": {
+      "label": "אש דרקון",
+      "description": "עוצמה ואינטנסיביות"
+    }
+  },
+  "categories": {
+    "apaisant": "מרגיע",
+    "energique": "אנרגטי",
+    "sophistique": "מתוחכם"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "home": {
+    "greeting": "היי, אני",
+    "name": "יחי ויזמן"
+  },
+  "about": {
+    "header": "אודות",
+    "title": "המסע שלי",
+    "subtitle": "בנאי אובססיבי ביום, נהנתן בלילה",
+    "journey": "המסע שלי",
+    "journeyText": "מהנדס תוכנה פול-סטאק ב-PhoneGS בירושלים. נלהב מבניית מוצרים חזקים ויעילים. בין שורות קוד, אני נהנה מזמן עם המשפחה ופיצות טובות על גגות ירושלים.",
+    "philosophy": "הפילוסופיה שלי",
+    "philosophyText": "אני נלהב מ-AI ואוטומציה. המטרה שלי: לבנות כלים שמפשטים את החיים של אנשים תוך כדי שאני נהנה. כל פרויקט הוא הזדמנות ללמוד ולדחוף גבולות.",
+    "experiences": "ניסיון מקצועי",
+    "languages": "שפות",
+    "findMe": "מצא אותי",
+    "experienceTypes": {
+      "alternance": "התמחות",
+      "emploi": "עבודה",
+      "stage": "סטאז'",
+      "benevole": "התנדבות",
+      "freelance": "פרילנס"
+    },
+    "current": "בתהליך",
+    "present": "הווה"
+  },
+  "projects": {
+    "header": "תיק עבודות",
+    "title": "פרויקטים",
+    "subtitle": "מבחר מההישגים שלי בפיתוח אתרים, מניסויים אישיים ועד פרויקטים מקצועיים.",
+    "projectCount": "פרויקטים",
+    "featured": "מומלץ",
+    "highlights": "נקודות מפתח",
+    "code": "קוד",
+    "viewProject": "צפה בפרויקט",
+    "hoverToExplore": "רחף לחקירה",
+    "categories": {
+      "formation": "הכשרה",
+      "personnel": "אישי",
+      "alternance": "התמחות",
+      "academique": "אקדמי",
+      "professionnel": "מקצועי"
+    }
+  },
+  "skills": {
+    "header": "מומחיות",
+    "title": "כישורים",
+    "subtitle": "טכנולוגיות וכלים שאני שולט בהם בפיתוח אתרים פול-סטאק, מעיצוב ועד הפקה.",
+    "technologies": "טכנולוגיות",
+    "expert": "מומחה",
+    "average": "ממוצע",
+    "levels": ":רמות",
+    "levelLabels": {
+      "expert": "מומחה",
+      "advanced": "מתקדם",
+      "intermediate": "בינוני",
+      "fundamental": "יסודי",
+      "beginner": "מתחיל"
+    },
+    "skill": "כישור",
+    "skills": "כישורים",
+    "alwaysLearning": "תמיד לומד, תמיד סקרן לגבי טכנולוגיות חדשות"
+  },
+  "contact": {
+    "header": "צור קשר",
+    "title": "צור קשר",
+    "subtitle": "אל תהססו ליצור קשר לכל הזדמנות, פרויקט או סתם לשיחה.",
+    "email": "אימייל",
+    "phone": "טלפון",
+    "location": "מיקום",
+    "sendMessage": "שלח לי הודעה",
+    "allFieldsRequired": "כל השדות נדרשים",
+    "messageSent": "!ההודעה נשלחה",
+    "willReply": ".אחזור אליך בקרוב",
+    "sending": "...שולח",
+    "send": "שלח הודעה",
+    "findMeAlso": "מצא אותי גם ב",
+    "form": {
+      "name": "שם",
+      "namePlaceholder": "השם המלא שלך",
+      "email": "אימייל",
+      "emailPlaceholder": "your@email.com",
+      "message": "הודעה",
+      "messagePlaceholder": "...ההודעה שלך"
+    }
+  },
+  "error": {
+    "title": "אירעה שגיאה",
+    "message": ".האפליקציה נתקלה בשגיאה בלתי צפויה",
+    "reload": "טען מחדש את הדף"
+  }
+}

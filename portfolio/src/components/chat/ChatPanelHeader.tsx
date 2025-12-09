@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { X, MessageSquare, Minimize2 } from "lucide-react";
 
 type ChatPanelHeaderProps = {
@@ -7,6 +8,8 @@ type ChatPanelHeaderProps = {
 };
 
 export function ChatPanelHeader({ onClose, isMobile }: ChatPanelHeaderProps) {
+  const { t } = useTranslation("common");
+
   return (
     <motion.div
       className="flex items-center justify-between px-4 py-3 border-b border-foreground/10 bg-background/30"
@@ -19,8 +22,8 @@ export function ChatPanelHeader({ onClose, isMobile }: ChatPanelHeaderProps) {
           <MessageSquare className="w-4 h-4 text-primary" />
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Assistant</h2>
-          <p className="text-[10px] text-foreground/40">Posez vos questions</p>
+          <h2 className="text-sm font-semibold text-foreground">{t("chat.title")}</h2>
+          <p className="text-[10px] text-foreground/40">{t("chat.subtitle")}</p>
         </div>
       </div>
 
@@ -29,7 +32,7 @@ export function ChatPanelHeader({ onClose, isMobile }: ChatPanelHeaderProps) {
         className="p-2 rounded-lg hover:bg-foreground/5 text-foreground/50 hover:text-foreground transition-colors"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        aria-label={isMobile ? "Fermer" : "Réduire"}
+        aria-label={isMobile ? t("buttons.close") : t("buttons.minimize")}
       >
         {isMobile ? (
           <X className="w-5 h-5" />

@@ -1,6 +1,8 @@
 import { motion, useInView } from "framer-motion";
-import { SKILLS, SKILL_CATEGORIES } from "@/data/skills";
+import { useTranslation } from "react-i18next";
+import { useSkills, useSkillCategories } from "@/data/hooks";
 import { useState, useRef } from "react";
+import type { Skill } from "@/data/skills";
 import { FadeInView } from "@/components/animations";
 import { EASINGS, SPRINGS } from "@/lib/constants/animation";
 import {
@@ -79,21 +81,23 @@ function getLevelColor(level: number): {
   };
 }
 
-function getLevelLabel(level: number): string {
-  if (level >= 90) return "Expert";
-  if (level >= 75) return "Avancé";
-  if (level >= 60) return "Intermédiaire";
-  if (level >= 40) return "Fondamental";
-  return "Débutant";
+function getLevelLabelKey(level: number): string {
+  if (level >= 90) return "expert";
+  if (level >= 75) return "advanced";
+  if (level >= 60) return "intermediate";
+  if (level >= 40) return "fundamental";
+  return "beginner";
 }
 
 // Animated Progress Bar Component
 function SkillBar({
   skill,
   index,
+  t,
 }: {
-  skill: (typeof SKILLS)[0];
+  skill: Skill;
   index: number;
+  t: (key: string) => string;
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -131,7 +135,7 @@ function SkillBar({
             animate={{ opacity: isHovered ? 1 : 0.7 }}
           >
             <span className={`text-tiny font-medium ${colors.text}`}>
-              {getLevelLabel(skill.level)}
+              {t(`skills.levelLabels.${getLevelLabelKey(skill.level)}`)}
             </span>
             <motion.span
               className={`text-tiny font-bold ${colors.text}`}
@@ -206,12 +210,15 @@ function CategorySection({
   category,
   skills,
   index,
+  categoryLabel,
+  t,
 }: {
   category: string;
-  skills: typeof SKILLS;
+  skills: Skill[];
   index: number;
+  categoryLabel: string;
+  t: (key: string) => string;
 }) {
-  const categoryInfo = SKILL_CATEGORIES[category as keyof typeof SKILL_CATEGORIES];
   const icon = categoryIcons[category] || categoryIcons.other;
 
   return (
@@ -235,9 +242,9 @@ function CategorySection({
           {icon}
         </motion.div>
         <div>
-          <h2 className="text-title font-bold">{categoryInfo.label}</h2>
+          <h2 className="text-title font-bold">{categoryLabel}</h2>
           <p className="text-tiny text-foreground/50 mt-1">
-            {skills.length} compétence{skills.length > 1 ? "s" : ""}
+            {skills.length} {skills.length > 1 ? t("skills.skills") : t("skills.skill")}
           </p>
         </div>
       </div>
@@ -249,6 +256,7 @@ function CategorySection({
             key={skill.name}
             skill={skill}
             index={skillIndex + index * 10}
+            t={t}
           />
         ))}
       </div>
@@ -257,19 +265,23 @@ function CategorySection({
 }
 
 export function SkillsPage() {
+  const { t } = useTranslation("pages");
+  const skills = useSkills();
+  const skillCategories = useSkillCategories();
+
   // Group by category
-  const byCategory = SKILLS.reduce((acc, skill) => {
+  const byCategory = skills.reduce((acc, skill) => {
     if (!acc[skill.category]) acc[skill.category] = [];
     acc[skill.category].push(skill);
     return acc;
-  }, {} as Record<string, typeof SKILLS>);
+  }, {} as Record<string, Skill[]>);
 
   // Calculate stats
-  const totalSkills = SKILLS.length;
+  const totalSkills = skills.length;
   const avgLevel = Math.round(
-    SKILLS.reduce((sum, s) => sum + s.level, 0) / totalSkills
+    skills.reduce((sum, s) => sum + s.level, 0) / totalSkills
   );
-  const expertSkills = SKILLS.filter((s) => s.level >= 90).length;
+  const expertSkills = skills.filter((s) => s.level >= 90).length;
 
   return (
     <div className="min-h-screen pt-32 pb-24 px-8">
@@ -285,10 +297,10 @@ export function SkillsPage() {
                 transition={{ delay: 0.2 }}
               >
                 <div className="w-8 h-px bg-primary/50" />
-                Expertise
+                {t("skills.header")}
               </motion.div>
               <h1 className="text-monumental tracking-tight">
-                <span className="gradient-text">Compétences</span>
+                <span className="gradient-text">{t("skills.title")}</span>
               </h1>
             </div>
 
@@ -303,36 +315,37 @@ export function SkillsPage() {
                 <div className="text-title font-bold text-primary">
                   {totalSkills}
                 </div>
-                <div className="text-tiny text-foreground/50">Technologies</div>
+                <div className="text-tiny text-foreground/50">{t("skills.technologies")}</div>
               </div>
               <div className="px-4 py-3 rounded-xl glass text-center">
                 <div className="text-title font-bold text-[var(--color-success)]">
                   {expertSkills}
                 </div>
-                <div className="text-tiny text-foreground/50">Expert</div>
+                <div className="text-tiny text-foreground/50">{t("skills.expert")}</div>
               </div>
               <div className="px-4 py-3 rounded-xl glass text-center">
                 <div className="text-title font-bold text-[var(--color-info)]">
                   {avgLevel}%
                 </div>
-                <div className="text-tiny text-foreground/50">Moyenne</div>
+                <div className="text-tiny text-foreground/50">{t("skills.average")}</div>
               </div>
             </motion.div>
           </div>
           <p className="text-body-large text-foreground/60 max-w-2xl">
-            Technologies et outils que je maîtrise dans le développement web
-            full-stack, de la conception à la mise en production.
+            {t("skills.subtitle")}
           </p>
         </FadeInView>
 
         {/* Skills by Category */}
         <div className="space-y-16">
-          {Object.entries(byCategory).map(([category, skills], index) => (
+          {Object.entries(byCategory).map(([category, categorySkills], index) => (
             <CategorySection
               key={category}
               category={category}
-              skills={skills}
+              skills={categorySkills}
               index={index}
+              categoryLabel={skillCategories[category]?.label || category}
+              t={t}
             />
           ))}
         </div>
@@ -355,7 +368,7 @@ export function SkillsPage() {
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-foreground/20" />
           </div>
           <p className="text-body text-foreground/50">
-            Toujours en apprentissage, toujours curieux de nouvelles technologies
+            {t("skills.alwaysLearning")}
           </p>
         </motion.div>
       </div>

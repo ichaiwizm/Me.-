@@ -1,0 +1,110 @@
+{
+  "personalInfo": {
+    "title": "Ingénieur Logiciel Full-Stack",
+    "subtitle": "Développeur chez PhoneGS",
+    "location": "Jérusalem, Israël",
+    "bio": {
+      "short": "Ingénieur Full-Stack passionné, obsédé par la création de produits puissants. Entre deux lignes de code, je profite de la famille et des bonnes pizzas sur les toits de Jérusalem.",
+      "long": "Je suis un ingénieur logiciel full-stack qui vit pour construire. Depuis plusieurs années, je conçois, développe et scale des applications complètes — du front au backend en passant par l'infra. Passionné par l'IA et l'automatisation, j'intègre ces technologies dans chacun de mes projets pour aller plus vite, viser plus haut et livrer mieux.\n\nMais la vie c'est pas que du code : j'accorde une place importante à la famille, aux voyages (entre Paris et Jérusalem), et aux moments simples — une pizza sur le toit avec vue sur la ville, une balade au parc, ou une photo fun à l'aquarium. C'est cet équilibre qui me garde motivé et créatif.\n\nQuand je code pas, je code quand même — c'est simple : je suis lancé et je m'arrête pas."
+    },
+    "qualities": [
+      { "trait": "Builder", "icon": "Zap" },
+      { "trait": "Famille first", "icon": "Heart" },
+      { "trait": "Autonome", "icon": "Rocket" },
+      { "trait": "Fun", "icon": "Smile" }
+    ],
+    "languages": [
+      { "name": "Français", "level": "Natif" },
+      { "name": "Anglais", "level": "Courant" },
+      { "name": "Hébreu", "level": "Débutant" }
+    ]
+  },
+  "projects": {
+    "mutuelles-v4": {
+      "title": "Mutuelles_v4 - Application Desktop d'Automatisation",
+      "description": "Application desktop complète automatisant les plateformes d'assurance (mutuelles). Inclut workflows automatisés, gestion des dossiers, scraping intelligent et orchestration Playwright.",
+      "highlights": [
+        "Interface desktop solide avec Electron",
+        "Automatisation avancée via Playwright",
+        "Gestion intelligente des dossiers",
+        "Performance et fiabilité optimisées"
+      ]
+    },
+    "shoot": {
+      "title": "Shoot - Plateforme pour Photographes",
+      "description": "Écosystème complet pour photographes professionnels : back-office admin puissant, dashboard client full-features, site vitrine personnalisable. Architecture robuste et UX clean.",
+      "highlights": [
+        "Back-office admin complet",
+        "Dashboard client riche en fonctionnalités",
+        "Site vitrine personnalisable",
+        "Automatisations et performances optimisées"
+      ]
+    },
+    "ai-blog": {
+      "title": "AI Blog - Apprentissage IA pour Développeurs",
+      "description": "Blog éducatif pour développeurs : apprendre à maîtriser l'IA et booster son niveau grâce aux bons outils et bonnes pratiques. Contenu pédagogique, moderne et IA-oriented.",
+      "highlights": [
+        "Contenu pédagogique sur l'IA",
+        "Interface moderne et claire",
+        "Orienté développeurs",
+        "Déployé sur Vercel"
+      ]
+    },
+    "portfolio-interactif": {
+      "title": "Portfolio Interactif avec IA",
+      "description": "Portfolio personnel innovant avec interface conversationnelle alimentée par IA, permettant une navigation intuitive via commandes naturelles. Système de fenêtres flottantes interactives et thèmes dynamiques.",
+      "highlights": [
+        "Interface conversationnelle avec IA",
+        "Système de fenêtres interactives",
+        "Thèmes personnalisables",
+        "Architecture modulaire et évolutive"
+      ]
+    }
+  },
+  "skillCategories": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "database": "Bases de données",
+    "tools": "Outils & DevOps",
+    "other": "Autres"
+  },
+  "experiences": {
+    "phonegs": {
+      "position": "Ingénieur Logiciel Full-Stack",
+      "location": "Jérusalem, Israël",
+      "description": "Développement complet d'une application de téléphonie professionnelle (VoIP), pilotée en React/Node, intégrée à Asterisk et FusionPBX.",
+      "responsibilities": [
+        "Développement full-stack de l'application interne : UI React, API Node.js, backend PHP/Laravel",
+        "Intégration avancée avec les systèmes téléphoniques : Asterisk, FusionPBX, WebRTC",
+        "Architecture et optimisation des performances",
+        "Automatisation des workflows",
+        "Mise en place de dashboards et interfaces d'administration",
+        "Participation aux décisions produit avec forte autonomie technique"
+      ]
+    },
+    "freelance": {
+      "position": "Développeur Full-Stack",
+      "location": "France",
+      "description": "Missions variées en développement web et automatisation pour divers clients.",
+      "responsibilities": [
+        "Création de sites vitrines professionnels",
+        "Développement de SaaS",
+        "Scrapers et automatisations avancées",
+        "Intégration API et développement de back-offices",
+        "Création de dashboards sur mesure"
+      ]
+    }
+  },
+  "education": {
+    "webschool": {
+      "degree": "Formation Développement Web",
+      "field": "Full-Stack",
+      "description": "Formation intensive en développement web couvrant le frontend et le backend.",
+      "achievements": [
+        "Bases solides en développement front et back",
+        "Premières applications complètes",
+        "Premières missions freelance"
+      ]
+    }
+  }
+}

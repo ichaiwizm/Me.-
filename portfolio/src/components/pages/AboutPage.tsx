@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { PERSONAL_INFO } from "@/data/personal-info";
-import { EXPERIENCES } from "@/data/experience";
+import { useTranslation } from "react-i18next";
+import { usePersonalInfo, useExperiences, type LocalizedExperience } from "@/data/hooks";
 import { FadeInView } from "@/components/animations";
 import { EASINGS, SPRINGS } from "@/lib/constants/animation";
 import {
@@ -16,14 +16,6 @@ import {
   Smile,
   Zap,
 } from "lucide-react";
-
-const typeLabels: Record<string, string> = {
-  alternance: "Alternance",
-  emploi: "Emploi",
-  stage: "Stage",
-  benevole: "Bénévolat",
-  freelance: "Freelance",
-};
 
 const typeColors: Record<string, string> = {
   alternance: "from-blue-500 to-blue-600",
@@ -44,9 +36,11 @@ const qualityIcons: Record<string, React.ReactNode> = {
 function ExperienceCard({
   exp,
   index,
+  t,
 }: {
-  exp: (typeof EXPERIENCES)[0];
+  exp: LocalizedExperience;
   index: number;
+  t: (key: string) => string;
 }) {
   return (
     <motion.div
@@ -102,7 +96,7 @@ function ExperienceCard({
               transition={{ duration: 2, repeat: Infinity }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)] animate-pulse" />
-              En cours
+              {t("about.current")}
             </motion.span>
           )}
         </div>
@@ -114,11 +108,11 @@ function ExperienceCard({
               typeColors[exp.type]
             } bg-opacity-10 text-foreground/70`}
           >
-            {typeLabels[exp.type]}
+            {t(`about.experienceTypes.${exp.type}`)}
           </span>
           <span className="flex items-center gap-1.5">
             <Calendar className="w-3 h-3" />
-            {exp.startDate} — {exp.current ? "Présent" : exp.endDate}
+            {exp.startDate} — {exp.current ? t("about.present") : exp.endDate}
           </span>
         </div>
 
@@ -151,7 +145,10 @@ function ExperienceCard({
 }
 
 export function AboutPage() {
-  const sortedExperiences = [...EXPERIENCES].sort((a, b) => {
+  const { t } = useTranslation("pages");
+  const personalInfo = usePersonalInfo();
+  const experiences = useExperiences();
+  const sortedExperiences = [...experiences].sort((a, b) => {
     const dateA = new Date(a.startDate).getTime();
     const dateB = new Date(b.startDate).getTime();
     return dateB - dateA;
@@ -169,13 +166,13 @@ export function AboutPage() {
             transition={{ delay: 0.2 }}
           >
             <div className="w-8 h-px bg-primary/50" />
-            À propos
+            {t("about.header")}
           </motion.div>
           <h1 className="text-monumental tracking-tight mb-6">
-            <span className="gradient-text">Mon parcours</span>
+            <span className="gradient-text">{t("about.title")}</span>
           </h1>
           <p className="text-headline text-foreground/70 leading-snug max-w-2xl">
-            Builder obsessionnel le jour, bon vivant la nuit
+            {t("about.subtitle")}
           </p>
         </FadeInView>
 
@@ -186,7 +183,7 @@ export function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          {PERSONAL_INFO.qualities.map((quality, i) => (
+          {personalInfo.qualities.map((quality, i) => (
             <motion.div
               key={quality.trait}
               className="p-4 rounded-xl glass text-center"
@@ -216,13 +213,10 @@ export function AboutPage() {
               <div className="p-2 rounded-lg bg-primary/10 text-primary">
                 <Briefcase className="w-4 h-4" />
               </div>
-              <h2 className="text-small-caps text-foreground/50">Mon parcours</h2>
+              <h2 className="text-small-caps text-foreground/50">{t("about.journey")}</h2>
             </div>
             <p className="text-body text-foreground/70 leading-relaxed">
-              Ingénieur logiciel full-stack chez <strong className="text-foreground">PhoneGS</strong> à Jérusalem, je conçois
-              et développe des applications complètes — du front au backend en passant par l'infra.
-              Après plusieurs années en freelance entre Paris et Israël, j'ai acquis une vision 360°
-              du développement produit et une capacité à livrer vite et bien.
+              {t("about.journeyText")}
             </p>
           </motion.div>
 
@@ -237,13 +231,10 @@ export function AboutPage() {
               <div className="p-2 rounded-lg bg-accent/10 text-accent">
                 <Sparkles className="w-4 h-4" />
               </div>
-              <h2 className="text-small-caps text-foreground/50">Ma philosophie</h2>
+              <h2 className="text-small-caps text-foreground/50">{t("about.philosophy")}</h2>
             </div>
             <p className="text-body text-foreground/70 leading-relaxed">
-              Je suis passionné par l'IA et l'automatisation — je les intègre dans chaque projet
-              pour aller plus vite et livrer mieux. Mais la vie c'est pas que du code : famille,
-              voyages, pizza sur les toits avec vue sur la ville. C'est cet équilibre qui me garde
-              créatif.
+              {t("about.philosophyText")}
             </p>
           </motion.div>
         </div>
@@ -252,14 +243,14 @@ export function AboutPage() {
         <div className="mb-20">
           <FadeInView>
             <div className="flex items-center gap-4 mb-8">
-              <h2 className="text-title font-bold">Expériences professionnelles</h2>
+              <h2 className="text-title font-bold">{t("about.experiences")}</h2>
               <div className="flex-1 h-px bg-gradient-to-r from-foreground/20 to-transparent" />
             </div>
           </FadeInView>
 
           <div className="space-y-6">
             {sortedExperiences.map((exp, index) => (
-              <ExperienceCard key={exp.id} exp={exp} index={index} />
+              <ExperienceCard key={exp.id} exp={exp} index={index} t={t} />
             ))}
           </div>
         </div>
@@ -278,10 +269,10 @@ export function AboutPage() {
               <div className="p-2 rounded-lg bg-primary/10 text-primary">
                 <Languages className="w-4 h-4" />
               </div>
-              <h3 className="text-small-caps text-foreground/50">Langues</h3>
+              <h3 className="text-small-caps text-foreground/50">{t("about.languages")}</h3>
             </div>
             <div className="space-y-4">
-              {PERSONAL_INFO.languages.map((lang, i) => (
+              {personalInfo.languages.map((lang, i) => (
                 <motion.div
                   key={lang.name}
                   className="flex items-center justify-between"
@@ -305,11 +296,11 @@ export function AboutPage() {
               <div className="p-2 rounded-lg bg-accent/10 text-accent">
                 <Sparkles className="w-4 h-4" />
               </div>
-              <h3 className="text-small-caps text-foreground/50">Retrouvez-moi</h3>
+              <h3 className="text-small-caps text-foreground/50">{t("about.findMe")}</h3>
             </div>
             <div className="space-y-3">
               <motion.a
-                href={PERSONAL_INFO.social.github}
+                href={personalInfo.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-3 p-3 rounded-xl hover:bg-foreground/5 transition-colors"
@@ -324,7 +315,7 @@ export function AboutPage() {
                 </span>
               </motion.a>
               <motion.a
-                href={PERSONAL_INFO.social.linkedin}
+                href={personalInfo.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-3 p-3 rounded-xl hover:bg-foreground/5 transition-colors"

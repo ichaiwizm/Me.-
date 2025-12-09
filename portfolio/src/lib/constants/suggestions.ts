@@ -1,38 +1,40 @@
+export type CategoryKey = "portfolio" | "contact" | "experience" | "projects" | "photos" | "demo" | "customization";
+
 export type Suggestion = {
-  text: string;
-  category: string;
+  textKey: string;
+  category: CategoryKey;
 };
 
 export const SUGGESTIONS: Suggestion[] = [
-  // Portfolio - Section principale
-  { text: "Montre-moi tes projets", category: "Portfolio" },
-  { text: "Affiche ton CV", category: "Portfolio" },
-  { text: "Quelles sont tes compétences ?", category: "Portfolio" },
-  { text: "Parle-moi de ton parcours", category: "Portfolio" },
+  // Portfolio - Main section
+  { textKey: "showProjects", category: "portfolio" },
+  { textKey: "showCV", category: "portfolio" },
+  { textKey: "whatSkills", category: "portfolio" },
+  { textKey: "tellAbout", category: "portfolio" },
 
   // Contact
-  { text: "Comment te contacter ?", category: "Contact" },
-  { text: "Formulaire de contact", category: "Contact" },
+  { textKey: "howContact", category: "contact" },
+  { textKey: "contactForm", category: "contact" },
 
-  // Expérience
-  { text: "Ton expérience chez PhoneGS", category: "Expérience" },
-  { text: "Tes missions freelance", category: "Expérience" },
+  // Experience
+  { textKey: "phonegsExp", category: "experience" },
+  { textKey: "freelanceMissions", category: "experience" },
 
-  // Projets
-  { text: "Parle-moi de Mutuelles_v4", category: "Projets" },
-  { text: "Présente Shoot", category: "Projets" },
-  { text: "Ton blog sur l'IA", category: "Projets" },
+  // Projects
+  { textKey: "aboutMutuelles", category: "projects" },
+  { textKey: "presentShoot", category: "projects" },
+  { textKey: "aiBlog", category: "projects" },
 
-  // Photos perso
-  { text: "Montre-moi tes photos", category: "Photos" },
-  { text: "Photo de Paris", category: "Photos" },
-  { text: "La photo fun à l'aquarium", category: "Photos" },
+  // Personal photos
+  { textKey: "showPhotos", category: "photos" },
+  { textKey: "parisPhoto", category: "photos" },
+  { textKey: "aquariumPhoto", category: "photos" },
 
-  // Compétences techniques
-  { text: "Visualise tes compétences", category: "Démo" },
-  { text: "Tes technos préférées", category: "Démo" },
+  // Technical skills
+  { textKey: "visualizeSkills", category: "demo" },
+  { textKey: "favoriteTech", category: "demo" },
 
-  // Personnalisation
-  { text: "Change le thème en mode sombre", category: "Personnalisation" },
-  { text: "Fond dégradé violet", category: "Personnalisation" },
+  // Customization
+  { textKey: "darkTheme", category: "customization" },
+  { textKey: "purpleGradient", category: "customization" },
 ];

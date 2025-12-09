@@ -1,0 +1,28 @@
+{
+  "items": {
+    "home": "Home",
+    "projects": "Projects",
+    "skills": "Skills",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "subtitle": "Full-Stack Engineer",
+  "cards": {
+    "home": {
+      "title": "Home",
+      "description": "My Projects"
+    },
+    "skills": {
+      "title": "Skills",
+      "description": "My tech stack"
+    },
+    "about": {
+      "title": "About",
+      "description": "My journey"
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Get in touch"
+    }
+  }
+}

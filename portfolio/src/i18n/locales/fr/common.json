@@ -1,0 +1,118 @@
+{
+  "welcome": {
+    "greeting": "Bonjour ! Je suis Ichai, ingénieur full-stack.",
+    "subtext": "Posez-moi des questions sur mes projets, compétences ou expérience !",
+    "fullGreeting": "Bonjour ! Je suis Ichai, ingénieur full-stack. Posez-moi des questions sur mes projets, compétences ou expérience !"
+  },
+  "windowTitles": {
+    "skills": "Compétences Techniques",
+    "cv": "CV - Ichai Wizman",
+    "contact": "Me contacter",
+    "projects": "Mes Projets Phares",
+    "about": "À propos de moi",
+    "experience": "Mon Expérience",
+    "education": "Mon Parcours"
+  },
+  "toast": {
+    "success": {
+      "messageSent": "Message envoyé avec succès !",
+      "windowCreated": "Fenêtre créée",
+      "themeChanged": "Thème modifié",
+      "copied": "Copié dans le presse-papiers",
+      "languageChanged": "Langue modifiée"
+    },
+    "error": {
+      "generic": "Une erreur s'est produite",
+      "networkError": "Erreur de connexion",
+      "invalidInput": "Entrée invalide"
+    },
+    "info": {
+      "loading": "Chargement en cours...",
+      "processing": "Traitement en cours..."
+    }
+  },
+  "buttons": {
+    "sendMessage": "Envoyer le message",
+    "downloadCV": "Télécharger mon CV",
+    "viewProject": "Voir le projet",
+    "contactMe": "Me contacter",
+    "viewMore": "En savoir plus",
+    "close": "Fermer",
+    "minimize": "Réduire",
+    "expand": "Agrandir",
+    "retry": "Réessayer",
+    "cancel": "Annuler"
+  },
+  "placeholders": {
+    "name": "Votre nom",
+    "email": "Votre email",
+    "message": "Votre message",
+    "search": "Rechercher...",
+    "chatInput": "Écrivez votre demande..."
+  },
+  "aria": {
+    "closeWindow": "Fermer la fenêtre",
+    "minimizeWindow": "Réduire la fenêtre",
+    "themeSwitcher": "Changer de thème",
+    "languageSwitcher": "Changer de langue",
+    "resetApp": "Tout réinitialiser",
+    "toggleChat": "Afficher/masquer le chat",
+    "sendMessage": "Envoyer le message",
+    "openChat": "Ouvrir le chat"
+  },
+  "suggestions": {
+    "categories": {
+      "portfolio": "Portfolio",
+      "contact": "Contact",
+      "experience": "Expérience",
+      "projects": "Projets",
+      "photos": "Photos",
+      "demo": "Démo",
+      "customization": "Personnalisation"
+    },
+    "items": {
+      "showProjects": "Montre-moi tes projets",
+      "showCV": "Affiche ton CV",
+      "whatSkills": "Quelles sont tes compétences ?",
+      "tellAbout": "Parle-moi de ton parcours",
+      "howContact": "Comment te contacter ?",
+      "contactForm": "Formulaire de contact",
+      "phonegsExp": "Ton expérience chez PhoneGS",
+      "freelanceMissions": "Tes missions freelance",
+      "aboutMutuelles": "Parle-moi de Mutuelles_v4",
+      "presentShoot": "Présente Shoot",
+      "aiBlog": "Ton blog sur l'IA",
+      "showPhotos": "Montre-moi tes photos",
+      "parisPhoto": "Photo de Paris",
+      "aquariumPhoto": "La photo fun à l'aquarium",
+      "visualizeSkills": "Visualise tes compétences",
+      "favoriteTech": "Tes technos préférées",
+      "darkTheme": "Change le thème en mode sombre",
+      "purpleGradient": "Fond dégradé violet"
+    },
+    "header": "Suggestions",
+    "shuffle": "Mélanger les suggestions",
+    "clickToSend": "Cliquez pour envoyer la suggestion"
+  },
+  "chat": {
+    "title": "Assistant",
+    "subtitle": "Posez vos questions",
+    "thinking": "Ichai réfléchit",
+    "welcomeLine1": "Bonjour ! Je suis l'assistant d'Ichai, ingénieur full-stack.",
+    "welcomeLine2": "Pose-moi des questions sur ses projets, compétences ou parcours.",
+    "collapse": "Réduire",
+    "expand": "Afficher plus"
+  },
+  "labels": {
+    "windows": "Fenêtres",
+    "themes": "Thèmes",
+    "gallery": "Galerie",
+    "image": "Image",
+    "window": "Fenêtre",
+    "theme": "Thème",
+    "background": "Fond",
+    "navigation": "Navigation",
+    "action": "Action",
+    "noImageAvailable": "Aucune image disponible"
+  }
+}

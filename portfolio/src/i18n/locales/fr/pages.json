@@ -1,0 +1,92 @@
+{
+  "home": {
+    "greeting": "Salut, je suis",
+    "name": "Ichai Wizman"
+  },
+  "about": {
+    "header": "À propos",
+    "title": "Mon parcours",
+    "subtitle": "Builder obsessionnel le jour, bon vivant la nuit",
+    "journey": "Mon parcours",
+    "journeyText": "Ingénieur logiciel full-stack chez PhoneGS à Jérusalem. Passionné par la création de produits puissants et efficaces. Entre deux lignes de code, j'apprécie les moments en famille et les bonnes pizzas sur les toits de Jérusalem.",
+    "philosophy": "Ma philosophie",
+    "philosophyText": "Je suis passionné par l'IA et l'automatisation. Mon objectif : créer des outils qui simplifient la vie des gens tout en m'amusant. Chaque projet est une occasion d'apprendre et de repousser les limites.",
+    "experiences": "Expériences professionnelles",
+    "languages": "Langues",
+    "findMe": "Retrouvez-moi",
+    "experienceTypes": {
+      "alternance": "Alternance",
+      "emploi": "Emploi",
+      "stage": "Stage",
+      "benevole": "Bénévolat",
+      "freelance": "Freelance"
+    },
+    "current": "En cours",
+    "present": "Présent"
+  },
+  "projects": {
+    "header": "Portfolio",
+    "title": "Projets",
+    "subtitle": "Une sélection de mes réalisations en développement web, de l'expérimentation personnelle aux projets professionnels.",
+    "projectCount": "projets",
+    "featured": "Featured",
+    "highlights": "Points clés",
+    "code": "Code",
+    "viewProject": "Voir le projet",
+    "hoverToExplore": "Survole pour explorer",
+    "categories": {
+      "formation": "Formation",
+      "personnel": "Personnel",
+      "alternance": "Alternance",
+      "academique": "Académique",
+      "professionnel": "Professionnel"
+    }
+  },
+  "skills": {
+    "header": "Expertise",
+    "title": "Compétences",
+    "subtitle": "Technologies et outils que je maîtrise dans le développement web full-stack, de la conception à la mise en production.",
+    "technologies": "Technologies",
+    "expert": "Expert",
+    "average": "Moyenne",
+    "levels": "Niveaux :",
+    "levelLabels": {
+      "expert": "Expert",
+      "advanced": "Avancé",
+      "intermediate": "Intermédiaire",
+      "fundamental": "Fondamental",
+      "beginner": "Débutant"
+    },
+    "skill": "compétence",
+    "skills": "compétences",
+    "alwaysLearning": "Toujours en apprentissage, toujours curieux de nouvelles technologies"
+  },
+  "contact": {
+    "header": "Contactez-moi",
+    "title": "Contact",
+    "subtitle": "N'hésitez pas à me contacter pour toute opportunité, projet ou simplement pour discuter.",
+    "email": "Email",
+    "phone": "Téléphone",
+    "location": "Localisation",
+    "sendMessage": "Envoyez-moi un message",
+    "allFieldsRequired": "Tous les champs sont requis",
+    "messageSent": "Message envoyé !",
+    "willReply": "Je vous réponds très vite.",
+    "sending": "Envoi en cours...",
+    "send": "Envoyer le message",
+    "findMeAlso": "Retrouvez-moi également",
+    "form": {
+      "name": "Nom",
+      "namePlaceholder": "Votre nom complet",
+      "email": "Email",
+      "emailPlaceholder": "votre@email.com",
+      "message": "Message",
+      "messagePlaceholder": "Votre message..."
+    }
+  },
+  "error": {
+    "title": "Une erreur s'est produite",
+    "message": "L'application a rencontré une erreur inattendue.",
+    "reload": "Recharger la page"
+  }
+}

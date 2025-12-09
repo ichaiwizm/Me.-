@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { PERSONAL_INFO } from "@/data/personal-info";
+import { usePersonalInfo } from "@/data/hooks";
 import { useTypeWriter } from "@/components/ui/TypeWriter";
 import { EASINGS } from "@/lib/constants/animation";
 
@@ -33,7 +33,8 @@ function FloatingShape({
 }
 
 export function HomePage() {
-  const { displayedText, isComplete } = useTypeWriter(PERSONAL_INFO.fullName, 100, 800);
+  const personalInfo = usePersonalInfo();
+  const { displayedText, isComplete } = useTypeWriter(personalInfo.fullName, 100, 800);
 
   const titleVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -124,7 +125,7 @@ export function HomePage() {
           initial="hidden"
           animate="visible"
         >
-          {PERSONAL_INFO.title}
+          {personalInfo.title}
         </motion.p>
 
         {/* Subtitle with glassmorphism badge */}
@@ -136,7 +137,7 @@ export function HomePage() {
         >
           <span className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass text-body text-foreground/70">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            {PERSONAL_INFO.subtitle}
+            {personalInfo.subtitle}
           </span>
         </motion.div>
 
@@ -161,7 +162,7 @@ export function HomePage() {
           initial="hidden"
           animate="visible"
         >
-          {PERSONAL_INFO.bio.short}
+          {personalInfo.bio.short}
         </motion.p>
       </motion.div>
     </div>

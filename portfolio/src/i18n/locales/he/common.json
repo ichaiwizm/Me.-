@@ -1,0 +1,118 @@
+{
+  "welcome": {
+    "greeting": "!שלום! אני יחי, מהנדס פול-סטאק",
+    "subtext": "!שאלו אותי על הפרויקטים, הכישורים או הניסיון שלי",
+    "fullGreeting": "!שלום! אני יחי, מהנדס פול-סטאק. שאלו אותי על הפרויקטים, הכישורים או הניסיון שלי"
+  },
+  "windowTitles": {
+    "skills": "כישורים טכניים",
+    "cv": "קורות חיים - יחי ויזמן",
+    "contact": "צור קשר",
+    "projects": "פרויקטים מובילים",
+    "about": "אודותיי",
+    "experience": "הניסיון שלי",
+    "education": "המסע שלי"
+  },
+  "toast": {
+    "success": {
+      "messageSent": "!ההודעה נשלחה בהצלחה",
+      "windowCreated": "חלון נוצר",
+      "themeChanged": "ערכת הנושא שונתה",
+      "copied": "הועתק ללוח",
+      "languageChanged": "השפה שונתה"
+    },
+    "error": {
+      "generic": "אירעה שגיאה",
+      "networkError": "שגיאת חיבור",
+      "invalidInput": "קלט לא תקין"
+    },
+    "info": {
+      "loading": "...טוען",
+      "processing": "...מעבד"
+    }
+  },
+  "buttons": {
+    "sendMessage": "שלח הודעה",
+    "downloadCV": "הורד את קורות החיים שלי",
+    "viewProject": "צפה בפרויקט",
+    "contactMe": "צור קשר",
+    "viewMore": "למידע נוסף",
+    "close": "סגור",
+    "minimize": "מזער",
+    "expand": "הרחב",
+    "retry": "נסה שוב",
+    "cancel": "בטל"
+  },
+  "placeholders": {
+    "name": "השם שלך",
+    "email": "האימייל שלך",
+    "message": "ההודעה שלך",
+    "search": "...חפש",
+    "chatInput": "...כתוב את הבקשה שלך"
+  },
+  "aria": {
+    "closeWindow": "סגור חלון",
+    "minimizeWindow": "מזער חלון",
+    "themeSwitcher": "שנה ערכת נושא",
+    "languageSwitcher": "שנה שפה",
+    "resetApp": "אפס הכל",
+    "toggleChat": "הצג/הסתר צ'אט",
+    "sendMessage": "שלח הודעה",
+    "openChat": "פתח צ'אט"
+  },
+  "suggestions": {
+    "categories": {
+      "portfolio": "תיק עבודות",
+      "contact": "צור קשר",
+      "experience": "ניסיון",
+      "projects": "פרויקטים",
+      "photos": "תמונות",
+      "demo": "הדגמה",
+      "customization": "התאמה אישית"
+    },
+    "items": {
+      "showProjects": "הראה לי את הפרויקטים שלך",
+      "showCV": "הצג את קורות החיים שלך",
+      "whatSkills": "מה הכישורים שלך?",
+      "tellAbout": "ספר לי על המסע שלך",
+      "howContact": "איך ליצור איתך קשר?",
+      "contactForm": "טופס יצירת קשר",
+      "phonegsExp": "הניסיון שלך ב-PhoneGS",
+      "freelanceMissions": "המשימות הפרילנס שלך",
+      "aboutMutuelles": "ספר לי על Mutuelles_v4",
+      "presentShoot": "הצג את Shoot",
+      "aiBlog": "הבלוג שלך על AI",
+      "showPhotos": "הראה לי את התמונות שלך",
+      "parisPhoto": "תמונה מפריז",
+      "aquariumPhoto": "התמונה המצחיקה מהאקווריום",
+      "visualizeSkills": "הדגם את הכישורים שלך",
+      "favoriteTech": "הטכנולוגיות האהובות עליך",
+      "darkTheme": "עבור למצב כהה",
+      "purpleGradient": "רקע גרדיאנט סגול"
+    },
+    "header": "הצעות",
+    "shuffle": "ערבב הצעות",
+    "clickToSend": "לחץ לשליחת ההצעה"
+  },
+  "chat": {
+    "title": "עוזר",
+    "subtitle": "שאל את השאלות שלך",
+    "thinking": "יחי חושב",
+    "welcomeLine1": ".שלום! אני העוזר של יחי, מהנדס פול-סטאק",
+    "welcomeLine2": ".שאל אותי על הפרויקטים, הכישורים או המסע שלו",
+    "collapse": "כווץ",
+    "expand": "הצג עוד"
+  },
+  "labels": {
+    "windows": "חלונות",
+    "themes": "ערכות נושא",
+    "gallery": "גלריה",
+    "image": "תמונה",
+    "window": "חלון",
+    "theme": "ערכת נושא",
+    "background": "רקע",
+    "navigation": "ניווט",
+    "action": "פעולה",
+    "noImageAvailable": "אין תמונה זמינה"
+  }
+}

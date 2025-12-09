@@ -1,6 +1,8 @@
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { PageId } from "@/lib/commands/types";
@@ -14,6 +16,7 @@ type HeaderProps = {
 export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
+  const { t } = useTranslation("navigation");
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
@@ -24,12 +27,12 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
     onNavigate?.(page);
   };
 
-  const navItems: { id: PageId; label: string }[] = [
-    { id: "accueil", label: "Accueil" },
-    { id: "projets", label: "Projets" },
-    { id: "competences", label: "Compétences" },
-    { id: "a-propos", label: "À propos" },
-    { id: "contact", label: "Contact" },
+  const navItems: { id: PageId; labelKey: string }[] = [
+    { id: "accueil", labelKey: "home" },
+    { id: "projets", labelKey: "projects" },
+    { id: "competences", labelKey: "skills" },
+    { id: "a-propos", labelKey: "about" },
+    { id: "contact", labelKey: "contact" },
   ];
 
   return (
@@ -81,7 +84,7 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
               }}
               transition={{ duration: 0.3 }}
             >
-              Ingénieur Full-Stack
+              {t("subtitle")}
             </motion.span>
           </motion.div>
 
@@ -103,7 +106,7 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  {item.label}
+                  {t(`items.${item.labelKey}`)}
 
                   {/* Active indicator with layoutId for smooth transitions */}
                   {isActive && (
@@ -143,14 +146,15 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
                   variant="ghost"
                   size="icon"
                   onClick={onReset}
-                  aria-label="Tout réinitialiser"
-                  title="Tout réinitialiser"
+                  aria-label={t("common:aria.resetApp")}
+                  title={t("common:aria.resetApp")}
                   className="text-foreground/60 hover:text-foreground hover:bg-foreground/5"
                 >
                   <RotateCcw className="h-4 w-4" />
                 </Button>
               </motion.div>
             )}
+            <LanguageSwitcher />
             <ThemeSwitcher />
           </div>
         </div>

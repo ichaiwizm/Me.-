@@ -1,0 +1,118 @@
+{
+  "welcome": {
+    "greeting": "Hello! I'm Ichai, a full-stack engineer.",
+    "subtext": "Ask me about my projects, skills, or experience!",
+    "fullGreeting": "Hello! I'm Ichai, a full-stack engineer. Ask me about my projects, skills, or experience!"
+  },
+  "windowTitles": {
+    "skills": "Technical Skills",
+    "cv": "CV - Ichai Wizman",
+    "contact": "Contact Me",
+    "projects": "Featured Projects",
+    "about": "About Me",
+    "experience": "My Experience",
+    "education": "My Journey"
+  },
+  "toast": {
+    "success": {
+      "messageSent": "Message sent successfully!",
+      "windowCreated": "Window created",
+      "themeChanged": "Theme changed",
+      "copied": "Copied to clipboard",
+      "languageChanged": "Language changed"
+    },
+    "error": {
+      "generic": "An error occurred",
+      "networkError": "Connection error",
+      "invalidInput": "Invalid input"
+    },
+    "info": {
+      "loading": "Loading...",
+      "processing": "Processing..."
+    }
+  },
+  "buttons": {
+    "sendMessage": "Send message",
+    "downloadCV": "Download my CV",
+    "viewProject": "View project",
+    "contactMe": "Contact me",
+    "viewMore": "Learn more",
+    "close": "Close",
+    "minimize": "Minimize",
+    "expand": "Expand",
+    "retry": "Retry",
+    "cancel": "Cancel"
+  },
+  "placeholders": {
+    "name": "Your name",
+    "email": "Your email",
+    "message": "Your message",
+    "search": "Search...",
+    "chatInput": "Write your request..."
+  },
+  "aria": {
+    "closeWindow": "Close window",
+    "minimizeWindow": "Minimize window",
+    "themeSwitcher": "Change theme",
+    "languageSwitcher": "Change language",
+    "resetApp": "Reset everything",
+    "toggleChat": "Show/hide chat",
+    "sendMessage": "Send message",
+    "openChat": "Open chat"
+  },
+  "suggestions": {
+    "categories": {
+      "portfolio": "Portfolio",
+      "contact": "Contact",
+      "experience": "Experience",
+      "projects": "Projects",
+      "photos": "Photos",
+      "demo": "Demo",
+      "customization": "Customization"
+    },
+    "items": {
+      "showProjects": "Show me your projects",
+      "showCV": "Display your CV",
+      "whatSkills": "What are your skills?",
+      "tellAbout": "Tell me about your journey",
+      "howContact": "How to contact you?",
+      "contactForm": "Contact form",
+      "phonegsExp": "Your experience at PhoneGS",
+      "freelanceMissions": "Your freelance missions",
+      "aboutMutuelles": "Tell me about Mutuelles_v4",
+      "presentShoot": "Present Shoot",
+      "aiBlog": "Your AI blog",
+      "showPhotos": "Show me your photos",
+      "parisPhoto": "Paris photo",
+      "aquariumPhoto": "The fun aquarium photo",
+      "visualizeSkills": "Visualize your skills",
+      "favoriteTech": "Your favorite technologies",
+      "darkTheme": "Switch to dark theme",
+      "purpleGradient": "Purple gradient background"
+    },
+    "header": "Suggestions",
+    "shuffle": "Shuffle suggestions",
+    "clickToSend": "Click to send the suggestion"
+  },
+  "chat": {
+    "title": "Assistant",
+    "subtitle": "Ask your questions",
+    "thinking": "Ichai is thinking",
+    "welcomeLine1": "Hello! I'm Ichai's assistant, a full-stack engineer.",
+    "welcomeLine2": "Ask me about his projects, skills, or journey.",
+    "collapse": "Collapse",
+    "expand": "Show more"
+  },
+  "labels": {
+    "windows": "Windows",
+    "themes": "Themes",
+    "gallery": "Gallery",
+    "image": "Image",
+    "window": "Window",
+    "theme": "Theme",
+    "background": "Background",
+    "navigation": "Navigation",
+    "action": "Action",
+    "noImageAvailable": "No image available"
+  }
+}

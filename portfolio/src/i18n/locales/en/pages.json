@@ -1,0 +1,92 @@
+{
+  "home": {
+    "greeting": "Hi, I'm",
+    "name": "Ichai Wizman"
+  },
+  "about": {
+    "header": "About",
+    "title": "My Journey",
+    "subtitle": "Obsessive builder by day, bon vivant by night",
+    "journey": "My Journey",
+    "journeyText": "Full-stack software engineer at PhoneGS in Jerusalem. Passionate about building powerful, efficient products. Between lines of code, I enjoy family time and good pizzas on Jerusalem rooftops.",
+    "philosophy": "My Philosophy",
+    "philosophyText": "I'm passionate about AI and automation. My goal: build tools that make people's lives easier while having fun doing it. Every project is an opportunity to learn and push the limits.",
+    "experiences": "Professional Experience",
+    "languages": "Languages",
+    "findMe": "Find Me",
+    "experienceTypes": {
+      "alternance": "Apprenticeship",
+      "emploi": "Employment",
+      "stage": "Internship",
+      "benevole": "Volunteer",
+      "freelance": "Freelance"
+    },
+    "current": "Ongoing",
+    "present": "Present"
+  },
+  "projects": {
+    "header": "Portfolio",
+    "title": "Projects",
+    "subtitle": "A selection of my web development achievements, from personal experimentation to professional projects.",
+    "projectCount": "projects",
+    "featured": "Featured",
+    "highlights": "Key Points",
+    "code": "Code",
+    "viewProject": "View project",
+    "hoverToExplore": "Hover to explore",
+    "categories": {
+      "formation": "Training",
+      "personnel": "Personal",
+      "alternance": "Apprenticeship",
+      "academique": "Academic",
+      "professionnel": "Professional"
+    }
+  },
+  "skills": {
+    "header": "Expertise",
+    "title": "Skills",
+    "subtitle": "Technologies and tools I master in full-stack web development, from design to production.",
+    "technologies": "Technologies",
+    "expert": "Expert",
+    "average": "Average",
+    "levels": "Levels:",
+    "levelLabels": {
+      "expert": "Expert",
+      "advanced": "Advanced",
+      "intermediate": "Intermediate",
+      "fundamental": "Fundamental",
+      "beginner": "Beginner"
+    },
+    "skill": "skill",
+    "skills": "skills",
+    "alwaysLearning": "Always learning, always curious about new technologies"
+  },
+  "contact": {
+    "header": "Contact Me",
+    "title": "Contact",
+    "subtitle": "Feel free to reach out for any opportunity, project, or just to chat.",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "sendMessage": "Send me a message",
+    "allFieldsRequired": "All fields are required",
+    "messageSent": "Message sent!",
+    "willReply": "I'll get back to you soon.",
+    "sending": "Sending...",
+    "send": "Send message",
+    "findMeAlso": "Also find me on",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "message": "Message",
+      "messagePlaceholder": "Your message..."
+    }
+  },
+  "error": {
+    "title": "An error occurred",
+    "message": "The application encountered an unexpected error.",
+    "reload": "Reload page"
+  }
+}

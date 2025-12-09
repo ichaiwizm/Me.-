@@ -1,0 +1,38 @@
+{
+  "header": "Themes",
+  "themes": {
+    "lumiere": {
+      "label": "Light",
+      "description": "Clarity and simplicity"
+    },
+    "nuit": {
+      "label": "Starry Night",
+      "description": "Nocturnal elegance"
+    },
+    "foret-emeraude": {
+      "label": "Emerald Forest",
+      "description": "Nature and serenity"
+    },
+    "ocean-profond": {
+      "label": "Deep Ocean",
+      "description": "Calm and depth"
+    },
+    "crepuscule-dore": {
+      "label": "Golden Twilight",
+      "description": "Warmth and harmony"
+    },
+    "lavande-zen": {
+      "label": "Zen Lavender",
+      "description": "Softness and meditation"
+    },
+    "feu-dragon": {
+      "label": "Dragon Fire",
+      "description": "Power and intensity"
+    }
+  },
+  "categories": {
+    "apaisant": "Calming",
+    "energique": "Energetic",
+    "sophistique": "Sophisticated"
+  }
+}

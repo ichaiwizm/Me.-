@@ -1,18 +1,11 @@
 import { motion } from "framer-motion";
-import { PROJECTS } from "@/data/projects";
+import { useTranslation } from "react-i18next";
+import { useProjects, type LocalizedProject } from "@/data/hooks";
 import { useState } from "react";
 import { FadeInView } from "@/components/animations";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { EASINGS, SPRINGS } from "@/lib/constants/animation";
 import { ExternalLink, Github, Star, Calendar, Folder } from "lucide-react";
-
-const categoryLabels: Record<string, string> = {
-  formation: "Formation",
-  personnel: "Personnel",
-  alternance: "Alternance",
-  academique: "Académique",
-  professionnel: "Professionnel",
-};
 
 const categoryColors: Record<string, string> = {
   formation: "from-blue-500/20 to-blue-600/20",
@@ -26,9 +19,11 @@ const categoryColors: Record<string, string> = {
 function ProjectCard({
   project,
   index,
+  t,
 }: {
-  project: (typeof PROJECTS)[0];
+  project: LocalizedProject;
   index: number;
+  t: (key: string) => string;
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -93,7 +88,7 @@ function ProjectCard({
                   >
                     <Star className="w-3 h-3 text-[var(--color-warning)] fill-[var(--color-warning)]" />
                     <span className="text-tiny text-[var(--color-warning)] font-medium">
-                      Featured
+                      {t("projects.featured")}
                     </span>
                   </motion.div>
                 )}
@@ -107,7 +102,7 @@ function ProjectCard({
                       project.category
                     ].replace("/20", "/60")}`}
                   />
-                  {categoryLabels[project.category]}
+                  {t(`projects.categories.${project.category}`)}
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Calendar className="w-3 h-3" />
@@ -155,7 +150,7 @@ function ProjectCard({
                 <div className="pt-4">
                   <div className="text-small-caps text-foreground/40 mb-3 flex items-center gap-2">
                     <div className="w-8 h-px bg-foreground/20" />
-                    Points clés
+                    {t("projects.highlights")}
                   </div>
                   <ul className="space-y-2">
                     {project.highlights.map((highlight, i) => (
@@ -196,7 +191,7 @@ function ProjectCard({
                     whileTap={{ scale: 0.95 }}
                   >
                     <Github className="w-4 h-4" />
-                    Code
+                    {t("projects.code")}
                   </motion.a>
                 )}
                 {project.liveUrl && (
@@ -209,7 +204,7 @@ function ProjectCard({
                     whileTap={{ scale: 0.95 }}
                   >
                     <ExternalLink className="w-4 h-4" />
-                    Voir le projet
+                    {t("projects.viewProject")}
                   </motion.a>
                 )}
               </motion.div>
@@ -233,8 +228,11 @@ function ProjectCard({
 }
 
 export function ProjectsPage() {
+  const { t } = useTranslation("pages");
+  const projects = useProjects();
+
   // Sort projects by date (newest first)
-  const sortedProjects = [...PROJECTS].sort((a, b) => {
+  const sortedProjects = [...projects].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
     return dateB - dateA;
@@ -254,10 +252,10 @@ export function ProjectsPage() {
                 transition={{ delay: 0.2 }}
               >
                 <div className="w-8 h-px bg-primary/50" />
-                Portfolio
+                {t("projects.header")}
               </motion.div>
               <h1 className="text-monumental tracking-tight">
-                <span className="gradient-text">Projets</span>
+                <span className="gradient-text">{t("projects.title")}</span>
               </h1>
             </div>
             <motion.div
@@ -267,20 +265,19 @@ export function ProjectsPage() {
               transition={{ delay: 0.4 }}
             >
               <p className="text-body text-foreground/50">
-                {sortedProjects.length} projets
+                {sortedProjects.length} {t("projects.projectCount")}
               </p>
             </motion.div>
           </div>
           <p className="text-body-large text-foreground/60 max-w-2xl">
-            Une sélection de mes réalisations en développement web, de
-            l'expérimentation personnelle aux projets professionnels.
+            {t("projects.subtitle")}
           </p>
         </FadeInView>
 
         {/* Projects Grid */}
         <div className="grid gap-8 md:grid-cols-2">
           {sortedProjects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <ProjectCard key={project.id} project={project} index={index} t={t} />
           ))}
         </div>
 
@@ -294,7 +291,7 @@ export function ProjectsPage() {
         >
           <div className="h-px w-16 bg-gradient-to-r from-transparent to-foreground/20" />
           <p className="text-tiny text-foreground/40 uppercase tracking-widest">
-            Survole pour explorer
+            {t("projects.hoverToExplore")}
           </p>
           <div className="h-px w-16 bg-gradient-to-l from-transparent to-foreground/20" />
         </motion.div>

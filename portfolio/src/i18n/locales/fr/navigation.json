@@ -1,0 +1,28 @@
+{
+  "items": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "skills": "Compétences",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "subtitle": "Ingénieur Full-Stack",
+  "cards": {
+    "home": {
+      "title": "Accueil",
+      "description": "Mes Projets"
+    },
+    "skills": {
+      "title": "Compétences",
+      "description": "Ma stack technique"
+    },
+    "about": {
+      "title": "À propos",
+      "description": "Mon parcours"
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Me contacter"
+    }
+  }
+}

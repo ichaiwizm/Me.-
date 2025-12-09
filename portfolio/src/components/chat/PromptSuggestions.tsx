@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lightbulb, RefreshCw, X, ChevronDown, ChevronUp } from "lucide-react";
-import { SUGGESTIONS, type Suggestion } from "@/lib/constants/suggestions";
+import { SUGGESTIONS, type Suggestion, type CategoryKey } from "@/lib/constants/suggestions";
 import { cn } from "@/lib/utils";
 
 type PromptSuggestionsProps = {
@@ -11,15 +12,15 @@ type PromptSuggestionsProps = {
   variant?: "floating" | "inline";
 };
 
-// Category colors mapping
-const categoryColors: Record<string, { bg: string; border: string; dot: string }> = {
-  Portfolio: { bg: "hover:bg-violet-500/10", border: "border-violet-500/20", dot: "bg-violet-500" },
-  Contact: { bg: "hover:bg-emerald-500/10", border: "border-emerald-500/20", dot: "bg-emerald-500" },
-  Expérience: { bg: "hover:bg-blue-500/10", border: "border-blue-500/20", dot: "bg-blue-500" },
-  Projets: { bg: "hover:bg-amber-500/10", border: "border-amber-500/20", dot: "bg-amber-500" },
-  Photos: { bg: "hover:bg-rose-500/10", border: "border-rose-500/20", dot: "bg-rose-500" },
-  Démo: { bg: "hover:bg-cyan-500/10", border: "border-cyan-500/20", dot: "bg-cyan-500" },
-  Personnalisation: { bg: "hover:bg-purple-500/10", border: "border-purple-500/20", dot: "bg-purple-500" },
+// Category colors mapping (using category keys)
+const categoryColors: Record<CategoryKey, { bg: string; border: string; dot: string }> = {
+  portfolio: { bg: "hover:bg-violet-500/10", border: "border-violet-500/20", dot: "bg-violet-500" },
+  contact: { bg: "hover:bg-emerald-500/10", border: "border-emerald-500/20", dot: "bg-emerald-500" },
+  experience: { bg: "hover:bg-blue-500/10", border: "border-blue-500/20", dot: "bg-blue-500" },
+  projects: { bg: "hover:bg-amber-500/10", border: "border-amber-500/20", dot: "bg-amber-500" },
+  photos: { bg: "hover:bg-rose-500/10", border: "border-rose-500/20", dot: "bg-rose-500" },
+  demo: { bg: "hover:bg-cyan-500/10", border: "border-cyan-500/20", dot: "bg-cyan-500" },
+  customization: { bg: "hover:bg-purple-500/10", border: "border-purple-500/20", dot: "bg-purple-500" },
 };
 
 const defaultColors = { bg: "hover:bg-foreground/5", border: "border-foreground/10", dot: "bg-foreground/50" };
@@ -44,6 +45,7 @@ function groupByCategory(suggestions: Suggestion[]): Record<string, Suggestion[]
 }
 
 export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floating" }: PromptSuggestionsProps) {
+  const { t } = useTranslation("common");
   const [isOpen, setIsOpen] = useState(false);
   const [shuffleKey, setShuffleKey] = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -105,7 +107,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
           className="flex items-center gap-1.5 text-xs text-foreground/50 hover:text-foreground/70 transition-colors mb-2"
         >
           <Lightbulb className="w-3.5 h-3.5" />
-          <span>Suggestions</span>
+          <span>{t("suggestions.header")}</span>
           {isOpen ? (
             <ChevronUp className="w-3.5 h-3.5" />
           ) : (
@@ -126,10 +128,11 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
               <div className="flex flex-wrap gap-1.5 pb-2">
                 {flatSuggestions.map((suggestion, index) => {
                   const colors = categoryColors[suggestion.category] || defaultColors;
+                  const text = t(`suggestions.items.${suggestion.textKey}`);
                   return (
                     <motion.button
-                      key={suggestion.text}
-                      onClick={() => handleSelect(suggestion.text)}
+                      key={suggestion.textKey}
+                      onClick={() => handleSelect(text)}
                       className={cn(
                         "px-2.5 py-1 rounded-full text-xs border transition-colors",
                         colors.border,
@@ -142,9 +145,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      {suggestion.text.length > 30
-                        ? suggestion.text.slice(0, 30) + "..."
-                        : suggestion.text}
+                      {text.length > 30 ? text.slice(0, 30) + "..." : text}
                     </motion.button>
                   );
                 })}
@@ -178,7 +179,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
         }`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        aria-label="Suggestions"
+        aria-label={t("suggestions.header")}
         aria-expanded={isOpen}
       >
         <motion.div
@@ -217,14 +218,14 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
             <div className="flex items-center justify-between px-4 py-3 border-b border-foreground/10">
               <div className="flex items-center gap-2">
                 <Lightbulb className="w-4 h-4 text-primary" />
-                <span className="text-sm font-semibold">Suggestions</span>
+                <span className="text-sm font-semibold">{t("suggestions.header")}</span>
               </div>
               <motion.button
                 onClick={handleShuffle}
                 className="p-1.5 rounded-lg hover:bg-foreground/5 text-foreground/50 hover:text-foreground transition-colors"
                 whileHover={{ rotate: 180 }}
                 transition={{ duration: 0.3 }}
-                aria-label="Mélanger les suggestions"
+                aria-label={t("suggestions.shuffle")}
               >
                 <RefreshCw className="w-4 h-4" />
               </motion.button>
@@ -233,7 +234,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
             {/* Suggestions list */}
             <div className="overflow-y-auto max-h-[calc(50vh-80px)] p-2">
               {Object.entries(groupedSuggestions).map(([category, suggestions], catIndex) => {
-                const colors = categoryColors[category] || defaultColors;
+                const colors = categoryColors[category as CategoryKey] || defaultColors;
 
                 return (
                   <motion.div
@@ -247,27 +248,30 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
                     <div className="flex items-center gap-2 px-2 py-1.5">
                       <span className={`w-2 h-2 rounded-full ${colors.dot}`} />
                       <span className="text-[11px] font-medium text-foreground/50 uppercase tracking-wider">
-                        {category}
+                        {t(`suggestions.categories.${category}`)}
                       </span>
                     </div>
 
                     {/* Suggestions */}
                     <div className="space-y-0.5">
-                      {suggestions.map((suggestion, index) => (
-                        <motion.button
-                          key={suggestion.text}
-                          onClick={() => handleSelect(suggestion.text)}
-                          className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${colors.bg}`}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: catIndex * 0.05 + index * 0.02 }}
-                          whileHover={{ x: 4 }}
-                        >
-                          <span className="text-sm text-foreground/80">
-                            {suggestion.text}
-                          </span>
-                        </motion.button>
-                      ))}
+                      {suggestions.map((suggestion, index) => {
+                        const text = t(`suggestions.items.${suggestion.textKey}`);
+                        return (
+                          <motion.button
+                            key={suggestion.textKey}
+                            onClick={() => handleSelect(text)}
+                            className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${colors.bg}`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: catIndex * 0.05 + index * 0.02 }}
+                            whileHover={{ x: 4 }}
+                          >
+                            <span className="text-sm text-foreground/80">
+                              {text}
+                            </span>
+                          </motion.button>
+                        );
+                      })}
                     </div>
                   </motion.div>
                 );
@@ -277,7 +281,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
             {/* Footer hint */}
             <div className="px-4 py-2 border-t border-foreground/10 bg-foreground/[0.02]">
               <p className="text-[10px] text-foreground/40 text-center">
-                Cliquez pour envoyer la suggestion
+                {t("suggestions.clickToSend")}
               </p>
             </div>
           </motion.div>

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { MessageSquare } from "lucide-react";
 
 type ChatToggleButtonProps = {
@@ -7,6 +8,8 @@ type ChatToggleButtonProps = {
 };
 
 export function ChatToggleButton({ onClick, hasUnread = true }: ChatToggleButtonProps) {
+  const { t } = useTranslation("common");
+
   return (
     <motion.button
       onClick={onClick}
@@ -25,7 +28,7 @@ export function ChatToggleButton({ onClick, hasUnread = true }: ChatToggleButton
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      aria-label="Ouvrir le chat"
+      aria-label={t("aria.openChat")}
     >
       <div className="relative">
         <MessageSquare className="w-5 h-5 text-foreground/60 group-hover:text-foreground transition-colors" />
@@ -47,7 +50,7 @@ export function ChatToggleButton({ onClick, hasUnread = true }: ChatToggleButton
         initial={{ x: -10 }}
         whileHover={{ x: 0 }}
       >
-        Chat
+        {t("chat.title")}
       </motion.span>
     </motion.button>
   );

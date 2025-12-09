@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { X, RotateCcw } from "lucide-react";
 import { useState, useEffect } from "react";
 import { EASINGS } from "@/lib/constants/animation";
@@ -25,10 +26,12 @@ export interface LoadingIndicatorProps {
 
 export function LoadingIndicator({
   onCancel,
-  context = "Ichai réfléchit",
+  context,
   showTimer = false,
   className,
 }: LoadingIndicatorProps) {
+  const { t } = useTranslation("common");
+  const displayContext = context || t("chat.thinking");
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   // Timer for elapsed time
@@ -81,7 +84,7 @@ export function LoadingIndicator({
       {/* Context message */}
       <div className="flex-1 min-w-0">
         <p className="text-body text-foreground/70 truncate">
-          {context}
+          {displayContext}
           <motion.span
             animate={{ opacity: [1, 0, 1] }}
             transition={{ duration: 1.5, repeat: Infinity }}
@@ -103,8 +106,8 @@ export function LoadingIndicator({
           className="p-2 rounded-full hover:bg-foreground/10 transition-colors group"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          aria-label="Annuler"
-          title="Annuler la requête"
+          aria-label={t("buttons.cancel")}
+          title={t("buttons.cancel")}
         >
           <X className="w-4 h-4 text-foreground/50 group-hover:text-foreground/80 transition-colors" />
         </motion.button>
@@ -127,6 +130,7 @@ export function ErrorMessage({
   onRetry,
   className,
 }: ErrorMessageProps) {
+  const { t } = useTranslation("common");
   return (
     <motion.div
       className={`flex items-center gap-3 p-4 rounded-2xl bg-[var(--color-error-muted)] border border-[var(--color-error)]/20 ${className ?? ""}`}
@@ -152,7 +156,7 @@ export function ErrorMessage({
           whileTap={{ scale: 0.95 }}
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          Réessayer
+          {t("buttons.retry")}
         </motion.button>
       )}
     </motion.div>

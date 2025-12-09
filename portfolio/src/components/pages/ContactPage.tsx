@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { PERSONAL_INFO } from "@/data/personal-info";
+import { useTranslation } from "react-i18next";
+import { usePersonalInfo } from "@/data/hooks";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { FadeInView } from "@/components/animations";
@@ -115,6 +116,8 @@ function SocialLink({
 }
 
 export function ContactPage() {
+  const { t } = useTranslation("pages");
+  const personalInfo = usePersonalInfo();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -128,7 +131,7 @@ export function ContactPage() {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Tous les champs sont requis");
+      toast.error(t("contact.allFieldsRequired"));
       return;
     }
 
@@ -139,7 +142,7 @@ export function ContactPage() {
 
     setIsSubmitting(false);
     setIsSuccess(true);
-    toast.success("Message envoyé ! Je vous réponds bientôt.");
+    toast.success(t("contact.messageSent"));
 
     // Reset after animation
     setTimeout(() => {
@@ -169,15 +172,14 @@ export function ContactPage() {
             transition={{ delay: 0.2 }}
           >
             <div className="w-8 h-px bg-primary/50" />
-            Contactez-moi
+            {t("contact.header")}
             <div className="w-8 h-px bg-primary/50" />
           </motion.div>
           <h1 className="text-monumental tracking-tight mb-6">
-            <span className="gradient-text">Contact</span>
+            <span className="gradient-text">{t("contact.title")}</span>
           </h1>
           <p className="text-body-large text-foreground/60 max-w-xl mx-auto">
-            N'hésitez pas à me contacter pour toute opportunité, projet ou
-            simplement pour discuter.
+            {t("contact.subtitle")}
           </p>
         </FadeInView>
 
@@ -185,24 +187,24 @@ export function ContactPage() {
         <div className="grid md:grid-cols-3 gap-4 mb-16">
           <ContactCard
             icon={Mail}
-            label="Email"
-            value={PERSONAL_INFO.contact.email}
-            href={`mailto:${PERSONAL_INFO.contact.email}`}
+            label={t("contact.email")}
+            value={personalInfo.contact.email}
+            href={`mailto:${personalInfo.contact.email}`}
             delay={0.3}
           />
           <ContactCard
             icon={Phone}
-            label="Téléphone"
-            value={PERSONAL_INFO.contact.phone}
-            href={`tel:${PERSONAL_INFO.contact.phone.replace(/\s/g, "")}`}
+            label={t("contact.phone")}
+            value={personalInfo.contact.phone}
+            href={`tel:${personalInfo.contact.phone.replace(/\s/g, "")}`}
             delay={0.4}
           />
           <ContactCard
             icon={MapPin}
-            label="Localisation"
-            value={PERSONAL_INFO.contact.location}
+            label={t("contact.location")}
+            value={personalInfo.contact.location}
             href={`https://maps.google.com/?q=${encodeURIComponent(
-              PERSONAL_INFO.contact.location
+              personalInfo.contact.location
             )}`}
             delay={0.5}
           />
@@ -220,7 +222,7 @@ export function ContactPage() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
             <h2 className="text-title font-bold mb-8 text-center relative">
-              Envoyez-moi un message
+              {t("contact.sendMessage")}
             </h2>
 
             <AnimatePresence mode="wait">
@@ -252,7 +254,7 @@ export function ContactPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    Message envoyé !
+                    {t("contact.messageSent")}
                   </motion.p>
                   <motion.p
                     className="text-body text-foreground/60 mt-2"
@@ -260,7 +262,7 @@ export function ContactPage() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
                   >
-                    Je vous réponds très vite.
+                    {t("contact.willReply")}
                   </motion.p>
                 </motion.div>
               ) : (
@@ -274,30 +276,30 @@ export function ContactPage() {
                   exit={{ opacity: 0 }}
                 >
                   <AnimatedInput
-                    label="Nom"
+                    label={t("contact.form.name")}
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Votre nom complet"
+                    placeholder={t("contact.form.namePlaceholder")}
                     required
                   />
 
                   <AnimatedInput
-                    label="Email"
+                    label={t("contact.form.email")}
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="votre@email.com"
+                    placeholder={t("contact.form.emailPlaceholder")}
                     required
                   />
 
                   <AnimatedInput
-                    label="Message"
+                    label={t("contact.form.message")}
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Votre message..."
+                    placeholder={t("contact.form.messagePlaceholder")}
                     required
                     rows={5}
                   />
@@ -331,12 +333,12 @@ export function ContactPage() {
                         {isSubmitting ? (
                           <>
                             <Loader2 className="w-5 h-5 animate-spin" />
-                            Envoi en cours...
+                            {t("contact.sending")}
                           </>
                         ) : (
                           <>
                             <Send className="w-5 h-5" />
-                            Envoyer le message
+                            {t("contact.send")}
                           </>
                         )}
                       </span>
@@ -358,7 +360,7 @@ export function ContactPage() {
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-foreground/20" />
             <span className="text-small-caps text-foreground/50">
-              Retrouvez-moi également
+              {t("contact.findMeAlso")}
             </span>
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-foreground/20" />
           </div>
@@ -367,13 +369,13 @@ export function ContactPage() {
             <SocialLink
               icon={Github}
               label="GitHub"
-              href={PERSONAL_INFO.social.github}
+              href={personalInfo.social.github}
               delay={0.7}
             />
             <SocialLink
               icon={Linkedin}
               label="LinkedIn"
-              href={PERSONAL_INFO.social.linkedin}
+              href={personalInfo.social.linkedin}
               delay={0.8}
             />
           </div>

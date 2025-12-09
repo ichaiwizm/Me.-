@@ -1,0 +1,110 @@
+{
+  "personalInfo": {
+    "title": "Full-Stack Software Engineer",
+    "subtitle": "Developer at PhoneGS",
+    "location": "Jerusalem, Israel",
+    "bio": {
+      "short": "Passionate Full-Stack Engineer, obsessed with building powerful products. Between lines of code, I enjoy family time and good pizzas on Jerusalem rooftops.",
+      "long": "I'm a full-stack software engineer who lives to build. For several years, I've been designing, developing, and scaling complete applications - from front to backend to infrastructure. Passionate about AI and automation, I integrate these technologies into all my projects to go faster, aim higher, and deliver better.\n\nBut life isn't just code: I value family, travel (between Paris and Jerusalem), and simple moments - a pizza on the roof with city views, a walk in the park, or a fun photo at the aquarium. This balance keeps me motivated and creative.\n\nWhen I'm not coding, I'm still coding - it's simple: I'm launched and I don't stop."
+    },
+    "qualities": [
+      { "trait": "Builder", "icon": "Zap" },
+      { "trait": "Family first", "icon": "Heart" },
+      { "trait": "Autonomous", "icon": "Rocket" },
+      { "trait": "Fun", "icon": "Smile" }
+    ],
+    "languages": [
+      { "name": "French", "level": "Native" },
+      { "name": "English", "level": "Fluent" },
+      { "name": "Hebrew", "level": "Beginner" }
+    ]
+  },
+  "projects": {
+    "mutuelles-v4": {
+      "title": "Mutuelles_v4 - Desktop Automation App",
+      "description": "Complete desktop application automating insurance platforms (mutuelles). Includes automated workflows, file management, intelligent scraping, and Playwright orchestration.",
+      "highlights": [
+        "Solid desktop interface with Electron",
+        "Advanced automation via Playwright",
+        "Intelligent file management",
+        "Optimized performance and reliability"
+      ]
+    },
+    "shoot": {
+      "title": "Shoot - Platform for Photographers",
+      "description": "Complete ecosystem for professional photographers: powerful admin back-office, full-featured client dashboard, customizable showcase site. Robust architecture and clean UX.",
+      "highlights": [
+        "Complete admin back-office",
+        "Feature-rich client dashboard",
+        "Customizable showcase site",
+        "Automations and optimized performance"
+      ]
+    },
+    "ai-blog": {
+      "title": "AI Blog - AI Learning for Developers",
+      "description": "Educational blog for developers: learn to master AI and boost your level with the right tools and best practices. Pedagogical, modern, and AI-oriented content.",
+      "highlights": [
+        "Pedagogical AI content",
+        "Modern and clear interface",
+        "Developer-oriented",
+        "Deployed on Vercel"
+      ]
+    },
+    "portfolio-interactif": {
+      "title": "Interactive Portfolio with AI",
+      "description": "Innovative personal portfolio with AI-powered conversational interface, enabling intuitive navigation via natural commands. Interactive floating window system and dynamic themes.",
+      "highlights": [
+        "Conversational interface with AI",
+        "Interactive window system",
+        "Customizable themes",
+        "Modular and scalable architecture"
+      ]
+    }
+  },
+  "skillCategories": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "database": "Databases",
+    "tools": "Tools & DevOps",
+    "other": "Other"
+  },
+  "experiences": {
+    "phonegs": {
+      "position": "Full-Stack Software Engineer",
+      "location": "Jerusalem, Israel",
+      "description": "Complete development of a professional telephony application (VoIP), driven by React/Node, integrated with Asterisk and FusionPBX.",
+      "responsibilities": [
+        "Full-stack development of internal application: React UI, Node.js API, PHP/Laravel backend",
+        "Advanced integration with telephony systems: Asterisk, FusionPBX, WebRTC",
+        "Architecture and performance optimization",
+        "Workflow automation",
+        "Implementation of dashboards and admin interfaces",
+        "Participation in product decisions with strong technical autonomy"
+      ]
+    },
+    "freelance": {
+      "position": "Full-Stack Developer",
+      "location": "France",
+      "description": "Various missions in web development and automation for diverse clients.",
+      "responsibilities": [
+        "Creation of professional showcase sites",
+        "SaaS development",
+        "Advanced scrapers and automations",
+        "API integration and back-office development",
+        "Custom dashboard creation"
+      ]
+    }
+  },
+  "education": {
+    "webschool": {
+      "degree": "Web Development Training",
+      "field": "Full-Stack",
+      "description": "Intensive training in web development covering frontend and backend.",
+      "achievements": [
+        "Solid foundations in front and back development",
+        "First complete applications",
+        "First freelance missions"
+      ]
+    }
+  }
+}

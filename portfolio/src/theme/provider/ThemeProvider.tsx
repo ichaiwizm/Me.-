@@ -15,10 +15,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const setThemeId = React.useCallback((id: ThemeId) => {
     setThemeIdState(id);
     saveThemeToStorage(id);
-    // Theme application handled by useEffect below to avoid double application
   }, []);
 
-  // Application initiale du thème
   React.useEffect(() => {
     applyThemeToDocument(themeId);
   }, [themeId]);
@@ -29,8 +27,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       setThemeId,
       themes: Object.values(THEME_DEFINITIONS).map((t) => ({
         id: t.id,
-        label: t.label,
-        description: t.description,
         category: t.category,
       })),
     }),
@@ -39,4 +35,3 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
-
