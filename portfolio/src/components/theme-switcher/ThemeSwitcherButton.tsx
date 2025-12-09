@@ -1,4 +1,5 @@
 import { Palette } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 
 type ThemeSwitcherButtonProps = {
@@ -7,12 +8,14 @@ type ThemeSwitcherButtonProps = {
 };
 
 export function ThemeSwitcherButton({ onClick, isOpen }: ThemeSwitcherButtonProps) {
+  const { t } = useTranslation("common");
+
   return (
     <Button
       variant="outline"
       size="icon"
       onClick={onClick}
-      aria-label="Changer le thème"
+      aria-label={t("aria.themeSwitcher")}
       aria-expanded={isOpen}
       className="transition-transform hover:scale-105"
     >

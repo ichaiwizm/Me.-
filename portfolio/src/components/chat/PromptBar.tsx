@@ -47,7 +47,7 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={t("placeholders.chatInput")}
-          aria-label="Prompt"
+          aria-label={t("aria.promptInput")}
           className="flex-1 bg-transparent border-0 focus-visible:ring-0"
         />
         <Button

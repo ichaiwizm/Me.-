@@ -53,12 +53,19 @@
   "aria": {
     "closeWindow": "סגור חלון",
     "minimizeWindow": "מזער חלון",
+    "expandWindow": "הרחב חלון (דקורטיבי)",
     "themeSwitcher": "שנה ערכת נושא",
     "languageSwitcher": "שנה שפה",
     "resetApp": "אפס הכל",
     "toggleChat": "הצג/הסתר צ'אט",
     "sendMessage": "שלח הודעה",
-    "openChat": "פתח צ'אט"
+    "openChat": "פתח צ'אט",
+    "closeImage": "סגור",
+    "zoomIn": "התקרב",
+    "zoomOut": "התרחק",
+    "previousImage": "תמונה קודמת",
+    "nextImage": "תמונה הבאה",
+    "promptInput": "קלט הנחיה"
   },
   "suggestions": {
     "categories": {

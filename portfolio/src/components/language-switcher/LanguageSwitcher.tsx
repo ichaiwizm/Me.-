@@ -1,12 +1,14 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Globe, Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useI18n } from "@/i18n";
 import { useClickOutside } from "@/lib/hooks/useClickOutside";
 import { cn } from "@/lib/utils";
 
 export function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation("common");
   const { languageId, setLanguageId, languages, isRTL } = useI18n();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -26,7 +28,7 @@ export function LanguageSwitcher() {
         )}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        aria-label="Change language"
+        aria-label={t("aria.languageSwitcher")}
         aria-expanded={isOpen}
       >
         <Globe className="w-4 h-4" />

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import SandboxedContent from "@/components/windows/SandboxedContent";
 
 /**
@@ -43,6 +44,7 @@ export function FloatingWindow({
   onFocus,
   onMove,
 }: Props) {
+  const { t } = useTranslation("common");
   const [pos, setPos] = useState<Pos>(initialPos);
   const [dragOffset, setDragOffset] = useState<Pos | null>(null);
   const posRef = useRef<Pos>(pos);
@@ -133,7 +135,7 @@ export function FloatingWindow({
           >
             {/* Close button */}
             <button
-              aria-label="Fermer la fenêtre"
+              aria-label={t("aria.closeWindow")}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -146,7 +148,7 @@ export function FloatingWindow({
                 padding: BUTTON_PADDING,
               }}
               className="flex items-center justify-center bg-transparent border-0 cursor-pointer touch-manipulation"
-              title="Fermer"
+              title={t("buttons.close")}
             >
               <span
                 className="rounded-full bg-red-500/80 hover:bg-red-500 transition-colors shadow-sm flex items-center justify-center relative"
@@ -167,7 +169,7 @@ export function FloatingWindow({
 
             {/* Minimize button */}
             <button
-              aria-label="Réduire la fenêtre"
+              aria-label={t("aria.minimizeWindow")}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -180,7 +182,7 @@ export function FloatingWindow({
                 padding: BUTTON_PADDING,
               }}
               className="flex items-center justify-center bg-transparent border-0 cursor-pointer touch-manipulation"
-              title="Réduire"
+              title={t("buttons.minimize")}
             >
               <span
                 className="rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors shadow-sm flex items-center justify-center relative"
@@ -207,7 +209,7 @@ export function FloatingWindow({
                 padding: BUTTON_PADDING,
               }}
               className="flex items-center justify-center"
-              title="Agrandir (décoratif)"
+              title={t("aria.expandWindow")}
             >
               <span
                 className="rounded-full bg-green-500/80 transition-colors shadow-sm"

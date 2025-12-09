@@ -53,12 +53,19 @@
   "aria": {
     "closeWindow": "Fermer la fenêtre",
     "minimizeWindow": "Réduire la fenêtre",
+    "expandWindow": "Agrandir la fenêtre (décoratif)",
     "themeSwitcher": "Changer de thème",
     "languageSwitcher": "Changer de langue",
     "resetApp": "Tout réinitialiser",
     "toggleChat": "Afficher/masquer le chat",
     "sendMessage": "Envoyer le message",
-    "openChat": "Ouvrir le chat"
+    "openChat": "Ouvrir le chat",
+    "closeImage": "Fermer",
+    "zoomIn": "Zoomer",
+    "zoomOut": "Dézoomer",
+    "previousImage": "Image précédente",
+    "nextImage": "Image suivante",
+    "promptInput": "Saisie de prompt"
   },
   "suggestions": {
     "categories": {

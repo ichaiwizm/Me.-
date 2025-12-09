@@ -53,12 +53,19 @@
   "aria": {
     "closeWindow": "Close window",
     "minimizeWindow": "Minimize window",
+    "expandWindow": "Expand window (decorative)",
     "themeSwitcher": "Change theme",
     "languageSwitcher": "Change language",
     "resetApp": "Reset everything",
     "toggleChat": "Show/hide chat",
     "sendMessage": "Send message",
-    "openChat": "Open chat"
+    "openChat": "Open chat",
+    "closeImage": "Close",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "promptInput": "Prompt input"
   },
   "suggestions": {
     "categories": {

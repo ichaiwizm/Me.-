@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
 import type { ImageMeta } from "@/lib/constants/images";
 import { TRANSITIONS, EASINGS, SPRINGS } from "@/lib/constants/animation";
@@ -38,6 +39,7 @@ export function Lightbox({
   showThumbnails = true,
   enableZoom = true,
 }: LightboxProps) {
+  const { t } = useTranslation("common");
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isZoomed, setIsZoomed] = useState(false);
   const [direction, setDirection] = useState(0);
@@ -147,7 +149,7 @@ export function Lightbox({
             onClick={onClose}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            aria-label="Fermer"
+            aria-label={t("aria.closeImage")}
           >
             <X className="w-6 h-6 text-foreground" />
           </motion.button>
@@ -159,7 +161,7 @@ export function Lightbox({
               onClick={toggleZoom}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              aria-label={isZoomed ? "Dézoomer" : "Zoomer"}
+              aria-label={isZoomed ? t("aria.zoomOut") : t("aria.zoomIn")}
             >
               {isZoomed ? (
                 <ZoomOut className="w-6 h-6 text-foreground" />
@@ -177,7 +179,7 @@ export function Lightbox({
                 onClick={goToPrevious}
                 whileHover={{ scale: 1.1, x: -2 }}
                 whileTap={{ scale: 0.9 }}
-                aria-label="Image précédente"
+                aria-label={t("aria.previousImage")}
               >
                 <ChevronLeft className="w-6 h-6 text-foreground" />
               </motion.button>
@@ -186,7 +188,7 @@ export function Lightbox({
                 onClick={goToNext}
                 whileHover={{ scale: 1.1, x: 2 }}
                 whileTap={{ scale: 0.9 }}
-                aria-label="Image suivante"
+                aria-label={t("aria.nextImage")}
               >
                 <ChevronRight className="w-6 h-6 text-foreground" />
               </motion.button>

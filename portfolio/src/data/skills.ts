@@ -57,17 +57,17 @@ export const SKILL_CATEGORIES = {
     gradient: "linear-gradient(90deg, #6366f1, #818cf8)",
   },
   database: {
-    label: "Bases de données",
+    label: "Databases",
     color: "#ec4899",
     gradient: "linear-gradient(90deg, #ec4899, #f472b6)",
   },
   tools: {
-    label: "Outils & DevOps",
+    label: "Tools & DevOps",
     color: "#10b981",
     gradient: "linear-gradient(90deg, #10b981, #34d399)",
   },
   other: {
-    label: "Autres",
+    label: "Other",
     color: "#f59e0b",
     gradient: "linear-gradient(90deg, #f59e0b, #fbbf24)",
   },
