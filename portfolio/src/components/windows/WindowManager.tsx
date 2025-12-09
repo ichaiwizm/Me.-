@@ -18,7 +18,11 @@ type Item = {
 
 const makeId = () => `w_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,7)}`;
 
-export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) => {
+type WindowManagerProps = {
+  showDock?: boolean;
+};
+
+export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>(({ showDock = true }, ref) => {
   const [items, setItems] = useState<Item[]>([]);
   const [, setNextZ] = useState(1000);
 
@@ -119,7 +123,7 @@ export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) =
 
   return (
     <>
-      <WindowDock items={docked} onRestore={handleRestore} />
+      {showDock && <WindowDock items={docked} onRestore={handleRestore} />}
       {items.filter(w=>!w.minimized).map(w => (
         <FloatingWindow key={w.id} id={w.id} title={w.title} zIndex={w.z}
           initialPos={{ x: w.x, y: w.y }} width={w.width} height={w.height} contentHtml={w.contentHtml}

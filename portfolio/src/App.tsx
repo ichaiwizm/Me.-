@@ -172,7 +172,7 @@ function App() {
         />
       )}
 
-      <WindowManager ref={wmRef} />
+      <WindowManager ref={wmRef} showDock={currentPage === "accueil"} />
       <Toaster position="top-right" richColors />
 
       {/* Global lightbox for gallery images */}

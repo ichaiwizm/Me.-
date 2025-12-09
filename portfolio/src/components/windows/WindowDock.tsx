@@ -14,7 +14,7 @@ export function WindowDock({ items, onRestore }: Props) {
   if (items.length === 0) return null;
 
   return (
-    <div className="fixed top-20 left-4 z-[10000] rounded-xl bg-gradient-to-br from-background/95 to-background/90 backdrop-blur-xl border border-primary/20 shadow-2xl ring-1 ring-white/10 overflow-hidden">
+    <div className="fixed top-20 left-4 z-[900] rounded-xl bg-gradient-to-br from-background/95 to-background/90 backdrop-blur-xl border border-primary/20 shadow-2xl ring-1 ring-white/10 overflow-hidden">
       <Button
         variant="ghost"
         onClick={() => setCollapsed(!collapsed)}
