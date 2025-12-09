@@ -11,10 +11,9 @@ import SandboxedContent from "@/components/windows/SandboxedContent";
  * - Better mobile support
  */
 
-// macOS-style window buttons (tighter spacing)
-const TOUCH_TARGET_SIZE = 28;
-const BUTTON_VISUAL_SIZE = 12;
-const BUTTON_PADDING = (TOUCH_TARGET_SIZE - BUTTON_VISUAL_SIZE) / 2;
+// macOS traffic light buttons - exact style
+const BUTTON_SIZE = 12; // 12px circles like macOS
+const BUTTON_GAP = 8; // 8px between buttons
 
 type Pos = { x: number; y: number };
 type Props = {
@@ -138,116 +137,57 @@ export function FloatingWindow({
         }`}
         onPointerDown={startDrag}
       >
-        <div className="flex items-center gap-1 flex-1 min-w-0">
-          {/* Window control buttons with 44px touch targets */}
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          {/* macOS traffic light buttons */}
           <div
-            className="flex items-center gap-1 group/buttons"
+            className="flex items-center group/buttons"
+            style={{ gap: BUTTON_GAP }}
             onPointerDown={(e) => e.stopPropagation()}
           >
-            {/* Close button */}
+            {/* Close (red) */}
             <button
               aria-label={t("aria.closeWindow")}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onClose(id);
-              }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); onClose(id); }}
               onPointerDown={(e) => e.stopPropagation()}
-              style={{
-                width: TOUCH_TARGET_SIZE,
-                height: TOUCH_TARGET_SIZE,
-                padding: BUTTON_PADDING,
-              }}
-              className="flex items-center justify-center bg-transparent border-0 cursor-pointer touch-manipulation"
+              className="rounded-full bg-[#ff5f57] hover:bg-[#ff5f57] transition-colors flex items-center justify-center cursor-pointer border-0 p-0"
+              style={{ width: BUTTON_SIZE, height: BUTTON_SIZE }}
               title={t("buttons.close")}
             >
-              <span
-                className="rounded-full bg-red-500/80 hover:bg-red-500 transition-colors shadow-sm flex items-center justify-center relative"
-                style={{ width: BUTTON_VISUAL_SIZE, height: BUTTON_VISUAL_SIZE }}
-              >
-                <svg
-                  style={{ width: 8, height: 8 }}
-                  className="text-red-900/80 opacity-0 group-hover/buttons:opacity-100 transition-opacity absolute"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={4}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </span>
+              <svg className="w-[6px] h-[6px] text-[#4d0000] opacity-0 group-hover/buttons:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
 
-            {/* Minimize button */}
+            {/* Minimize (yellow) */}
             <button
               aria-label={t("aria.minimizeWindow")}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onMinimize(id);
-              }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); onMinimize(id); }}
               onPointerDown={(e) => e.stopPropagation()}
-              style={{
-                width: TOUCH_TARGET_SIZE,
-                height: TOUCH_TARGET_SIZE,
-                padding: BUTTON_PADDING,
-              }}
-              className="flex items-center justify-center bg-transparent border-0 cursor-pointer touch-manipulation"
+              className="rounded-full bg-[#febc2e] hover:bg-[#febc2e] transition-colors flex items-center justify-center cursor-pointer border-0 p-0"
+              style={{ width: BUTTON_SIZE, height: BUTTON_SIZE }}
               title={t("buttons.minimize")}
             >
-              <span
-                className="rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors shadow-sm flex items-center justify-center relative"
-                style={{ width: BUTTON_VISUAL_SIZE, height: BUTTON_VISUAL_SIZE }}
-              >
-                <svg
-                  style={{ width: 8, height: 8 }}
-                  className="text-yellow-900/80 opacity-0 group-hover/buttons:opacity-100 transition-opacity absolute"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={4}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
-                </svg>
-              </span>
+              <svg className="w-[8px] h-[2px] text-[#995700] opacity-0 group-hover/buttons:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 8 2">
+                <rect width="8" height="2" rx="1" />
+              </svg>
             </button>
 
-            {/* Maximize button */}
+            {/* Maximize (green) */}
             <button
               aria-label={t("aria.expandWindow")}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onMaximize(id);
-              }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); onMaximize(id); }}
               onPointerDown={(e) => e.stopPropagation()}
-              style={{
-                width: TOUCH_TARGET_SIZE,
-                height: TOUCH_TARGET_SIZE,
-                padding: BUTTON_PADDING,
-              }}
-              className="flex items-center justify-center bg-transparent border-0 cursor-pointer touch-manipulation"
+              className="rounded-full bg-[#28c840] hover:bg-[#28c840] transition-colors flex items-center justify-center cursor-pointer border-0 p-0"
+              style={{ width: BUTTON_SIZE, height: BUTTON_SIZE }}
               title={t("aria.expandWindow")}
             >
-              <span
-                className="rounded-full bg-green-500/80 hover:bg-green-500 transition-colors shadow-sm flex items-center justify-center relative"
-                style={{ width: BUTTON_VISUAL_SIZE, height: BUTTON_VISUAL_SIZE }}
-              >
-                <svg
-                  style={{ width: 7, height: 7 }}
-                  className="text-green-900/80 opacity-0 group-hover/buttons:opacity-100 transition-opacity absolute"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={3}
-                >
-                  {isMaximized ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M15 9h4.5M15 9V4.5M15 9l5.25-5.25M9 15H4.5M9 15v4.5M9 15l-5.25 5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25" />
-                  ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-                  )}
-                </svg>
-              </span>
+              <svg className="w-[6px] h-[6px] text-[#006500] opacity-0 group-hover/buttons:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
+                {isMaximized ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M15 9h4.5M15 9V4.5M9 15H4.5M9 15v4.5M15 15h4.5M15 15v4.5" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 4l6 6M4 4v5M4 4h5M20 20l-6-6M20 20v-5M20 20h-5" />
+                )}
+              </svg>
             </button>
           </div>
 

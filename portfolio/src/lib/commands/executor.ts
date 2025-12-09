@@ -85,25 +85,40 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
           .map((i, idx) => {
             const url = `/images/${i.id}.png`;
             return `
-              <figure style="margin:0;cursor:pointer;transition:transform 0.2s ease;"
+              <figure class="gallery-item" style="margin:0;cursor:pointer;transition:transform 0.2s ease;"
                       onclick="window.parent.postMessage({type:'lightbox',index:${idx},images:${imageIds}}, '*')"
                       onmouseover="this.style.transform='scale(1.02)'"
                       onmouseout="this.style.transform='scale(1)'">
-                <img src="${url}" alt="${i.name}"
-                     style="width:100%;height:180px;object-fit:cover;border-radius:12px;
+                <div style="position:relative;width:100%;padding-bottom:66.67%;overflow:hidden;border-radius:12px;
                             box-shadow:0 4px 12px rgba(0,0,0,0.25);transition:box-shadow 0.2s ease;"
                      onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.4)'"
-                     onmouseout="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.25)'" />
-                <figcaption style="margin-top:8px;font-size:12px;opacity:0.7;font-weight:500;">
+                     onmouseout="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.25)'">
+                  <img src="${url}" alt="${i.name}"
+                       style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" />
+                </div>
+                <figcaption style="margin-top:10px;font-size:13px;opacity:0.8;font-weight:500;text-align:center;">
                   ${i.name}
                 </figcaption>
               </figure>`;
           })
           .join("");
         const html = `
-          <div style="padding:16px;background:linear-gradient(180deg, rgba(10,10,10,0.98) 0%, rgba(5,5,5,1) 100%);
-                      color:#f0f0f0;height:100%;overflow:auto;font-family:system-ui,-apple-system,sans-serif;">
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;">
+          <style>
+            .gallery-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+              gap: 20px;
+            }
+            @media (min-width: 800px) {
+              .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; }
+            }
+            @media (min-width: 1200px) {
+              .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
+            }
+          </style>
+          <div style="padding:20px;background:linear-gradient(180deg, rgba(15,15,15,0.98) 0%, rgba(8,8,8,1) 100%);
+                      color:#f0f0f0;height:100%;overflow:auto;font-family:system-ui,-apple-system,sans-serif;box-sizing:border-box;">
+            <div class="gallery-grid">
               ${grid}
             </div>
           </div>
