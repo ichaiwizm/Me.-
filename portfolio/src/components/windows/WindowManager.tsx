@@ -154,7 +154,7 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
           snapPoints={["half", "full"]}
           initialSnap="half"
         >
-          <SandboxedContent html={w.contentHtml} className="w-full min-h-[40vh]" />
+          <SandboxedContent html={w.contentHtml} className="w-full h-full" />
         </BottomSheet>
       ))}
     </>

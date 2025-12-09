@@ -16,6 +16,12 @@ type ChatSidePanelProps = {
   messages: ChatMessage[];
   loading?: boolean;
   onSubmit: (message: string) => Promise<void> | void;
+  /** If provided, overrides the internal useChatPanel state */
+  isOpenOverride?: boolean;
+  /** If provided, called when closing (to sync with parent state) */
+  onCloseOverride?: () => void;
+  /** If provided, called when toggling (to sync with parent state) */
+  onToggleOverride?: () => void;
 };
 
 // Animation variants
@@ -76,10 +82,22 @@ const backdropVariants = {
   exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
-export function ChatSidePanel({ messages, loading, onSubmit }: ChatSidePanelProps) {
-  const { isOpen, toggle, close } = useChatPanel();
+export function ChatSidePanel({
+  messages,
+  loading,
+  onSubmit,
+  isOpenOverride,
+  onCloseOverride,
+  onToggleOverride,
+}: ChatSidePanelProps) {
+  const { isOpen: internalIsOpen, toggle: internalToggle, close: internalClose } = useChatPanel();
   const isMobile = useIsMobile();
   const panelRef = useRef<HTMLDivElement>(null);
+
+  // Use overrides if provided (for mobile), otherwise use internal state (for desktop)
+  const isOpen = isOpenOverride !== undefined ? isOpenOverride : internalIsOpen;
+  const close = onCloseOverride || internalClose;
+  const toggle = onToggleOverride || internalToggle;
 
   // Lock body scroll on mobile when panel is open
   useEffect(() => {

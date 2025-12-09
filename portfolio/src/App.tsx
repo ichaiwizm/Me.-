@@ -49,7 +49,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState<PageId>("accueil");
   const { setThemeId } = useTheme();
   const isMobile = useIsMobile();
-  const { isOpen: isChatOpen, toggle: toggleChat } = useChatPanel();
+  const { isOpen: isChatOpen, toggle: toggleChat, close: closeChat } = useChatPanel();
 
   // Global lightbox state for gallery images
   const [lightboxState, setLightboxState] = useState<{
@@ -201,6 +201,9 @@ function App() {
               messages={messages}
               loading={loading}
               onSubmit={handleSubmit}
+              isOpenOverride={isChatOpen}
+              onCloseOverride={closeChat}
+              onToggleOverride={toggleChat}
             />
           )}
         </MobileLayout>

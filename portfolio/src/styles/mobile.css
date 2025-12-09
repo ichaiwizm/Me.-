@@ -173,6 +173,8 @@
   overflow: hidden;
   max-height: 92vh;
   touch-action: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .bottom-sheet-handle {
@@ -196,6 +198,7 @@
 
 .bottom-sheet-content {
   flex: 1;
+  min-height: 0; /* Required for flex item to scroll properly */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;

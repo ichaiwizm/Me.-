@@ -84,12 +84,13 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
           break;
         }
         const limited = typeof cmd.limit === "number" ? imgs.slice(0, cmd.limit) : imgs;
-        const imageIds = JSON.stringify(limited.map(i => i.id));
+        const imageIdList = limited.map(i => i.id).join(",");
         const grid = limited
           .map((i, idx) => {
             return `
               <figure class="gallery-item" style="margin:0;cursor:pointer;transition:transform 0.2s ease;"
-                      onclick="window.parent.postMessage({type:'lightbox',index:${idx},images:${imageIds}}, '*')"
+                      data-index="${idx}" data-images="${imageIdList}"
+                      onclick="openLightbox(this)"
                       onmouseover="this.style.transform='scale(1.02)'"
                       onmouseout="this.style.transform='scale(1)'">
                 <div style="position:relative;width:100%;padding-bottom:66.67%;overflow:hidden;border-radius:12px;
@@ -106,6 +107,13 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
           })
           .join("");
         const html = `
+          <script>
+            function openLightbox(el) {
+              var index = parseInt(el.dataset.index, 10);
+              var images = el.dataset.images.split(',');
+              window.parent.postMessage({type:'lightbox', index:index, images:images}, '*');
+            }
+          </script>
           <style>
             .gallery-grid {
               display: grid;
