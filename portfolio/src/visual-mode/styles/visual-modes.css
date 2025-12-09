@@ -1,0 +1,32 @@
+/* ============================================
+   VISUAL MODES - CSS Aggregator
+
+   Import order matters for specificity.
+   All visual mode selectors use html.visual-mode-*
+   which has higher specificity than .theme-* selectors.
+
+   Note: Google Fonts are loaded in index.css
+   ============================================ */
+
+@import "./neo-brutalism.css";
+@import "./retro-pixel.css";
+@import "./newspaper.css";
+
+/* ============================================
+   SHARED VISUAL MODE BEHAVIORS
+   ============================================ */
+
+/* When any visual mode is active, ensure it overrides themes */
+html[data-visual-mode] {
+  /* Force visual mode to take precedence */
+}
+
+/* Hide custom cursor in visual modes (they have their own or use default) */
+html[data-visual-mode] .custom-cursor {
+  display: none !important;
+}
+
+/* Ensure exit button is always visible above everything */
+html[data-visual-mode] .visual-mode-exit-button {
+  z-index: 100000 !important;
+}

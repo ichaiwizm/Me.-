@@ -7,7 +7,9 @@ import WindowManager from "@/components/windows/WindowManager";
 import { Lightbox } from "@/components/media/Lightbox";
 import { Toaster } from "sonner";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { VisualModeExitButton } from "@/components/visual-mode-exit";
 import { useTheme } from "@/theme/provider/ThemeContext";
+import { useVisualMode } from "@/visual-mode";
 import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
@@ -48,6 +50,7 @@ const pageTransition = {
 function App() {
   const [currentPage, setCurrentPage] = useState<PageId>("accueil");
   const { setThemeId } = useTheme();
+  const { isVisualModeActive } = useVisualMode();
   const isMobile = useIsMobile();
   const { isOpen: isChatOpen, toggle: toggleChat, close: closeChat } = useChatPanel();
 
@@ -162,8 +165,8 @@ function App() {
 
   return (
     <>
-      {/* Custom cursor - desktop only */}
-      {!isMobile && <CustomCursor />}
+      {/* Custom cursor - desktop only, hidden when visual mode is active */}
+      {!isMobile && !isVisualModeActive && <CustomCursor />}
 
       {/* Desktop layout */}
       {!isMobile && (
@@ -231,6 +234,9 @@ function App() {
         initialIndex={lightboxState.index}
         onClose={closeLightbox}
       />
+
+      {/* Visual mode exit button - floating, always visible when mode is active */}
+      <VisualModeExitButton />
     </>
   );
 }

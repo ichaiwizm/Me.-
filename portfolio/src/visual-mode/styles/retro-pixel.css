@@ -1,0 +1,454 @@
+/* ============================================
+   RETRO PIXEL MODE
+   8-bit aesthetic, NES-inspired palette
+   Pixel-perfect nostalgia trip
+   Font: Press Start 2P (loaded in visual-modes.css)
+   ============================================ */
+
+html.visual-mode-retro-pixel {
+  /* NES-inspired palette */
+  --background: #0f0f23;
+  --foreground: #fcfcfc;
+
+  --primary: #00e436;
+  --primary-foreground: #0f0f23;
+
+  --accent: #ff004d;
+  --accent-foreground: #fcfcfc;
+
+  --secondary: #29adff;
+  --secondary-foreground: #0f0f23;
+
+  --muted: #1d2b53;
+  --muted-foreground: #83769c;
+
+  --card: #1d2b53;
+  --card-foreground: #fcfcfc;
+
+  --popover: #1d2b53;
+  --popover-foreground: #fcfcfc;
+
+  --border: #7e2553;
+  --input: #7e2553;
+  --ring: #00e436;
+
+  --destructive: #ff004d;
+
+  /* Semantic colors - pixel style */
+  --color-success: #00e436;
+  --color-success-muted: #008751;
+  --color-warning: #ffec27;
+  --color-warning-muted: #ab5236;
+  --color-error: #ff004d;
+  --color-error-muted: #7e2553;
+  --color-info: #29adff;
+  --color-info-muted: #1d2b53;
+
+  /* Skill levels */
+  --color-level-expert: #00e436;
+  --color-level-advanced: #29adff;
+  --color-level-intermediate: #ffec27;
+  --color-level-fundamental: #ffa300;
+  --color-level-beginner: #ff004d;
+
+  /* Kill all rounded corners */
+  --radius: 0px;
+
+  /* Chart colors */
+  --chart-1: #00e436;
+  --chart-2: #29adff;
+  --chart-3: #ffec27;
+  --chart-4: #ff004d;
+  --chart-5: #ff77a8;
+
+  /* Effects */
+  --shimmer-color: rgba(0, 228, 54, 0.3);
+  --image-bg: #1d2b53;
+}
+
+/* ============================================
+   GLOBAL PIXEL FONT
+   ============================================ */
+
+html.visual-mode-retro-pixel,
+html.visual-mode-retro-pixel * {
+  font-family: 'Press Start 2P', monospace !important;
+  border-radius: 0 !important;
+  image-rendering: pixelated !important;
+  image-rendering: crisp-edges !important;
+}
+
+html.visual-mode-retro-pixel body {
+  font-size: 10px !important;
+  line-height: 2 !important;
+}
+
+html.visual-mode-retro-pixel *::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ============================================
+   KILL ALL SMOOTH ANIMATIONS
+   ============================================ */
+
+html.visual-mode-retro-pixel * {
+  transition: none !important;
+  animation-timing-function: steps(4) !important;
+}
+
+html.visual-mode-retro-pixel .animate-float,
+html.visual-mode-retro-pixel .animate-gradient,
+html.visual-mode-retro-pixel .animate-pulse-glow,
+html.visual-mode-retro-pixel .animate-shimmer,
+html.visual-mode-retro-pixel [class*="animate-"] {
+  animation: none !important;
+}
+
+/* ============================================
+   GLASSMORPHISM DESTRUCTION
+   ============================================ */
+
+html.visual-mode-retro-pixel .glass,
+html.visual-mode-retro-pixel .glass-strong,
+html.visual-mode-retro-pixel .glass-subtle,
+html.visual-mode-retro-pixel [class*="backdrop-blur"],
+html.visual-mode-retro-pixel [class*="bg-background/"],
+html.visual-mode-retro-pixel [class*="bg-card/"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--card) !important;
+}
+
+/* ============================================
+   PIXEL BORDERS - 8-bit style
+   ============================================ */
+
+/* Form elements and explicit cards */
+html.visual-mode-retro-pixel button,
+html.visual-mode-retro-pixel input,
+html.visual-mode-retro-pixel textarea,
+html.visual-mode-retro-pixel select,
+html.visual-mode-retro-pixel .card {
+  border: 4px solid var(--border) !important;
+  box-shadow:
+    inset -4px -4px 0 rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Project cards - more specific selector */
+html.visual-mode-retro-pixel .group[class*="rounded-2xl"],
+html.visual-mode-retro-pixel [class*="bg-card"][class*="rounded"] {
+  border: 4px solid var(--border) !important;
+  box-shadow:
+    inset -4px -4px 0 rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.1) !important;
+  background: var(--card) !important;
+}
+
+html.visual-mode-retro-pixel button:hover,
+html.visual-mode-retro-pixel .card:hover {
+  border-color: var(--primary) !important;
+  box-shadow:
+    0 0 0 4px var(--primary),
+    inset -4px -4px 0 rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Project card hover - glow effect */
+html.visual-mode-retro-pixel .group:hover {
+  border-color: var(--primary) !important;
+  box-shadow:
+    0 0 0 4px var(--primary),
+    inset -4px -4px 0 rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+html.visual-mode-retro-pixel .group:hover * {
+  color: inherit;
+}
+
+html.visual-mode-retro-pixel button:active {
+  box-shadow:
+    inset 4px 4px 0 rgba(0, 0, 0, 0.4),
+    inset -4px -4px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ============================================
+   TYPOGRAPHY - Pixel Perfect
+   ============================================ */
+
+html.visual-mode-retro-pixel h1 {
+  font-size: 24px !important;
+  line-height: 1.5 !important;
+  text-shadow: 4px 4px 0 var(--accent) !important;
+}
+
+html.visual-mode-retro-pixel h2 {
+  font-size: 18px !important;
+  line-height: 1.5 !important;
+  text-shadow: 3px 3px 0 var(--secondary) !important;
+}
+
+html.visual-mode-retro-pixel h3 {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+html.visual-mode-retro-pixel p,
+html.visual-mode-retro-pixel span,
+html.visual-mode-retro-pixel label {
+  font-size: 10px !important;
+  line-height: 2 !important;
+}
+
+html.visual-mode-retro-pixel .text-tiny,
+html.visual-mode-retro-pixel .text-xs {
+  font-size: 8px !important;
+}
+
+/* Gradient text override - solid with shadow */
+html.visual-mode-retro-pixel .gradient-text,
+html.visual-mode-retro-pixel .gradient-text-animated {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: var(--primary) !important;
+  text-shadow: 4px 4px 0 var(--accent) !important;
+}
+
+/* ============================================
+   PIXEL CURSOR
+   ============================================ */
+
+html.visual-mode-retro-pixel,
+html.visual-mode-retro-pixel * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect x='0' y='0' width='4' height='4' fill='%2300e436'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%2300e436'/%3E%3Crect x='8' y='8' width='4' height='4' fill='%2300e436'/%3E%3Crect x='4' y='8' width='4' height='4' fill='%2300e436'/%3E%3Crect x='0' y='4' width='4' height='4' fill='%23fcfcfc'/%3E%3C/svg%3E") 0 0, auto !important;
+}
+
+html.visual-mode-retro-pixel button,
+html.visual-mode-retro-pixel a,
+html.visual-mode-retro-pixel [role="button"] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect x='4' y='0' width='4' height='4' fill='%23ff004d'/%3E%3Crect x='0' y='4' width='4' height='4' fill='%23ff004d'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%23fcfcfc'/%3E%3Crect x='8' y='4' width='4' height='4' fill='%23ff004d'/%3E%3Crect x='4' y='8' width='4' height='4' fill='%23ff004d'/%3E%3C/svg%3E") 4 4, pointer !important;
+}
+
+/* ============================================
+   BUTTONS - NES style
+   ============================================ */
+
+html.visual-mode-retro-pixel button[class*="bg-primary"],
+html.visual-mode-retro-pixel button[class*="variant-default"] {
+  background: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+html.visual-mode-retro-pixel button[class*="bg-secondary"] {
+  background: var(--secondary) !important;
+  color: var(--secondary-foreground) !important;
+}
+
+html.visual-mode-retro-pixel button[class*="variant-destructive"] {
+  background: var(--destructive) !important;
+  color: var(--foreground) !important;
+}
+
+/* ============================================
+   HEADER - Game HUD style
+   ============================================ */
+
+html.visual-mode-retro-pixel header {
+  border-bottom: 4px solid var(--border) !important;
+  background: var(--card) !important;
+  box-shadow:
+    inset 0 -4px 0 rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ============================================
+   SCROLLBAR - Pixel style
+   ============================================ */
+
+html.visual-mode-retro-pixel *::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+html.visual-mode-retro-pixel *::-webkit-scrollbar-track {
+  background: var(--background);
+  border: 4px solid var(--border);
+}
+
+html.visual-mode-retro-pixel *::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border: 4px solid var(--border);
+}
+
+html.visual-mode-retro-pixel *::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+html.visual-mode-retro-pixel *::-webkit-scrollbar-corner {
+  background: var(--background);
+}
+
+/* ============================================
+   IMAGES - Pixelated
+   ============================================ */
+
+html.visual-mode-retro-pixel img {
+  border: 4px solid var(--border) !important;
+  image-rendering: pixelated !important;
+}
+
+/* ============================================
+   SCANLINE EFFECT (subtle CRT feel)
+   ============================================ */
+
+html.visual-mode-retro-pixel::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  pointer-events: none;
+  z-index: 99999;
+}
+
+/* ============================================
+   SPECIAL ELEMENTS
+   ============================================ */
+
+/* Progress bars - segmented */
+html.visual-mode-retro-pixel [role="progressbar"] {
+  border: 4px solid var(--border) !important;
+  background: var(--background) !important;
+}
+
+html.visual-mode-retro-pixel [role="progressbar"] > div {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--primary) 0px,
+    var(--primary) 8px,
+    transparent 8px,
+    transparent 12px
+  ) !important;
+}
+
+/* Chat panel */
+html.visual-mode-retro-pixel .side-panel {
+  border-left: 4px solid var(--border) !important;
+  background: var(--card) !important;
+}
+
+/* Links */
+html.visual-mode-retro-pixel a {
+  color: var(--primary) !important;
+  text-decoration: none !important;
+}
+
+html.visual-mode-retro-pixel a:hover {
+  color: var(--accent) !important;
+  text-shadow: 2px 2px 0 var(--primary) !important;
+}
+
+/* Dividers */
+html.visual-mode-retro-pixel hr {
+  border: none !important;
+  border-top: 4px dashed var(--border) !important;
+}
+
+/* ============================================
+   FLOATING WINDOW - Game Window Style
+   ============================================ */
+
+html.visual-mode-retro-pixel [class*="FloatingWindow"],
+html.visual-mode-retro-pixel div[style*="position: fixed"][style*="z-index"] {
+  border: 4px solid var(--border) !important;
+  box-shadow:
+    inset -4px -4px 0 rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 4px var(--primary) !important;
+  background: var(--card) !important;
+  backdrop-filter: none !important;
+}
+
+/* ============================================
+   TILTCARD - Disable 3D effects
+   ============================================ */
+
+html.visual-mode-retro-pixel [style*="preserve-3d"],
+html.visual-mode-retro-pixel [style*="perspective"] {
+  transform-style: flat !important;
+  perspective: none !important;
+}
+
+html.visual-mode-retro-pixel [style*="rotateX"],
+html.visual-mode-retro-pixel [style*="rotateY"] {
+  transform: none !important;
+}
+
+/* ============================================
+   BOTTOM SHEET - Mobile (Pixel style)
+   ============================================ */
+
+html.visual-mode-retro-pixel .bottom-sheet,
+html.visual-mode-retro-pixel [class*="bottom-sheet"] {
+  border: 4px solid var(--border) !important;
+  border-bottom: none !important;
+  background: var(--card) !important;
+  backdrop-filter: none !important;
+}
+
+html.visual-mode-retro-pixel .bottom-sheet-backdrop {
+  backdrop-filter: none !important;
+  background: rgba(15, 15, 35, 0.9) !important;
+}
+
+html.visual-mode-retro-pixel .bottom-sheet-handle {
+  background: var(--primary) !important;
+  width: 48px !important;
+  height: 8px !important;
+}
+
+/* ============================================
+   CHAT MESSAGES - Pixel Bubbles
+   ============================================ */
+
+html.visual-mode-retro-pixel [class*="ChatMessages"] > div,
+html.visual-mode-retro-pixel [class*="message"] {
+  border: 4px solid var(--border) !important;
+  box-shadow:
+    inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.1) !important;
+  background: var(--card) !important;
+}
+
+/* ============================================
+   SIMPLIFY GRADIENTS - Keep but flatten
+   ============================================ */
+
+/* Only target major gradient backgrounds, not hover accents */
+html.visual-mode-retro-pixel header [class*="bg-gradient"] {
+  background: var(--card) !important;
+}
+
+/* Project card hover overlay - keep but adjust */
+html.visual-mode-retro-pixel .group:hover [class*="bg-gradient"][class*="opacity"] {
+  opacity: 0.4 !important;
+}
+
+/* ============================================
+   EXIT BUTTON - Pixel style
+   ============================================ */
+
+html.visual-mode-retro-pixel .visual-mode-exit-button button {
+  border: 4px solid var(--border) !important;
+  box-shadow:
+    inset -4px -4px 0 rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.2) !important;
+  background: var(--destructive) !important;
+}

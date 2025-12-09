@@ -56,6 +56,8 @@
     "expandWindow": "Expand window (decorative)",
     "themeSwitcher": "Change theme",
     "languageSwitcher": "Change language",
+    "visualModeSwitcher": "Change visual mode",
+    "exitVisualMode": "Exit visual mode",
     "resetApp": "Reset everything",
     "toggleChat": "Show/hide chat",
     "sendMessage": "Send message",
@@ -66,6 +68,24 @@
     "previousImage": "Previous image",
     "nextImage": "Next image",
     "promptInput": "Prompt input"
+  },
+  "visualModes": {
+    "header": "Visual Mode",
+    "experimental": "Experimental",
+    "exit": "Exit",
+    "hint": "Temporary - resets on refresh",
+    "neoBrutalism": {
+      "label": "Neo-Brutalism",
+      "description": "Bold borders, hard shadows"
+    },
+    "retroPixel": {
+      "label": "Retro Pixel",
+      "description": "8-bit aesthetic, NES vibes"
+    },
+    "newspaper": {
+      "label": "Newspaper",
+      "description": "Editorial, serif typography"
+    }
   },
   "suggestions": {
     "categories": {

@@ -56,6 +56,8 @@
     "expandWindow": "הרחב חלון (דקורטיבי)",
     "themeSwitcher": "שנה ערכת נושא",
     "languageSwitcher": "שנה שפה",
+    "visualModeSwitcher": "שנה מצב ויזואלי",
+    "exitVisualMode": "צא ממצב ויזואלי",
     "resetApp": "אפס הכל",
     "toggleChat": "הצג/הסתר צ'אט",
     "sendMessage": "שלח הודעה",
@@ -66,6 +68,24 @@
     "previousImage": "תמונה קודמת",
     "nextImage": "תמונה הבאה",
     "promptInput": "קלט הנחיה"
+  },
+  "visualModes": {
+    "header": "מצב ויזואלי",
+    "experimental": "ניסיוני",
+    "exit": "יציאה",
+    "hint": "זמני - מתאפס ברענון",
+    "neoBrutalism": {
+      "label": "ניאו-ברוטליזם",
+      "description": "גבולות עבים, צללים קשים"
+    },
+    "retroPixel": {
+      "label": "רטרו פיקסל",
+      "description": "אסתטיקה של 8 סיביות"
+    },
+    "newspaper": {
+      "label": "עיתון",
+      "description": "עריכה, טיפוגרפיה סריף"
+    }
   },
   "suggestions": {
     "categories": {

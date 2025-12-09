@@ -1,0 +1,388 @@
+/* ============================================
+   NEO-BRUTALISM MODE
+   Bold borders, hard shadows, primary colors
+   Raw, confrontational, unapologetic design
+   ============================================ */
+
+html.visual-mode-neo-brutalism {
+  /* Core palette - BOLD PRIMARY COLORS */
+  --background: #ffffff;
+  --foreground: #000000;
+
+  --primary: #00d4ff;
+  --primary-foreground: #000000;
+
+  --accent: #ff00ff;
+  --accent-foreground: #000000;
+
+  --secondary: #ffff00;
+  --secondary-foreground: #000000;
+
+  --muted: #f0f0f0;
+  --muted-foreground: #333333;
+
+  --card: #ffffff;
+  --card-foreground: #000000;
+
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+
+  --border: #000000;
+  --input: #000000;
+  --ring: #00d4ff;
+
+  --destructive: #ff3333;
+
+  /* Semantic colors - brutalist style */
+  --color-success: #00ff00;
+  --color-success-muted: #ccffcc;
+  --color-warning: #ffff00;
+  --color-warning-muted: #ffffcc;
+  --color-error: #ff0000;
+  --color-error-muted: #ffcccc;
+  --color-info: #00d4ff;
+  --color-info-muted: #ccffff;
+
+  /* Skill levels */
+  --color-level-expert: #00ff00;
+  --color-level-advanced: #00d4ff;
+  --color-level-intermediate: #ffff00;
+  --color-level-fundamental: #ff00ff;
+  --color-level-beginner: #ff3333;
+
+  /* Kill all rounded corners */
+  --radius: 0px;
+
+  /* Chart colors */
+  --chart-1: #00d4ff;
+  --chart-2: #ff00ff;
+  --chart-3: #ffff00;
+  --chart-4: #00ff00;
+  --chart-5: #ff3333;
+
+  /* Effects */
+  --shimmer-color: rgba(0, 212, 255, 0.3);
+  --image-bg: #f0f0f0;
+}
+
+/* ============================================
+   GLOBAL RESETS - Kill softness
+   ============================================ */
+
+html.visual-mode-neo-brutalism * {
+  border-radius: 0 !important;
+  transition-duration: 0.05s !important;
+  transition-timing-function: steps(2) !important;
+}
+
+html.visual-mode-neo-brutalism *::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ============================================
+   GLASSMORPHISM DESTRUCTION
+   ============================================ */
+
+html.visual-mode-neo-brutalism .glass,
+html.visual-mode-neo-brutalism .glass-strong,
+html.visual-mode-neo-brutalism .glass-subtle,
+html.visual-mode-neo-brutalism [class*="backdrop-blur"],
+html.visual-mode-neo-brutalism [class*="bg-background/"],
+html.visual-mode-neo-brutalism [class*="bg-card/"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--background) !important;
+}
+
+/* ============================================
+   BORDERS & SHADOWS - The Brutalist Way
+   ============================================ */
+
+/* Form elements and explicit cards */
+html.visual-mode-neo-brutalism button,
+html.visual-mode-neo-brutalism input,
+html.visual-mode-neo-brutalism textarea,
+html.visual-mode-neo-brutalism select,
+html.visual-mode-neo-brutalism .card {
+  border: 3px solid var(--foreground) !important;
+  box-shadow: 4px 4px 0 var(--foreground) !important;
+}
+
+/* Project cards - more specific selector */
+html.visual-mode-neo-brutalism .group[class*="rounded-2xl"],
+html.visual-mode-neo-brutalism [class*="bg-card"][class*="rounded"] {
+  border: 3px solid var(--foreground) !important;
+  box-shadow: 4px 4px 0 var(--foreground) !important;
+  background: var(--card) !important;
+}
+
+html.visual-mode-neo-brutalism button:hover,
+html.visual-mode-neo-brutalism .card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--foreground) !important;
+}
+
+/* Project card hover - ensure content stays visible */
+html.visual-mode-neo-brutalism .group:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--foreground) !important;
+}
+
+html.visual-mode-neo-brutalism .group:hover * {
+  color: inherit;
+}
+
+html.visual-mode-neo-brutalism input:focus,
+html.visual-mode-neo-brutalism textarea:focus {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--foreground) !important;
+}
+
+html.visual-mode-neo-brutalism button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--foreground) !important;
+}
+
+/* Header special treatment */
+html.visual-mode-neo-brutalism header {
+  border-bottom: 4px solid var(--foreground) !important;
+  box-shadow: none !important;
+}
+
+/* ============================================
+   TYPOGRAPHY - Bold & Confrontational
+   ============================================ */
+
+html.visual-mode-neo-brutalism h1,
+html.visual-mode-neo-brutalism h2,
+html.visual-mode-neo-brutalism h3,
+html.visual-mode-neo-brutalism .text-headline,
+html.visual-mode-neo-brutalism .text-monumental,
+html.visual-mode-neo-brutalism .text-title {
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.03em !important;
+}
+
+html.visual-mode-neo-brutalism h1 {
+  font-size: 4rem !important;
+  line-height: 0.9 !important;
+}
+
+/* Gradient text override - solid color */
+html.visual-mode-neo-brutalism .gradient-text,
+html.visual-mode-neo-brutalism .gradient-text-animated {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+}
+
+/* ============================================
+   BUTTONS - Chunky & Bold
+   ============================================ */
+
+html.visual-mode-neo-brutalism button[class*="variant-default"],
+html.visual-mode-neo-brutalism button[class*="bg-primary"] {
+  background: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+html.visual-mode-neo-brutalism button[class*="variant-secondary"],
+html.visual-mode-neo-brutalism button[class*="bg-secondary"] {
+  background: var(--secondary) !important;
+  color: var(--secondary-foreground) !important;
+}
+
+html.visual-mode-neo-brutalism button[class*="variant-destructive"] {
+  background: var(--destructive) !important;
+  color: #ffffff !important;
+}
+
+html.visual-mode-neo-brutalism button[class*="variant-outline"],
+html.visual-mode-neo-brutalism button[class*="variant-ghost"] {
+  background: transparent !important;
+}
+
+/* ============================================
+   ANIMATIONS - Kill the smoothness
+   ============================================ */
+
+html.visual-mode-neo-brutalism .animate-float,
+html.visual-mode-neo-brutalism .animate-gradient,
+html.visual-mode-neo-brutalism .animate-pulse-glow,
+html.visual-mode-neo-brutalism .animate-shimmer,
+html.visual-mode-neo-brutalism [class*="animate-"] {
+  animation: none !important;
+}
+
+/* ============================================
+   LINKS - Underlined & Bold
+   ============================================ */
+
+html.visual-mode-neo-brutalism a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 3px !important;
+  text-underline-offset: 4px !important;
+}
+
+html.visual-mode-neo-brutalism a:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ============================================
+   SCROLLBAR - Brutalist
+   ============================================ */
+
+html.visual-mode-neo-brutalism *::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+html.visual-mode-neo-brutalism *::-webkit-scrollbar-track {
+  background: var(--background);
+  border: 3px solid var(--foreground);
+}
+
+html.visual-mode-neo-brutalism *::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border: 3px solid var(--foreground);
+}
+
+html.visual-mode-neo-brutalism *::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ============================================
+   IMAGES - Hard edges
+   ============================================ */
+
+html.visual-mode-neo-brutalism img {
+  border: 3px solid var(--foreground) !important;
+  box-shadow: 4px 4px 0 var(--foreground) !important;
+}
+
+/* ============================================
+   SPECIAL ELEMENTS
+   ============================================ */
+
+/* Chat panel */
+html.visual-mode-neo-brutalism .side-panel {
+  border-left: 4px solid var(--foreground) !important;
+  box-shadow: none !important;
+}
+
+/* Progress bars */
+html.visual-mode-neo-brutalism [role="progressbar"] {
+  border: 2px solid var(--foreground) !important;
+  background: var(--muted) !important;
+}
+
+/* Dividers */
+html.visual-mode-neo-brutalism hr {
+  border: none !important;
+  border-top: 4px solid var(--foreground) !important;
+  margin: 2rem 0 !important;
+}
+
+/* Badges/Pills */
+html.visual-mode-neo-brutalism [class*="badge"],
+html.visual-mode-neo-brutalism [class*="pill"],
+html.visual-mode-neo-brutalism [class*="tag"] {
+  border: 2px solid var(--foreground) !important;
+  box-shadow: 2px 2px 0 var(--foreground) !important;
+}
+
+/* ============================================
+   FLOATING WINDOW - Brutalist Style
+   ============================================ */
+
+html.visual-mode-neo-brutalism [class*="FloatingWindow"],
+html.visual-mode-neo-brutalism div[style*="position: fixed"][style*="z-index"] {
+  border: 4px solid var(--foreground) !important;
+  box-shadow: 8px 8px 0 var(--foreground) !important;
+  background: var(--background) !important;
+  backdrop-filter: none !important;
+}
+
+/* ============================================
+   TILTCARD - Disable 3D effects
+   ============================================ */
+
+html.visual-mode-neo-brutalism [style*="preserve-3d"],
+html.visual-mode-neo-brutalism [style*="perspective"] {
+  transform-style: flat !important;
+  perspective: none !important;
+}
+
+html.visual-mode-neo-brutalism [style*="rotateX"],
+html.visual-mode-neo-brutalism [style*="rotateY"] {
+  transform: none !important;
+}
+
+/* ============================================
+   BOTTOM SHEET - Mobile (Brutalist)
+   ============================================ */
+
+html.visual-mode-neo-brutalism .bottom-sheet,
+html.visual-mode-neo-brutalism [class*="bottom-sheet"] {
+  border: 4px solid var(--foreground) !important;
+  border-bottom: none !important;
+  background: var(--background) !important;
+  backdrop-filter: none !important;
+}
+
+html.visual-mode-neo-brutalism .bottom-sheet-backdrop {
+  backdrop-filter: none !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+html.visual-mode-neo-brutalism .bottom-sheet-handle {
+  background: var(--foreground) !important;
+  width: 60px !important;
+  height: 6px !important;
+}
+
+/* ============================================
+   CHAT MESSAGES - Brutalist Bubbles
+   ============================================ */
+
+html.visual-mode-neo-brutalism [class*="ChatMessages"] > div,
+html.visual-mode-neo-brutalism [class*="message"] {
+  border: 2px solid var(--foreground) !important;
+  box-shadow: 3px 3px 0 var(--foreground) !important;
+  background: var(--card) !important;
+}
+
+/* ============================================
+   SIMPLIFY GRADIENTS - Keep but flatten
+   ============================================ */
+
+/* Only target major gradient backgrounds, not hover accents */
+html.visual-mode-neo-brutalism .gradient-text,
+html.visual-mode-neo-brutalism .gradient-text-animated {
+  background: none !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+}
+
+/* Header gradient */
+html.visual-mode-neo-brutalism header [class*="bg-gradient"] {
+  background: var(--background) !important;
+}
+
+/* Project card hover overlay - keep but brighten */
+html.visual-mode-neo-brutalism .group:hover [class*="bg-gradient"][class*="opacity"] {
+  opacity: 0.3 !important;
+}
+
+/* ============================================
+   EXIT BUTTON - Ensure brutalist style
+   ============================================ */
+
+html.visual-mode-neo-brutalism .visual-mode-exit-button button {
+  border: 3px solid var(--foreground) !important;
+  box-shadow: 4px 4px 0 var(--foreground) !important;
+  background: var(--destructive) !important;
+}

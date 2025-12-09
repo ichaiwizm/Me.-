@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { VisualModeSwitcher } from "@/components/visual-mode-switcher";
+import { useVisualMode } from "@/visual-mode";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { PageId } from "@/lib/commands/types";
@@ -17,6 +19,7 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
   const { t } = useTranslation("navigation");
+  const { isVisualModeActive } = useVisualMode();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
@@ -155,7 +158,13 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
               </motion.div>
             )}
             <LanguageSwitcher />
-            <ThemeSwitcher />
+            {/* Hide theme & visual mode switchers when a visual mode is active */}
+            {!isVisualModeActive && (
+              <>
+                <ThemeSwitcher />
+                <VisualModeSwitcher />
+              </>
+            )}
           </div>
         </div>
       </div>

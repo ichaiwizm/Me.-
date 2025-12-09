@@ -1,0 +1,492 @@
+/* ============================================
+   NEWSPAPER MODE
+   Editorial print aesthetic
+   Classic typography, paper texture, ink black
+   Fonts: Playfair Display, Merriweather, EB Garamond (loaded in visual-modes.css)
+   ============================================ */
+
+html.visual-mode-newspaper {
+  /* Newspaper palette - cream paper, ink black, red accent */
+  --background: #f5f0e8;
+  --foreground: #1a1a1a;
+
+  --primary: #c41e3a;
+  --primary-foreground: #f5f0e8;
+
+  --accent: #1a1a1a;
+  --accent-foreground: #f5f0e8;
+
+  --secondary: #e8e3db;
+  --secondary-foreground: #1a1a1a;
+
+  --muted: #d4cfc7;
+  --muted-foreground: #4a4a4a;
+
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+
+  --border: #1a1a1a;
+  --input: #1a1a1a;
+  --ring: #c41e3a;
+
+  --destructive: #c41e3a;
+
+  /* Semantic colors - newsprint */
+  --color-success: #2d5016;
+  --color-success-muted: #e8f0e0;
+  --color-warning: #8b6914;
+  --color-warning-muted: #f5f0d8;
+  --color-error: #c41e3a;
+  --color-error-muted: #f5e8ea;
+  --color-info: #1a4a6e;
+  --color-info-muted: #e8f0f5;
+
+  /* Skill levels - monochrome */
+  --color-level-expert: #1a1a1a;
+  --color-level-advanced: #3a3a3a;
+  --color-level-intermediate: #5a5a5a;
+  --color-level-fundamental: #7a7a7a;
+  --color-level-beginner: #9a9a9a;
+
+  /* Minimal radius */
+  --radius: 0px;
+
+  /* Chart colors - editorial */
+  --chart-1: #1a1a1a;
+  --chart-2: #c41e3a;
+  --chart-3: #4a4a4a;
+  --chart-4: #7a7a7a;
+  --chart-5: #9a9a9a;
+
+  /* Effects */
+  --shimmer-color: rgba(26, 26, 26, 0.1);
+  --image-bg: #e8e3db;
+}
+
+/* ============================================
+   TYPOGRAPHY - Classic Newspaper
+   ============================================ */
+
+html.visual-mode-newspaper h1,
+html.visual-mode-newspaper h2,
+html.visual-mode-newspaper h3,
+html.visual-mode-newspaper .text-headline,
+html.visual-mode-newspaper .text-monumental,
+html.visual-mode-newspaper .text-title {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase !important;
+}
+
+html.visual-mode-newspaper h1 {
+  font-size: 3.5rem !important;
+  line-height: 1.1 !important;
+  border-bottom: 3px double var(--foreground);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem !important;
+}
+
+html.visual-mode-newspaper h2 {
+  font-size: 2rem !important;
+  line-height: 1.2 !important;
+  border-bottom: 1px solid var(--foreground);
+  padding-bottom: 0.25rem;
+}
+
+html.visual-mode-newspaper h3 {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  text-transform: none !important;
+}
+
+html.visual-mode-newspaper p,
+html.visual-mode-newspaper span,
+html.visual-mode-newspaper label,
+html.visual-mode-newspaper .text-body {
+  font-family: 'EB Garamond', Georgia, serif !important;
+  font-size: 1.1rem !important;
+  line-height: 1.7 !important;
+}
+
+html.visual-mode-newspaper button,
+html.visual-mode-newspaper input,
+html.visual-mode-newspaper textarea {
+  font-family: 'Merriweather', Georgia, serif !important;
+}
+
+/* Gradient text override - solid black */
+html.visual-mode-newspaper .gradient-text,
+html.visual-mode-newspaper .gradient-text-animated {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+}
+
+/* ============================================
+   PAPER TEXTURE OVERLAY
+   ============================================ */
+
+html.visual-mode-newspaper::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 99998;
+}
+
+/* Horizontal lines like newspaper columns */
+html.visual-mode-newspaper::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1.7rem,
+    rgba(26, 26, 26, 0.03) 1.7rem,
+    rgba(26, 26, 26, 0.03) calc(1.7rem + 1px)
+  );
+  pointer-events: none;
+  z-index: 99999;
+}
+
+/* ============================================
+   GLASSMORPHISM REMOVAL
+   ============================================ */
+
+html.visual-mode-newspaper .glass,
+html.visual-mode-newspaper .glass-strong,
+html.visual-mode-newspaper .glass-subtle,
+html.visual-mode-newspaper [class*="backdrop-blur"],
+html.visual-mode-newspaper [class*="bg-background/"],
+html.visual-mode-newspaper [class*="bg-card/"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--card) !important;
+}
+
+/* ============================================
+   BORDERS & SHADOWS - Editorial style
+   ============================================ */
+
+html.visual-mode-newspaper * {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html.visual-mode-newspaper *::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+html.visual-mode-newspaper button,
+html.visual-mode-newspaper input,
+html.visual-mode-newspaper textarea,
+html.visual-mode-newspaper select {
+  border: 1px solid var(--foreground) !important;
+}
+
+html.visual-mode-newspaper .card {
+  border: 1px solid var(--border) !important;
+}
+
+/* Project cards - more specific selector */
+html.visual-mode-newspaper .group[class*="rounded-2xl"],
+html.visual-mode-newspaper [class*="bg-card"][class*="rounded"] {
+  border: 1px solid var(--border) !important;
+  background: var(--card) !important;
+}
+
+/* Card hover - subtle */
+html.visual-mode-newspaper .card:hover {
+  background: var(--secondary) !important;
+}
+
+/* Project card hover - subtle highlight */
+html.visual-mode-newspaper .group:hover {
+  background: var(--secondary) !important;
+  border-color: var(--foreground) !important;
+}
+
+html.visual-mode-newspaper .group:hover * {
+  color: inherit;
+}
+
+/* ============================================
+   BUTTONS - Classic, understated
+   ============================================ */
+
+html.visual-mode-newspaper button {
+  font-variant: small-caps !important;
+  letter-spacing: 0.1em !important;
+  text-transform: lowercase !important;
+}
+
+html.visual-mode-newspaper button[class*="bg-primary"],
+html.visual-mode-newspaper button[class*="variant-default"] {
+  background: var(--foreground) !important;
+  color: var(--background) !important;
+  border: none !important;
+}
+
+html.visual-mode-newspaper button[class*="bg-primary"]:hover,
+html.visual-mode-newspaper button[class*="variant-default"]:hover {
+  background: var(--primary) !important;
+}
+
+html.visual-mode-newspaper button[class*="variant-outline"],
+html.visual-mode-newspaper button[class*="variant-ghost"] {
+  background: transparent !important;
+  border: 1px solid var(--foreground) !important;
+}
+
+html.visual-mode-newspaper button[class*="variant-outline"]:hover,
+html.visual-mode-newspaper button[class*="variant-ghost"]:hover {
+  background: var(--foreground) !important;
+  color: var(--background) !important;
+}
+
+/* ============================================
+   ANIMATIONS - Minimal, subtle
+   ============================================ */
+
+html.visual-mode-newspaper * {
+  transition-duration: 0.15s !important;
+  transition-timing-function: ease-out !important;
+}
+
+html.visual-mode-newspaper .animate-float,
+html.visual-mode-newspaper .animate-gradient,
+html.visual-mode-newspaper .animate-pulse-glow,
+html.visual-mode-newspaper .animate-shimmer,
+html.visual-mode-newspaper [class*="animate-"] {
+  animation: none !important;
+}
+
+/* ============================================
+   HEADER - Masthead style
+   ============================================ */
+
+html.visual-mode-newspaper header {
+  border-bottom: 3px double var(--foreground) !important;
+  background: var(--background) !important;
+}
+
+/* ============================================
+   LINKS - Classic underline
+   ============================================ */
+
+html.visual-mode-newspaper a {
+  color: var(--foreground) !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 3px !important;
+}
+
+html.visual-mode-newspaper a:hover {
+  color: var(--primary) !important;
+}
+
+/* ============================================
+   DIVIDERS - Editorial rules
+   ============================================ */
+
+html.visual-mode-newspaper hr {
+  border: none !important;
+  border-top: 1px solid var(--foreground) !important;
+  margin: 2rem 0 !important;
+}
+
+/* Fancy divider */
+html.visual-mode-newspaper hr.fancy,
+html.visual-mode-newspaper hr:first-of-type {
+  border-top: 3px double var(--foreground) !important;
+}
+
+/* ============================================
+   SCROLLBAR - Minimal
+   ============================================ */
+
+html.visual-mode-newspaper *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html.visual-mode-newspaper *::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+html.visual-mode-newspaper *::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+}
+
+html.visual-mode-newspaper *::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground);
+}
+
+/* ============================================
+   IMAGES - Print-ready
+   ============================================ */
+
+html.visual-mode-newspaper img {
+  border: 1px solid var(--border) !important;
+  filter: grayscale(30%) contrast(1.1) !important;
+}
+
+html.visual-mode-newspaper img:hover {
+  filter: grayscale(0%) contrast(1) !important;
+}
+
+/* ============================================
+   SPECIAL ELEMENTS
+   ============================================ */
+
+/* Chat panel */
+html.visual-mode-newspaper .side-panel {
+  border-left: 1px solid var(--border) !important;
+  background: var(--card) !important;
+}
+
+/* Progress bars */
+html.visual-mode-newspaper [role="progressbar"] {
+  border: 1px solid var(--foreground) !important;
+  background: var(--secondary) !important;
+}
+
+html.visual-mode-newspaper [role="progressbar"] > div {
+  background: var(--foreground) !important;
+}
+
+/* Badges - newspaper tag style */
+html.visual-mode-newspaper [class*="badge"],
+html.visual-mode-newspaper [class*="pill"],
+html.visual-mode-newspaper [class*="tag"] {
+  border: 1px solid var(--foreground) !important;
+  font-variant: small-caps !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Drop caps effect for first paragraph */
+html.visual-mode-newspaper main p:first-of-type::first-letter {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 4rem !important;
+  float: left !important;
+  line-height: 0.8 !important;
+  padding-right: 0.5rem !important;
+  padding-top: 0.25rem !important;
+  color: var(--primary) !important;
+}
+
+/* Column-like text feel */
+html.visual-mode-newspaper main p {
+  text-align: justify !important;
+  hyphens: auto !important;
+}
+
+/* Blockquotes - pull quote style */
+html.visual-mode-newspaper blockquote {
+  border-left: 4px solid var(--primary) !important;
+  border-right: none !important;
+  padding-left: 1.5rem !important;
+  font-style: italic !important;
+  font-size: 1.25rem !important;
+  margin: 2rem 0 !important;
+}
+
+/* ============================================
+   FLOATING WINDOW - Editorial Window
+   ============================================ */
+
+html.visual-mode-newspaper [class*="FloatingWindow"],
+html.visual-mode-newspaper div[style*="position: fixed"][style*="z-index"] {
+  border: 1px solid var(--foreground) !important;
+  box-shadow: none !important;
+  background: var(--card) !important;
+  backdrop-filter: none !important;
+}
+
+/* ============================================
+   TILTCARD - Disable 3D effects
+   ============================================ */
+
+html.visual-mode-newspaper [style*="preserve-3d"],
+html.visual-mode-newspaper [style*="perspective"] {
+  transform-style: flat !important;
+  perspective: none !important;
+}
+
+html.visual-mode-newspaper [style*="rotateX"],
+html.visual-mode-newspaper [style*="rotateY"] {
+  transform: none !important;
+}
+
+/* ============================================
+   BOTTOM SHEET - Mobile (Editorial style)
+   ============================================ */
+
+html.visual-mode-newspaper .bottom-sheet,
+html.visual-mode-newspaper [class*="bottom-sheet"] {
+  border: 1px solid var(--foreground) !important;
+  border-bottom: none !important;
+  background: var(--card) !important;
+  backdrop-filter: none !important;
+}
+
+html.visual-mode-newspaper .bottom-sheet-backdrop {
+  backdrop-filter: none !important;
+  background: rgba(26, 26, 26, 0.7) !important;
+}
+
+html.visual-mode-newspaper .bottom-sheet-handle {
+  background: var(--muted-foreground) !important;
+  width: 40px !important;
+  height: 4px !important;
+}
+
+/* ============================================
+   CHAT MESSAGES - Editorial Bubbles
+   ============================================ */
+
+html.visual-mode-newspaper [class*="ChatMessages"] > div,
+html.visual-mode-newspaper [class*="message"] {
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+  background: var(--card) !important;
+  font-family: 'EB Garamond', Georgia, serif !important;
+}
+
+/* ============================================
+   SIMPLIFY GRADIENTS - Keep but mute
+   ============================================ */
+
+/* Only target major gradient backgrounds, not hover accents */
+html.visual-mode-newspaper header [class*="bg-gradient"] {
+  background: var(--background) !important;
+}
+
+/* Project card hover overlay - mute for newspaper aesthetic */
+html.visual-mode-newspaper .group:hover [class*="bg-gradient"][class*="opacity"] {
+  opacity: 0.15 !important;
+  filter: grayscale(50%) !important;
+}
+
+/* ============================================
+   EXIT BUTTON - Editorial style
+   ============================================ */
+
+html.visual-mode-newspaper .visual-mode-exit-button button {
+  border: 1px solid var(--foreground) !important;
+  box-shadow: none !important;
+  background: var(--primary) !important;
+  font-family: 'Merriweather', Georgia, serif !important;
+}
