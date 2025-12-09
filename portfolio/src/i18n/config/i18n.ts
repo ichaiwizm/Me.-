@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { DEFAULT_LANGUAGE, FALLBACK_LANGUAGE } from "./language-definitions";
+import { FALLBACK_LANGUAGE } from "./language-definitions";
 
 // Import English translations
 import enCommon from "../locales/en/common.json";
@@ -70,7 +70,6 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: DEFAULT_LANGUAGE,
     fallbackLng: FALLBACK_LANGUAGE,
     defaultNS: "common",
     ns: NAMESPACES,

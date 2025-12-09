@@ -3,11 +3,28 @@ import type { LanguageId } from "../config/language-definitions";
 
 const STORAGE_KEY = "portfolio-language-id";
 
+export function detectBrowserLanguage(): LanguageId | null {
+  try {
+    const browserLang = navigator.language || navigator.languages?.[0];
+    if (!browserLang) return null;
+
+    const baseLang = browserLang.split("-")[0].toLowerCase();
+    return sanitizeLanguageId(baseLang);
+  } catch {
+    return null;
+  }
+}
+
 export function loadLanguageFromStorage(): LanguageId {
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     const validated = sanitizeLanguageId(stored);
-    return validated ?? getDefaultLanguage();
+    if (validated) return validated;
+
+    const browserLang = detectBrowserLanguage();
+    if (browserLang) return browserLang;
+
+    return getDefaultLanguage();
   } catch {
     return getDefaultLanguage();
   }
