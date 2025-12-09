@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, PanInfo, useAnimation } from "framer-motion";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import type { PanInfo } from "framer-motion";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MOBILE_SPRINGS, GESTURE_THRESHOLDS } from "@/lib/constants/animation";

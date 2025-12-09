@@ -2,7 +2,7 @@ import { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 
 import FloatingWindow from "@/components/windows/FloatingWindow";
 import { WindowDock } from "@/components/windows/WindowDock";
 import { BottomSheet } from "@/components/mobile/BottomSheet";
-import { SandboxedContent } from "@/components/windows/SandboxedContent";
+import SandboxedContent from "@/components/windows/SandboxedContent";
 
 export type WindowSpec = { title: string; contentHtml: string; width?: number; height?: number; key?: string };
 export type WindowManagerHandle = {
