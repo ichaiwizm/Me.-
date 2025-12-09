@@ -62,6 +62,9 @@ function App() {
     setLightboxState(s => ({ ...s, isOpen: false }));
   }, []);
 
+  const { wmRef, windowCount, createWindow, closeWindow, minimizeWindow, modifyWindow, resizeWindow, resetAll } =
+    useWindowManager();
+
   // Listen for postMessage from gallery iframes
   useEffect(() => {
     const handleMessage = (e: MessageEvent) => {
@@ -75,15 +78,18 @@ function App() {
             images,
             index: typeof e.data.index === 'number' ? e.data.index : 0
           });
+          // Minimize the gallery window when lightbox opens
+          if (isMobile) {
+            closeWindow("gallery");
+          } else {
+            minimizeWindow("gallery");
+          }
         }
       }
     };
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, []);
-
-  const { wmRef, windowCount, createWindow, closeWindow, modifyWindow, resizeWindow, resetAll } =
-    useWindowManager();
+  }, [isMobile, minimizeWindow, closeWindow]);
   const { setBackground, clearBackground } = useAppBackground();
 
   const ctx: ExecutorContext = {

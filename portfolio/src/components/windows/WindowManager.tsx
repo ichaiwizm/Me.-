@@ -8,6 +8,7 @@ export type WindowSpec = { title: string; contentHtml: string; width?: number; h
 export type WindowManagerHandle = {
   createWindow: (spec: WindowSpec) => void;
   closeWindow: (key: string) => void;
+  minimizeWindow: (key: string) => void;
   modifyWindow: (key: string, contentHtml: string) => void;
   resizeWindow: (key: string, width?: number, height?: number) => void;
   resetAll: () => void;
@@ -92,6 +93,10 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
     setItems(ws => ws.filter(i => i.key !== key));
   }, []);
 
+  const minimizeWindow = useCallback((key: string) => {
+    setItems(ws => ws.map(i => i.key === key ? { ...i, minimized: true } : i));
+  }, []);
+
   const modifyWindow = useCallback((key: string, contentHtml: string) => {
     setItems(ws => ws.map(i => i.key === key ? { ...i, contentHtml } : i));
   }, []);
@@ -110,7 +115,7 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
     }));
   }, []);
 
-  useImperativeHandle(ref, () => ({ createWindow, closeWindow, modifyWindow, resizeWindow, resetAll }), [createWindow, closeWindow, modifyWindow, resizeWindow, resetAll]);
+  useImperativeHandle(ref, () => ({ createWindow, closeWindow, minimizeWindow, modifyWindow, resizeWindow, resetAll }), [createWindow, closeWindow, minimizeWindow, modifyWindow, resizeWindow, resetAll]);
 
   const docked = useMemo(() => items.filter(w=>w.minimized), [items]);
 

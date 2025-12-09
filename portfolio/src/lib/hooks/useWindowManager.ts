@@ -14,6 +14,10 @@ export function useWindowManager() {
     wmRef.current?.closeWindow(key);
   }
 
+  function minimizeWindow(key: string) {
+    wmRef.current?.minimizeWindow(key);
+  }
+
   function modifyWindow(key: string, html: string) {
     wmRef.current?.modifyWindow(key, html);
   }
@@ -32,6 +36,7 @@ export function useWindowManager() {
     windowCount,
     createWindow,
     closeWindow,
+    minimizeWindow,
     modifyWindow,
     resizeWindow,
     resetAll

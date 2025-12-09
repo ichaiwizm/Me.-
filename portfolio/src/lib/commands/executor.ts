@@ -150,6 +150,7 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
           contentHtml: html,
           width: cmd.width || 720,
           height: cmd.height || 520,
+          key: "gallery",
         });
         break;
       }
