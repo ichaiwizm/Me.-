@@ -88,9 +88,10 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         const grid = limited
           .map((i, idx) => {
             return `
-              <figure class="gallery-item" style="margin:0;cursor:pointer;transition:transform 0.2s ease;"
+              <figure class="gallery-item" style="margin:0;cursor:pointer;transition:transform 0.2s ease;-webkit-tap-highlight-color:transparent;"
                       data-index="${idx}" data-images="${imageIdList}"
                       onclick="openLightbox(this)"
+                      ontouchend="handleTouch(event, this)"
                       onmouseover="this.style.transform='scale(1.02)'"
                       onmouseout="this.style.transform='scale(1)'">
                 <div style="position:relative;width:100%;padding-bottom:66.67%;overflow:hidden;border-radius:12px;
@@ -108,6 +109,16 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
           .join("");
         const html = `
           <script>
+            var touchMoved = false;
+            document.addEventListener('touchmove', function() { touchMoved = true; }, {passive: true});
+            document.addEventListener('touchstart', function() { touchMoved = false; }, {passive: true});
+
+            function handleTouch(e, el) {
+              if (touchMoved) return;
+              e.preventDefault();
+              openLightbox(el);
+            }
+
             function openLightbox(el) {
               var index = parseInt(el.dataset.index, 10);
               var images = el.dataset.images.split(',');
