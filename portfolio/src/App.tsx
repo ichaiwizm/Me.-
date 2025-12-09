@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { ChatSidePanel } from "@/components/chat/ChatSidePanel";
 import WindowManager from "@/components/windows/WindowManager";
+import { Lightbox } from "@/components/media/Lightbox";
 import { Toaster } from "sonner";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { useTheme } from "@/theme/provider/ThemeContext";
@@ -10,6 +11,7 @@ import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
 import { isValidThemeId } from "@/theme/config/theme-registry";
+import { IMAGE_REGISTRY, type ImageMeta } from "@/lib/constants/images";
 import type { ExecutorContext, PageId } from "@/lib/commands/types";
 import { HomePage, ProjectsPage, SkillsPage, AboutPage, ContactPage } from "@/components/pages";
 
@@ -43,6 +45,37 @@ const pageTransition = {
 function App() {
   const [currentPage, setCurrentPage] = useState<PageId>("accueil");
   const { setThemeId } = useTheme();
+
+  // Global lightbox state for gallery images
+  const [lightboxState, setLightboxState] = useState<{
+    isOpen: boolean;
+    images: ImageMeta[];
+    index: number;
+  }>({ isOpen: false, images: [], index: 0 });
+
+  const closeLightbox = useCallback(() => {
+    setLightboxState(s => ({ ...s, isOpen: false }));
+  }, []);
+
+  // Listen for postMessage from gallery iframes
+  useEffect(() => {
+    const handleMessage = (e: MessageEvent) => {
+      if (e.data?.type === 'lightbox' && Array.isArray(e.data.images)) {
+        const images = e.data.images
+          .map((id: string) => IMAGE_REGISTRY.find(img => img.id === id))
+          .filter((img: ImageMeta | undefined): img is ImageMeta => img !== undefined);
+        if (images.length > 0) {
+          setLightboxState({
+            isOpen: true,
+            images,
+            index: typeof e.data.index === 'number' ? e.data.index : 0
+          });
+        }
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
 
   const { wmRef, windowCount, createWindow, closeWindow, modifyWindow, resizeWindow, resetAll } =
     useWindowManager();
@@ -141,6 +174,14 @@ function App() {
 
       <WindowManager ref={wmRef} />
       <Toaster position="top-right" richColors />
+
+      {/* Global lightbox for gallery images */}
+      <Lightbox
+        isOpen={lightboxState.isOpen}
+        images={lightboxState.images}
+        initialIndex={lightboxState.index}
+        onClose={closeLightbox}
+      />
     </>
   );
 }

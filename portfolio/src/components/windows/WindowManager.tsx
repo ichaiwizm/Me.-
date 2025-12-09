@@ -13,7 +13,7 @@ export type WindowManagerHandle = {
 
 type Item = {
   id: string; title: string; contentHtml: string; width: number; height: number; key?: string;
-  x: number; y: number; z: number; minimized: boolean;
+  x: number; y: number; z: number; minimized: boolean; maximized: boolean;
 };
 
 const makeId = () => `w_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,7)}`;
@@ -75,7 +75,8 @@ export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) =
         x,
         y,
         z: newZ,
-        minimized: false
+        minimized: false,
+        maximized: false
       }];
     });
   }, []);
@@ -111,14 +112,21 @@ export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) =
     bringFront(id);
   }, [bringFront]);
 
+  const toggleMaximize = useCallback((id: string) => {
+    setItems(ws=>ws.map(i=>i.id===id?{...i,maximized:!i.maximized}:i));
+    bringFront(id);
+  }, [bringFront]);
+
   return (
     <>
       <WindowDock items={docked} onRestore={handleRestore} />
       {items.filter(w=>!w.minimized).map(w => (
         <FloatingWindow key={w.id} id={w.id} title={w.title} zIndex={w.z}
           initialPos={{ x: w.x, y: w.y }} width={w.width} height={w.height} contentHtml={w.contentHtml}
+          isMaximized={w.maximized}
           onClose={(id)=>setItems(ws=>ws.filter(i=>i.id!==id))}
           onMinimize={(id)=>setItems(ws=>ws.map(i=>i.id===id?{...i,minimized:true}:i))}
+          onMaximize={toggleMaximize}
           onFocus={bringFront}
           onMove={(id,pos)=>setItems(ws=>ws.map(i=>i.id===id?{...i,x:pos.x,y:pos.y}:i))}
         />

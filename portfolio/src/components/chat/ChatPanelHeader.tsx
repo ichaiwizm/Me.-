@@ -12,7 +12,7 @@ export function ChatPanelHeader({ onClose, isMobile }: ChatPanelHeaderProps) {
 
   return (
     <motion.div
-      className="flex items-center justify-between px-4 py-3 border-b border-foreground/10 bg-background/30"
+      className="flex items-center justify-between px-4 py-3 bg-primary/5 backdrop-blur-sm shadow-[0_1px_3px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.06)]"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}

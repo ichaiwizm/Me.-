@@ -67,12 +67,11 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         }
         break;
       case "display_gallery": {
-        // Build a simple responsive gallery from AVAILABLE_IMAGES
+        // Build a responsive gallery from AVAILABLE_IMAGES with clickable images
         // Optional filters: tag, category, limit
         let imgs = [...(AVAILABLE_IMAGES as unknown as Array<{ id: string; name: string; category: string }> )];
         if (cmd.category) imgs = imgs.filter((i) => i.category === cmd.category);
         if (cmd.tag) {
-          // best-effort contains in name; tags are only in public manifest, so approximate here
           const t = String(cmd.tag).toLowerCase();
           imgs = imgs.filter((i) => i.name.toLowerCase().includes(t) || i.id.toLowerCase().includes(t));
         }
@@ -81,15 +80,30 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
           break;
         }
         const limited = typeof cmd.limit === "number" ? imgs.slice(0, cmd.limit) : imgs;
+        const imageIds = JSON.stringify(limited.map(i => i.id));
         const grid = limited
-          .map((i) => {
+          .map((i, idx) => {
             const url = `/images/${i.id}.png`;
-            return `<figure style=\"margin:0;\"><img src=\"${url}\" alt=\"${i.name}\" style=\"width:100%;height:160px;object-fit:cover;border-radius:8px;\" /><figcaption style=\"margin-top:6px;font-size:11px;color:#bbb;\">${i.name}</figcaption></figure>`;
+            return `
+              <figure style="margin:0;cursor:pointer;transition:transform 0.2s ease;"
+                      onclick="window.parent.postMessage({type:'lightbox',index:${idx},images:${imageIds}}, '*')"
+                      onmouseover="this.style.transform='scale(1.02)'"
+                      onmouseout="this.style.transform='scale(1)'">
+                <img src="${url}" alt="${i.name}"
+                     style="width:100%;height:180px;object-fit:cover;border-radius:12px;
+                            box-shadow:0 4px 12px rgba(0,0,0,0.25);transition:box-shadow 0.2s ease;"
+                     onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.4)'"
+                     onmouseout="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.25)'" />
+                <figcaption style="margin-top:8px;font-size:12px;opacity:0.7;font-weight:500;">
+                  ${i.name}
+                </figcaption>
+              </figure>`;
           })
           .join("");
         const html = `
-          <div style="padding:12px;background:#0a0a0a;color:#eaeaea;height:100%;overflow:auto;">
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;">
+          <div style="padding:16px;background:linear-gradient(180deg, rgba(10,10,10,0.98) 0%, rgba(5,5,5,1) 100%);
+                      color:#f0f0f0;height:100%;overflow:auto;font-family:system-ui,-apple-system,sans-serif;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;">
               ${grid}
             </div>
           </div>
