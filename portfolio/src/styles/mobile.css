@@ -1,0 +1,437 @@
+/* ============================================
+   MOBILE EXPERIENCE STYLES
+   Premium native iOS/Android feel
+   ============================================ */
+
+/* ============================================
+   SAFE AREA HANDLING
+   ============================================ */
+
+.mobile-safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.mobile-safe-area-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.mobile-safe-inset-bottom {
+  bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ============================================
+   BOTTOM NAVIGATION
+   ============================================ */
+
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: calc(64px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: oklch(from var(--background) l c h / 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid oklch(from var(--foreground) l c h / 0.08);
+}
+
+.mobile-bottom-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 64px;
+  padding: 0 8px;
+}
+
+.mobile-nav-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.mobile-nav-item-active {
+  color: var(--primary);
+}
+
+.mobile-nav-item-inactive {
+  color: oklch(from var(--foreground) l c h / 0.55);
+}
+
+.mobile-nav-indicator {
+  position: absolute;
+  top: 4px;
+  width: 48px;
+  height: 32px;
+  border-radius: 16px;
+  background: oklch(from var(--primary) l c h / 0.12);
+}
+
+.mobile-nav-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.mobile-nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  margin-top: 2px;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.01em;
+}
+
+/* ============================================
+   FLOATING ACTION BUTTON (FAB)
+   ============================================ */
+
+.mobile-fab {
+  position: fixed;
+  right: 16px;
+  bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  z-index: 49;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  box-shadow:
+    0 4px 20px oklch(from var(--primary) l c h / 0.35),
+    0 2px 8px oklch(from var(--primary) l c h / 0.2);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.mobile-fab:active {
+  transform: scale(0.92);
+}
+
+.mobile-fab-icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.mobile-fab-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background: var(--destructive);
+  border: 2px solid var(--background);
+}
+
+/* RTL positioning */
+[dir="rtl"] .mobile-fab {
+  right: auto;
+  left: 16px;
+}
+
+/* ============================================
+   BOTTOM SHEET
+   ============================================ */
+
+.bottom-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: oklch(0% 0 0 / 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 998;
+}
+
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  border-radius: 24px 24px 0 0;
+  background: oklch(from var(--background) l c h / 0.98);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow:
+    0 -10px 60px oklch(0% 0 0 / 0.15),
+    0 -2px 20px oklch(0% 0 0 / 0.08);
+  overflow: hidden;
+  max-height: 92vh;
+  touch-action: none;
+}
+
+.bottom-sheet-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: oklch(from var(--foreground) l c h / 0.25);
+  margin: 12px auto 8px;
+}
+
+.bottom-sheet-header {
+  padding: 0 24px 16px;
+  border-bottom: 1px solid oklch(from var(--foreground) l c h / 0.08);
+}
+
+.bottom-sheet-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.bottom-sheet-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ============================================
+   MOBILE CONTENT LAYOUT
+   ============================================ */
+
+.mobile-content {
+  min-height: calc(100vh - 64px - env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+}
+
+.mobile-page {
+  padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ============================================
+   TOUCH UTILITIES
+   ============================================ */
+
+.touch-feedback {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.touch-target-48 {
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.touch-target-44 {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Touch ripple effect */
+.touch-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.touch-ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
+    oklch(from var(--primary) l c h / 0.15) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  pointer-events: none;
+}
+
+.touch-ripple:active::after {
+  opacity: 1;
+  transform: scale(2.5);
+}
+
+/* ============================================
+   DISABLE HOVER ON TOUCH DEVICES
+   ============================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  .hover-only:hover {
+    transform: none !important;
+    box-shadow: inherit !important;
+  }
+
+  .hover-scale:hover {
+    transform: none !important;
+  }
+
+  .hover-glow:hover {
+    box-shadow: inherit !important;
+  }
+}
+
+/* ============================================
+   MOMENTUM SCROLLING
+   ============================================ */
+
+.momentum-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-snap-item {
+  scroll-snap-align: start;
+}
+
+/* ============================================
+   HIDE SCROLLBARS (MOBILE)
+   ============================================ */
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================
+   MOBILE CARD STYLES
+   ============================================ */
+
+.mobile-card {
+  background: oklch(from var(--card) l c h / 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid oklch(from var(--foreground) l c h / 0.06);
+}
+
+.mobile-card-pressed {
+  transform: scale(0.98);
+  transition: transform 0.15s ease-out;
+}
+
+/* ============================================
+   MOBILE TYPOGRAPHY ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 767px) {
+  .mobile-text-balance {
+    text-wrap: balance;
+  }
+
+  .mobile-leading-relaxed {
+    line-height: 1.7;
+  }
+}
+
+/* ============================================
+   MOBILE SPACING UTILITIES
+   ============================================ */
+
+.mobile-px {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.mobile-py {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+/* ============================================
+   MOBILE ANIMATIONS
+   ============================================ */
+
+@keyframes mobile-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mobile-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes mobile-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fab-pulse {
+  0%, 100% {
+    box-shadow:
+      0 4px 20px oklch(from var(--primary) l c h / 0.35),
+      0 2px 8px oklch(from var(--primary) l c h / 0.2);
+  }
+  50% {
+    box-shadow:
+      0 4px 30px oklch(from var(--primary) l c h / 0.5),
+      0 2px 12px oklch(from var(--primary) l c h / 0.3);
+  }
+}
+
+.mobile-fab-pulse {
+  animation: fab-pulse 2s ease-in-out infinite;
+}
+
+/* ============================================
+   iOS-STYLE BLUR BACKGROUNDS
+   ============================================ */
+
+.ios-blur-light {
+  background: oklch(98% 0 0 / 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.ios-blur-dark {
+  background: oklch(15% 0 0 / 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* ============================================
+   PREVENT OVERSCROLL BOUNCE
+   ============================================ */
+
+.no-overscroll {
+  overscroll-behavior: none;
+}
+
+.overscroll-contain {
+  overscroll-behavior: contain;
+}

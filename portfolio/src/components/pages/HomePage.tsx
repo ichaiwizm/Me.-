@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { usePersonalInfo } from "@/data/hooks";
 import { useTypeWriter } from "@/components/ui/TypeWriter";
 import { EASINGS } from "@/lib/constants/animation";
+import { useIsMobile } from "@/lib/hooks/useMediaQuery";
 
 // Floating shape component
 function FloatingShape({
@@ -34,6 +35,7 @@ function FloatingShape({
 
 export function HomePage() {
   const personalInfo = usePersonalInfo();
+  const isMobile = useIsMobile();
   const { displayedText, isComplete } = useTypeWriter(personalInfo.fullName, 100, 800);
 
   const titleVariants = {
@@ -50,54 +52,62 @@ export function HomePage() {
   };
 
   return (
-    <div className="relative h-[calc(100vh-4rem)] flex items-center justify-center px-8 overflow-hidden">
-      {/* Background decorative elements */}
+    <div className="relative h-[calc(100vh-4rem)] flex items-center justify-center px-4 md:px-8 overflow-hidden">
+      {/* Background decorative elements - reduced on mobile for performance */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Gradient orbs */}
+        {/* Gradient orbs - show only one on mobile */}
         <FloatingShape
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-br from-primary/20 to-accent/10 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full bg-gradient-to-br from-primary/20 to-accent/10 blur-3xl"
           delay={0}
           duration={8}
         />
-        <FloatingShape
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-gradient-to-tl from-accent/15 to-primary/10 blur-3xl"
-          delay={2}
-          duration={10}
-        />
+        {!isMobile && (
+          <FloatingShape
+            className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-gradient-to-tl from-accent/15 to-primary/10 blur-3xl"
+            delay={2}
+            duration={10}
+          />
+        )}
 
-        {/* Geometric shapes */}
-        <motion.div
-          className="absolute top-20 right-[15%] w-24 h-24 border border-foreground/10 rounded-2xl"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute bottom-32 left-[10%] w-16 h-16 border border-primary/20 rounded-full"
-          animate={{ y: [-10, 10, -10] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute top-1/3 right-[8%] w-3 h-3 bg-accent/40 rounded-full"
-          animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0.8, 0.4] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-[20%] w-2 h-2 bg-primary/50 rounded-full"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        />
+        {/* Geometric shapes - hidden on mobile */}
+        {!isMobile && (
+          <>
+            <motion.div
+              className="absolute top-20 right-[15%] w-24 h-24 border border-foreground/10 rounded-2xl"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute bottom-32 left-[10%] w-16 h-16 border border-primary/20 rounded-full"
+              animate={{ y: [-10, 10, -10] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute top-1/3 right-[8%] w-3 h-3 bg-accent/40 rounded-full"
+              animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0.8, 0.4] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute bottom-1/4 right-[20%] w-2 h-2 bg-primary/50 rounded-full"
+              animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            />
+          </>
+        )}
 
-        {/* Subtle grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, currentColor 1px, transparent 1px),
-              linear-gradient(to bottom, currentColor 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-          }}
-        />
+        {/* Subtle grid pattern - hidden on mobile */}
+        {!isMobile && (
+          <div
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, currentColor 1px, transparent 1px),
+                linear-gradient(to bottom, currentColor 1px, transparent 1px)
+              `,
+              backgroundSize: "60px 60px",
+            }}
+          />
+        )}
       </div>
 
       {/* Main content */}

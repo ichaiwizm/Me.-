@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
+import { MobileLayout } from "@/components/layout/MobileLayout";
 import { ChatSidePanel } from "@/components/chat/ChatSidePanel";
 import WindowManager from "@/components/windows/WindowManager";
 import { Lightbox } from "@/components/media/Lightbox";
@@ -10,6 +11,8 @@ import { useTheme } from "@/theme/provider/ThemeContext";
 import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
+import { useChatPanel } from "@/lib/hooks/useChatPanel";
+import { useIsMobile } from "@/lib/hooks/useMediaQuery";
 import { isValidThemeId } from "@/theme/config/theme-registry";
 import { IMAGE_REGISTRY, type ImageMeta } from "@/lib/constants/images";
 import type { ExecutorContext, PageId } from "@/lib/commands/types";
@@ -45,6 +48,8 @@ const pageTransition = {
 function App() {
   const [currentPage, setCurrentPage] = useState<PageId>("accueil");
   const { setThemeId } = useTheme();
+  const isMobile = useIsMobile();
+  const { isOpen: isChatOpen, toggle: toggleChat } = useChatPanel();
 
   // Global lightbox state for gallery images
   const [lightboxState, setLightboxState] = useState<{
@@ -151,29 +156,64 @@ function App() {
 
   return (
     <>
-      <CustomCursor />
-      <Header
-        onReset={resetToDefault}
-        currentPage={currentPage}
-        onNavigate={(page) => ctx.navigateToPage(page)}
-      />
+      {/* Custom cursor - desktop only */}
+      {!isMobile && <CustomCursor />}
 
-      {/* Page principale */}
-      <main className="relative">
-        {renderPage()}
-      </main>
+      {/* Desktop layout */}
+      {!isMobile && (
+        <>
+          <Header
+            onReset={resetToDefault}
+            currentPage={currentPage}
+            onNavigate={(page) => ctx.navigateToPage(page)}
+          />
 
-      {/* Chat side panel - only on home page */}
-      {currentPage === "accueil" && (
-        <ChatSidePanel
-          messages={messages}
-          loading={loading}
-          onSubmit={handleSubmit}
-        />
+          {/* Page principale */}
+          <main className="relative">
+            {renderPage()}
+          </main>
+
+          {/* Chat side panel - only on home page */}
+          {currentPage === "accueil" && (
+            <ChatSidePanel
+              messages={messages}
+              loading={loading}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </>
       )}
 
-      <WindowManager ref={wmRef} showDock={currentPage === "accueil"} />
-      <Toaster position="top-right" richColors />
+      {/* Mobile layout */}
+      {isMobile && (
+        <MobileLayout
+          currentPage={currentPage}
+          onNavigate={(page) => ctx.navigateToPage(page)}
+          showFab={currentPage === "accueil"}
+          isChatOpen={isChatOpen}
+          onFabClick={toggleChat}
+        >
+          {renderPage()}
+
+          {/* Chat side panel - only on home page for mobile */}
+          {currentPage === "accueil" && (
+            <ChatSidePanel
+              messages={messages}
+              loading={loading}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </MobileLayout>
+      )}
+
+      {/* Window Manager - passes mobile mode */}
+      <WindowManager
+        ref={wmRef}
+        showDock={!isMobile && currentPage === "accueil"}
+        mobileMode={isMobile}
+      />
+
+      <Toaster position={isMobile ? "top-center" : "top-right"} richColors />
 
       {/* Global lightbox for gallery images */}
       <Lightbox

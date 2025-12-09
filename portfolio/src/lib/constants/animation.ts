@@ -184,3 +184,110 @@ export const HOVER_STATES = {
 } as const;
 
 export type HoverStateName = keyof typeof HOVER_STATES;
+
+// ============================================================================
+// MOBILE-SPECIFIC SPRINGS
+// ============================================================================
+
+/**
+ * Spring configurations optimized for mobile interactions
+ * - sheet: Bottom sheet drag/snap animations
+ * - fab: Floating action button press feedback
+ * - nav: Bottom navigation tab transitions
+ * - press: Touch press feedback
+ */
+export const MOBILE_SPRINGS = {
+  sheet: { stiffness: 300, damping: 30, mass: 0.8 },
+  fab: { stiffness: 400, damping: 20 },
+  nav: { stiffness: 400, damping: 30 },
+  press: { stiffness: 400, damping: 25 },
+} as const;
+
+export type MobileSpringName = keyof typeof MOBILE_SPRINGS;
+
+// ============================================================================
+// MOBILE ANIMATION VARIANTS
+// ============================================================================
+
+/**
+ * Animation variants for mobile-specific components
+ */
+export const MOBILE_VARIANTS = {
+  bottomSheet: {
+    hidden: { y: "100%" },
+    visible: {
+      y: 0,
+      transition: { type: "spring", ...MOBILE_SPRINGS.sheet }
+    },
+    exit: {
+      y: "100%",
+      transition: { type: "spring", ...MOBILE_SPRINGS.sheet }
+    },
+  },
+  fab: {
+    hidden: { scale: 0, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { type: "spring", ...MOBILE_SPRINGS.fab }
+    },
+    exit: {
+      scale: 0,
+      opacity: 0,
+      transition: { duration: 0.2 }
+    },
+  },
+  navTab: {
+    inactive: { scale: 1, opacity: 0.6 },
+    active: { scale: 1, opacity: 1 },
+    pressed: { scale: 0.9 },
+  },
+  mobileCard: {
+    idle: { scale: 1 },
+    pressed: { scale: 0.98 },
+  },
+} as const;
+
+export type MobileVariantName = keyof typeof MOBILE_VARIANTS;
+
+// ============================================================================
+// GESTURE THRESHOLDS
+// ============================================================================
+
+/**
+ * Thresholds for touch gesture detection
+ */
+export const GESTURE_THRESHOLDS = {
+  /** Velocity (px/s) to trigger dismiss on drag */
+  dismissVelocity: 500,
+  /** Distance (px) to trigger dismiss on drag */
+  dismissDistance: 100,
+  /** Velocity (px/s) to snap to next point */
+  snapVelocity: 300,
+  /** Minimum swipe distance for navigation */
+  swipeDistance: 50,
+} as const;
+
+// ============================================================================
+// MOBILE TOUCH STATES
+// ============================================================================
+
+/**
+ * Touch interaction states for mobile elements
+ */
+export const TOUCH_STATES = {
+  press: {
+    whileTap: { scale: 0.95 },
+    transition: { type: "spring", ...MOBILE_SPRINGS.press },
+  },
+  pressSubtle: {
+    whileTap: { scale: 0.98 },
+    transition: { type: "spring", ...MOBILE_SPRINGS.press },
+  },
+  pressWithOpacity: {
+    whileTap: { scale: 0.95, opacity: 0.8 },
+    transition: { type: "spring", ...MOBILE_SPRINGS.press },
+  },
+} as const;
+
+export type TouchStateName = keyof typeof TOUCH_STATES;

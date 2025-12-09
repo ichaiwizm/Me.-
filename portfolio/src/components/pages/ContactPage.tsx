@@ -161,7 +161,7 @@ export function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-32 pb-24 px-8">
+    <div className="min-h-screen pt-24 md:pt-32 pb-24 px-4 md:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <FadeInView className="mb-16 text-center">
@@ -184,7 +184,7 @@ export function ContactPage() {
         </FadeInView>
 
         {/* Contact Cards Grid */}
-        <div className="grid md:grid-cols-3 gap-4 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
           <ContactCard
             icon={Mail}
             label={t("contact.email")}
@@ -217,7 +217,7 @@ export function ContactPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
         >
-          <div className="relative p-8 md:p-12 rounded-3xl glass overflow-hidden">
+          <div className="relative p-6 md:p-12 rounded-3xl glass overflow-hidden">
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 

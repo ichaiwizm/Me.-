@@ -146,7 +146,7 @@ export function ChatSidePanel({ messages, loading, onSubmit }: ChatSidePanelProp
             className={cn(
               "fixed z-45 flex flex-col",
               isMobile
-                ? "inset-0 bg-background/95 backdrop-blur-2xl"
+                ? "inset-0 pb-[calc(64px+env(safe-area-inset-bottom,0px))] bg-background/95 backdrop-blur-2xl"
                 : "right-0 top-16 bottom-0 w-[400px] border-l border-foreground/10 bg-background/80 backdrop-blur-xl shadow-[-10px_0_40px_-15px_rgba(0,0,0,0.15)]"
             )}
             variants={isMobile ? mobileVariants : panelVariants}

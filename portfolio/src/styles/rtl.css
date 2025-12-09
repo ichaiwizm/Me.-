@@ -249,3 +249,57 @@
   right: auto;
   left: 1rem;
 }
+
+/* ============================================
+   MOBILE BOTTOM NAVIGATION RTL
+   ============================================ */
+
+/* Bottom nav tabs remain in LTR order (mobile convention) */
+/* but internal text should be RTL */
+[dir="rtl"] .mobile-nav-label {
+  direction: rtl;
+}
+
+/* ============================================
+   MOBILE FAB RTL
+   ============================================ */
+
+[dir="rtl"] .mobile-fab {
+  right: auto;
+  left: 16px;
+}
+
+/* ============================================
+   BOTTOM SHEET RTL
+   ============================================ */
+
+[dir="rtl"] .bottom-sheet-header {
+  text-align: right;
+}
+
+[dir="rtl"] .bottom-sheet-content {
+  direction: rtl;
+}
+
+/* ============================================
+   MOBILE CARDS RTL
+   ============================================ */
+
+[dir="rtl"] .mobile-card {
+  text-align: right;
+}
+
+/* ============================================
+   MOBILE CHAT RTL
+   ============================================ */
+
+[dir="rtl"] .mobile-chat-input {
+  text-align: right;
+  padding-left: 48px;
+  padding-right: 16px;
+}
+
+[dir="rtl"] .mobile-chat-send {
+  right: auto;
+  left: 8px;
+}

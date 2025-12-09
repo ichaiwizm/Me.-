@@ -102,7 +102,7 @@ function ExperienceCard({
         </div>
 
         {/* Meta */}
-        <div className="flex items-center gap-3 text-tiny text-foreground/50 mb-4 ml-16">
+        <div className="flex items-center gap-3 text-tiny text-foreground/50 mb-4 ml-0 md:ml-16">
           <span
             className={`px-2 py-1 rounded-md bg-gradient-to-r ${
               typeColors[exp.type]
@@ -117,13 +117,13 @@ function ExperienceCard({
         </div>
 
         {/* Description */}
-        <p className="text-body text-foreground/70 leading-relaxed mb-4 ml-16">
+        <p className="text-body text-foreground/70 leading-relaxed mb-4 ml-0 md:ml-16">
           {exp.description}
         </p>
 
         {/* Technologies */}
         {exp.technologies && (
-          <div className="flex flex-wrap gap-2 ml-16">
+          <div className="flex flex-wrap gap-2 ml-0 md:ml-16">
             {exp.technologies.map((tech, i) => (
               <motion.span
                 key={tech}
@@ -155,7 +155,7 @@ export function AboutPage() {
   });
 
   return (
-    <div className="min-h-screen pt-32 pb-24 px-8">
+    <div className="min-h-screen pt-24 md:pt-32 pb-24 px-4 md:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <FadeInView className="mb-16">

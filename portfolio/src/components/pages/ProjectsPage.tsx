@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FadeInView } from "@/components/animations";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { EASINGS, SPRINGS } from "@/lib/constants/animation";
+import { useIsMobile } from "@/lib/hooks/useMediaQuery";
 import { ExternalLink, Github, Star, Calendar, Folder } from "lucide-react";
 
 const categoryColors: Record<string, string> = {
@@ -20,12 +21,21 @@ function ProjectCard({
   project,
   index,
   t,
+  isExpanded,
+  onToggle,
+  isMobile,
 }: {
   project: LocalizedProject;
   index: number;
   t: (key: string) => string;
+  isExpanded: boolean;
+  onToggle: () => void;
+  isMobile: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+
+  // On mobile, use expanded state from parent; on desktop, use hover state
+  const showDetails = isMobile ? isExpanded : isHovered;
 
   return (
     <motion.div
@@ -38,22 +48,26 @@ function ProjectCard({
         ease: EASINGS.standard,
       }}
     >
-      <TiltCard>
+      <TiltCard onTap={isMobile ? onToggle : undefined}>
         <motion.div
           className="group relative overflow-hidden rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm transition-all duration-500"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          whileHover={{
+          onMouseEnter={() => !isMobile && setIsHovered(true)}
+          onMouseLeave={() => !isMobile && setIsHovered(false)}
+          whileHover={!isMobile ? {
             boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
             borderColor: "rgba(var(--primary), 0.3)",
-          }}
+          } : undefined}
+          animate={isMobile && showDetails ? {
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+            borderColor: "rgba(var(--primary), 0.3)",
+          } : undefined}
           style={{ transformStyle: "preserve-3d" }}
         >
           {/* Category gradient accent */}
           <div
             className={`absolute inset-0 bg-gradient-to-br ${
               categoryColors[project.category]
-            } opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+            } transition-opacity duration-500 ${showDetails ? 'opacity-100' : 'opacity-0'}`}
           />
 
           {/* Content */}
@@ -80,7 +94,7 @@ function ProjectCard({
                   <motion.div
                     className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--color-warning-muted)] border border-[var(--color-warning)]/30"
                     animate={{
-                      boxShadow: isHovered
+                      boxShadow: showDetails
                         ? "0 0 20px var(--color-warning-muted)"
                         : "0 0 0px transparent",
                     }}
@@ -141,8 +155,8 @@ function ProjectCard({
               className="border-t border-foreground/10 overflow-hidden"
               initial={{ height: 0, opacity: 0 }}
               animate={{
-                height: isHovered ? "auto" : 0,
-                opacity: isHovered ? 1 : 0,
+                height: showDetails ? "auto" : 0,
+                opacity: showDetails ? 1 : 0,
               }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
@@ -159,8 +173,8 @@ function ProjectCard({
                         className="text-body text-foreground/60 flex items-start gap-3"
                         initial={{ opacity: 0, x: -10 }}
                         animate={{
-                          opacity: isHovered ? 1 : 0,
-                          x: isHovered ? 0 : -10,
+                          opacity: showDetails ? 1 : 0,
+                          x: showDetails ? 0 : -10,
                         }}
                         transition={{ delay: i * 0.1 }}
                       >
@@ -178,7 +192,7 @@ function ProjectCard({
               <motion.div
                 className="flex items-center gap-3 mt-4 pt-4 border-t border-foreground/10"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: isHovered ? 1 : 0.5 }}
+                animate={{ opacity: showDetails ? 1 : 0.5 }}
                 transition={{ duration: 0.2 }}
               >
                 {project.githubUrl && (
@@ -215,7 +229,7 @@ function ProjectCard({
           <motion.div
             className="absolute inset-0 pointer-events-none"
             animate={{
-              background: isHovered
+              background: showDetails
                 ? "radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(var(--primary), 0.06), transparent 40%)"
                 : "transparent",
             }}
@@ -230,6 +244,8 @@ function ProjectCard({
 export function ProjectsPage() {
   const { t } = useTranslation("pages");
   const projects = useProjects();
+  const isMobile = useIsMobile();
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   // Sort projects by date (newest first)
   const sortedProjects = [...projects].sort((a, b) => {
@@ -237,6 +253,10 @@ export function ProjectsPage() {
     const dateB = new Date(b.date).getTime();
     return dateB - dateA;
   });
+
+  const toggleExpanded = (id: string) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
 
   return (
     <div className="min-h-screen pt-32 pb-24 px-8">
@@ -275,9 +295,17 @@ export function ProjectsPage() {
         </FadeInView>
 
         {/* Projects Grid */}
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-6 md:gap-8 grid-cols-1 md:grid-cols-2">
           {sortedProjects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} t={t} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              t={t}
+              isExpanded={expandedId === project.id}
+              onToggle={() => toggleExpanded(project.id)}
+              isMobile={isMobile}
+            />
           ))}
         </div>
 
@@ -291,7 +319,7 @@ export function ProjectsPage() {
         >
           <div className="h-px w-16 bg-gradient-to-r from-transparent to-foreground/20" />
           <p className="text-tiny text-foreground/40 uppercase tracking-widest">
-            {t("projects.hoverToExplore")}
+            {isMobile ? t("projects.tapToExplore") : t("projects.hoverToExplore")}
           </p>
           <div className="h-px w-16 bg-gradient-to-l from-transparent to-foreground/20" />
         </motion.div>

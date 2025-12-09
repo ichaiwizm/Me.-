@@ -1,6 +1,8 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
 import FloatingWindow from "@/components/windows/FloatingWindow";
 import { WindowDock } from "@/components/windows/WindowDock";
+import { BottomSheet } from "@/components/mobile/BottomSheet";
+import { SandboxedContent } from "@/components/windows/SandboxedContent";
 
 export type WindowSpec = { title: string; contentHtml: string; width?: number; height?: number; key?: string };
 export type WindowManagerHandle = {
@@ -20,9 +22,10 @@ const makeId = () => `w_${Date.now().toString(36)}_${Math.random().toString(36).
 
 type WindowManagerProps = {
   showDock?: boolean;
+  mobileMode?: boolean;
 };
 
-export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>(({ showDock = true }, ref) => {
+export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>(({ showDock = true, mobileMode = false }, ref) => {
   const [items, setItems] = useState<Item[]>([]);
   const [, setNextZ] = useState(1000);
 
@@ -123,17 +126,36 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
 
   return (
     <>
-      {showDock && <WindowDock items={docked} onRestore={handleRestore} />}
-      {items.filter(w=>!w.minimized).map(w => (
-        <FloatingWindow key={w.id} id={w.id} title={w.title} zIndex={w.z}
-          initialPos={{ x: w.x, y: w.y }} width={w.width} height={w.height} contentHtml={w.contentHtml}
-          isMaximized={w.maximized}
-          onClose={(id)=>setItems(ws=>ws.filter(i=>i.id!==id))}
-          onMinimize={(id)=>setItems(ws=>ws.map(i=>i.id===id?{...i,minimized:true}:i))}
-          onMaximize={toggleMaximize}
-          onFocus={bringFront}
-          onMove={(id,pos)=>setItems(ws=>ws.map(i=>i.id===id?{...i,x:pos.x,y:pos.y}:i))}
-        />
+      {/* Desktop: WindowDock and FloatingWindows */}
+      {!mobileMode && (
+        <>
+          {showDock && <WindowDock items={docked} onRestore={handleRestore} />}
+          {items.filter(w=>!w.minimized).map(w => (
+            <FloatingWindow key={w.id} id={w.id} title={w.title} zIndex={w.z}
+              initialPos={{ x: w.x, y: w.y }} width={w.width} height={w.height} contentHtml={w.contentHtml}
+              isMaximized={w.maximized}
+              onClose={(id)=>setItems(ws=>ws.filter(i=>i.id!==id))}
+              onMinimize={(id)=>setItems(ws=>ws.map(i=>i.id===id?{...i,minimized:true}:i))}
+              onMaximize={toggleMaximize}
+              onFocus={bringFront}
+              onMove={(id,pos)=>setItems(ws=>ws.map(i=>i.id===id?{...i,x:pos.x,y:pos.y}:i))}
+            />
+          ))}
+        </>
+      )}
+
+      {/* Mobile: BottomSheets instead of FloatingWindows */}
+      {mobileMode && items.filter(w=>!w.minimized).map(w => (
+        <BottomSheet
+          key={w.id}
+          isOpen={true}
+          onClose={() => setItems(ws => ws.filter(i => i.id !== w.id))}
+          title={w.title}
+          snapPoints={["half", "full"]}
+          initialSnap="half"
+        >
+          <SandboxedContent html={w.contentHtml} className="w-full min-h-[40vh]" />
+        </BottomSheet>
       ))}
     </>
   );

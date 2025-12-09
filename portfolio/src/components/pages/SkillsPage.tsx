@@ -268,6 +268,7 @@ export function SkillsPage() {
   const { t } = useTranslation("pages");
   const skills = useSkills();
   const skillCategories = useSkillCategories();
+  // Note: Mobile responsive grid (1 col) is already set in CategorySection
 
   // Group by category
   const byCategory = skills.reduce((acc, skill) => {
@@ -284,7 +285,7 @@ export function SkillsPage() {
   const expertSkills = skills.filter((s) => s.level >= 90).length;
 
   return (
-    <div className="min-h-screen pt-32 pb-24 px-8">
+    <div className="min-h-screen pt-24 md:pt-32 pb-24 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <FadeInView className="mb-16">
@@ -304,30 +305,30 @@ export function SkillsPage() {
               </h1>
             </div>
 
-            {/* Stats cards */}
+            {/* Stats cards - wrap on mobile */}
             <motion.div
-              className="flex gap-4"
+              className="flex flex-wrap gap-3 md:gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <div className="px-4 py-3 rounded-xl glass text-center">
-                <div className="text-title font-bold text-primary">
+              <div className="flex-1 min-w-[80px] px-3 py-2 md:px-4 md:py-3 rounded-xl glass text-center">
+                <div className="text-lg md:text-title font-bold text-primary">
                   {totalSkills}
                 </div>
-                <div className="text-tiny text-foreground/50">{t("skills.technologies")}</div>
+                <div className="text-[10px] md:text-tiny text-foreground/50">{t("skills.technologies")}</div>
               </div>
-              <div className="px-4 py-3 rounded-xl glass text-center">
-                <div className="text-title font-bold text-[var(--color-success)]">
+              <div className="flex-1 min-w-[80px] px-3 py-2 md:px-4 md:py-3 rounded-xl glass text-center">
+                <div className="text-lg md:text-title font-bold text-[var(--color-success)]">
                   {expertSkills}
                 </div>
-                <div className="text-tiny text-foreground/50">{t("skills.expert")}</div>
+                <div className="text-[10px] md:text-tiny text-foreground/50">{t("skills.expert")}</div>
               </div>
-              <div className="px-4 py-3 rounded-xl glass text-center">
-                <div className="text-title font-bold text-[var(--color-info)]">
+              <div className="flex-1 min-w-[80px] px-3 py-2 md:px-4 md:py-3 rounded-xl glass text-center">
+                <div className="text-lg md:text-title font-bold text-[var(--color-info)]">
                   {avgLevel}%
                 </div>
-                <div className="text-tiny text-foreground/50">{t("skills.average")}</div>
+                <div className="text-[10px] md:text-tiny text-foreground/50">{t("skills.average")}</div>
               </div>
             </motion.div>
           </div>

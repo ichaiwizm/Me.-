@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { MessageSquare } from "lucide-react";
+import { useIsMobile } from "@/lib/hooks/useMediaQuery";
 
 type ChatToggleButtonProps = {
   onClick: () => void;
@@ -9,6 +10,10 @@ type ChatToggleButtonProps = {
 
 export function ChatToggleButton({ onClick, hasUnread = true }: ChatToggleButtonProps) {
   const { t } = useTranslation("common");
+  const isMobile = useIsMobile();
+
+  // On mobile, the FAB handles chat access instead
+  if (isMobile) return null;
 
   return (
     <motion.button
