@@ -1,0 +1,368 @@
+/* CV Ichai Wizman - Style Moderne Minimaliste */
+
+:root {
+  --primary: #1a1a2e;
+  --accent: #2563eb;
+  --accent-light: #3b82f6;
+  --text: #1f2937;
+  --text-light: #6b7280;
+  --bg: #ffffff;
+  --bg-light: #f9fafb;
+  --border: #e5e7eb;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 10pt;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cv-container {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 70mm 1fr;
+  background: var(--bg);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  background: var(--primary);
+  color: #ffffff;
+  padding: 20mm 6mm;
+}
+
+.sidebar h2 {
+  font-size: 9pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  font-size: 9pt;
+  margin-bottom: 4px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.sidebar a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: #ffffff;
+}
+
+/* Contact Section */
+.contact-section {
+  margin-bottom: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 9pt;
+}
+
+.contact-item svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  opacity: 0.8;
+}
+
+.contact-item span {
+  word-break: break-word;
+}
+
+/* Skills Section */
+.skills-section {
+  margin-bottom: 20px;
+}
+
+.skill-category {
+  margin-bottom: 12px;
+}
+
+.skill-category-title {
+  font-size: 8pt;
+  font-weight: 600;
+  color: var(--accent-light);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.skill-list {
+  font-size: 8.5pt;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+/* Languages Section */
+.languages-section {
+  margin-bottom: 20px;
+}
+
+.language-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9pt;
+  margin-bottom: 4px;
+}
+
+.language-level {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 8pt;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+  padding: 15mm 12mm 15mm 10mm;
+}
+
+/* Header */
+.header {
+  margin-bottom: 15px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.header h1 {
+  font-size: 22pt;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.header .title {
+  font-size: 11pt;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.header .bio {
+  font-size: 9pt;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* Section Titles */
+.section {
+  margin-bottom: 15px;
+}
+
+.section-title {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Experience */
+.experience-item {
+  margin-bottom: 12px;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+
+.experience-title {
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.experience-company {
+  font-size: 10pt;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.experience-meta {
+  font-size: 8.5pt;
+  color: var(--text-light);
+}
+
+.experience-date {
+  font-weight: 500;
+}
+
+.experience-description {
+  font-size: 9pt;
+  color: var(--text);
+  margin-bottom: 5px;
+  font-style: italic;
+}
+
+.experience-responsibilities {
+  list-style: none;
+  padding-left: 0;
+}
+
+.experience-responsibilities li {
+  font-size: 9pt;
+  color: var(--text);
+  margin-bottom: 2px;
+  padding-left: 12px;
+  position: relative;
+}
+
+.experience-responsibilities li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.experience-tech {
+  margin-top: 5px;
+  font-size: 8pt;
+  color: var(--text-light);
+}
+
+.experience-tech strong {
+  color: var(--text);
+}
+
+/* Projects */
+.project-item {
+  margin-bottom: 10px;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+
+.project-title {
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.project-date {
+  font-size: 8.5pt;
+  color: var(--text-light);
+}
+
+.project-description {
+  font-size: 9pt;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.project-tech {
+  font-size: 8pt;
+  color: var(--text-light);
+}
+
+.project-link {
+  font-size: 8pt;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* Education */
+.education-item {
+  margin-bottom: 10px;
+}
+
+.education-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.education-degree {
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.education-school {
+  font-size: 9pt;
+  color: var(--accent);
+}
+
+.education-date {
+  font-size: 8.5pt;
+  color: var(--text-light);
+}
+
+.education-description {
+  font-size: 9pt;
+  color: var(--text);
+}
+
+/* Print Styles */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .cv-container {
+    box-shadow: none;
+  }
+
+  .sidebar {
+    background: var(--primary) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* Screen preview */
+@media screen {
+  body {
+    background: #e5e7eb;
+    padding: 20px 0;
+  }
+
+  .cv-container {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+}

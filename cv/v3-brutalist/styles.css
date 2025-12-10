@@ -1,0 +1,382 @@
+/* CV V3 - Neo-Brutalist */
+/* Audacieux, anti-conventionnel, impact visuel immediat */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600&display=swap');
+
+:root {
+  --yellow: #FFE500;
+  --black: #0a0a0a;
+  --white: #fafafa;
+  --off-white: #f0f0f0;
+  --gray: #666;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  font-size: 9pt;
+  line-height: 1.5;
+  color: var(--black);
+  background: var(--white);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cv-container {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: var(--white);
+  position: relative;
+}
+
+.content {
+  padding: 10mm;
+}
+
+/* Header - Brutalist style */
+.header {
+  background: var(--black);
+  color: var(--white);
+  padding: 14px 18px;
+  margin-bottom: 6mm;
+  position: relative;
+  border: 4px solid var(--black);
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: -6px;
+  bottom: -6px;
+  background: var(--yellow);
+  z-index: -1;
+}
+
+.header h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.header .title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Contact bar */
+.contact-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4mm;
+  margin-bottom: 6mm;
+}
+
+.contact-item {
+  background: var(--yellow);
+  border: 3px solid var(--black);
+  padding: 6px 12px;
+  font-size: 8pt;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 3px 3px 0 var(--black);
+}
+
+.contact-item svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--black);
+  stroke-width: 2.5;
+}
+
+.contact-item a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+/* Main grid */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 62mm;
+  gap: 6mm;
+}
+
+/* Section styling */
+.section {
+  margin-bottom: 5mm;
+}
+
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: var(--black);
+  color: var(--white);
+  padding: 6px 12px;
+  margin-bottom: 4mm;
+  display: inline-block;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: -3px;
+  bottom: -3px;
+  background: var(--yellow);
+  z-index: -1;
+}
+
+/* Experience */
+.experience-item {
+  border: 3px solid var(--black);
+  padding: 10px 12px;
+  margin-bottom: 4mm;
+  background: var(--off-white);
+  position: relative;
+}
+
+.experience-item::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: -3px;
+  bottom: -3px;
+  border: 2px solid var(--black);
+  z-index: -1;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+
+.experience-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.experience-date {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8pt;
+  font-weight: 700;
+  background: var(--yellow);
+  padding: 2px 8px;
+  border: 2px solid var(--black);
+}
+
+.experience-company {
+  font-size: 9pt;
+  font-weight: 600;
+  color: var(--gray);
+  margin-bottom: 4px;
+}
+
+.experience-responsibilities {
+  list-style: none;
+  padding-left: 0;
+}
+
+.experience-responsibilities li {
+  font-size: 8.5pt;
+  margin-bottom: 2px;
+  padding-left: 16px;
+  position: relative;
+}
+
+.experience-responsibilities li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  color: var(--black);
+}
+
+/* Projects */
+.project-item {
+  border-left: 4px solid var(--yellow);
+  padding-left: 10px;
+  margin-bottom: 4mm;
+  background: var(--off-white);
+  padding: 8px 10px 8px 10px;
+  border: 2px solid var(--black);
+  border-left: 6px solid var(--yellow);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.project-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9pt;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.project-date {
+  font-size: 7pt;
+  font-weight: 700;
+  color: var(--gray);
+}
+
+.project-description {
+  font-size: 8pt;
+  margin: 2px 0;
+}
+
+.project-tech {
+  font-size: 7.5pt;
+  font-weight: 600;
+  color: var(--gray);
+}
+
+.project-link {
+  color: var(--black);
+  font-weight: 700;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--black);
+  color: var(--white);
+  padding: 10px;
+  border: 4px solid var(--black);
+  position: relative;
+}
+
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: -4px;
+  bottom: -4px;
+  background: var(--yellow);
+  z-index: -1;
+}
+
+.sidebar .section {
+  margin-bottom: 5mm;
+}
+
+.sidebar .section-title {
+  background: var(--yellow);
+  color: var(--black);
+  font-size: 9pt;
+  padding: 4px 8px;
+  margin-bottom: 3mm;
+}
+
+.sidebar .section-title::after {
+  display: none;
+}
+
+/* Skills in sidebar */
+.skill-category {
+  margin-bottom: 4mm;
+}
+
+.skill-category-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8pt;
+  font-weight: 700;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.skill-list {
+  font-size: 8pt;
+  color: var(--off-white);
+  line-height: 1.4;
+}
+
+/* Languages */
+.language-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8pt;
+  margin-bottom: 2px;
+  padding: 2px 0;
+  border-bottom: 1px dashed var(--gray);
+}
+
+.language-item:last-child {
+  border-bottom: none;
+}
+
+.language-level {
+  color: var(--yellow);
+  font-weight: 600;
+}
+
+/* Education */
+.education-degree {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9pt;
+  font-weight: 700;
+  color: var(--yellow);
+}
+
+.education-school {
+  font-size: 8pt;
+  color: var(--off-white);
+}
+
+.education-date {
+  font-size: 7pt;
+  color: var(--gray);
+}
+
+/* Print */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+@media screen {
+  body {
+    background: #ddd;
+    padding: 20px 0;
+  }
+  .cv-container {
+    box-shadow: 8px 8px 0 var(--black);
+  }
+}
