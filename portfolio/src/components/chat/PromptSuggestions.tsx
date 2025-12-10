@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lightbulb, RefreshCw, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Lightbulb, RefreshCw, X, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import { SUGGESTIONS, type Suggestion, type CategoryKey } from "@/lib/constants/suggestions";
 import { cn } from "@/lib/utils";
 
@@ -45,24 +45,56 @@ function groupByCategory(suggestions: Suggestion[]): Record<string, Suggestion[]
 }
 
 export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floating" }: PromptSuggestionsProps) {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const [isOpen, setIsOpen] = useState(true); // Open by default
   const [shuffleKey, setShuffleKey] = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  // AI-generated suggestions state
+  const [aiSuggestions, setAiSuggestions] = useState<string[]>([]);
+  const [loadingAI, setLoadingAI] = useState(false);
+
   const isInline = variant === "inline";
 
-  // Get shuffled suggestions grouped by category
+  // Fetch AI-generated suggestions from Haiku
+  const fetchAISuggestions = useCallback(async () => {
+    setLoadingAI(true);
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "suggestions", language: i18n.language }),
+      });
+      const data = await res.json();
+      if (data.suggestions && Array.isArray(data.suggestions)) {
+        setAiSuggestions(data.suggestions);
+      }
+    } catch {
+      // Keep fallback suggestions on error
+    } finally {
+      setLoadingAI(false);
+    }
+  }, [i18n.language]);
+
+  // Fetch suggestions on mount and when language changes
+  useEffect(() => {
+    fetchAISuggestions();
+  }, [fetchAISuggestions]);
+
+  // Get shuffled suggestions grouped by category (fallback only)
   const groupedSuggestions = useMemo(() => {
     const shuffled = shuffleArray(SUGGESTIONS);
     return groupByCategory(shuffled);
   }, [shuffleKey]);
 
-  // Flat list for inline mode (take first 6)
+  // Flat list for inline mode - use AI suggestions if available, otherwise fallback
   const flatSuggestions = useMemo(() => {
+    if (aiSuggestions.length > 0) {
+      return aiSuggestions.slice(0, 6);
+    }
     return shuffleArray(SUGGESTIONS).slice(0, 6);
-  }, [shuffleKey]);
+  }, [shuffleKey, aiSuggestions]);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -89,16 +121,20 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
     setIsOpen(false);
   };
 
-  // Shuffle suggestions
+  // Shuffle suggestions - fetch new AI suggestions
   const handleShuffle = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShuffleKey((k) => k + 1);
+    fetchAISuggestions();
   };
 
   if (loading) return null;
 
   // Inline variant - horizontal scrollable chips inside panel
   if (isInline) {
+    // Check if using AI suggestions (strings) or fallback (objects)
+    const usingAI = aiSuggestions.length > 0;
+
     return (
       <div className="px-4 pt-3 pb-1">
         {/* Header with toggle */}
@@ -108,6 +144,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
         >
           <Lightbulb className="w-3.5 h-3.5" />
           <span>{t("suggestions.header")}</span>
+          {loadingAI && <Loader2 className="w-3 h-3 animate-spin ml-1" />}
           {isOpen ? (
             <ChevronUp className="w-3.5 h-3.5" />
           ) : (
@@ -126,36 +163,82 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
               className="overflow-hidden"
             >
               <div className="flex flex-wrap gap-1.5 pb-2">
-                {flatSuggestions.map((suggestion, index) => {
-                  const colors = categoryColors[suggestion.category] || defaultColors;
-                  const text = t(`suggestions.items.${suggestion.textKey}`);
-                  return (
-                    <motion.button
-                      key={suggestion.textKey}
-                      onClick={() => handleSelect(text)}
-                      className={cn(
-                        "px-2.5 py-1 rounded-full text-xs border transition-colors",
-                        colors.border,
-                        colors.bg,
-                        "text-foreground/70 hover:text-foreground"
-                      )}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.03 }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                {loadingAI && aiSuggestions.length === 0 ? (
+                  // Loading skeleton
+                  Array.from({ length: 4 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="px-2.5 py-1 rounded-full text-xs border border-foreground/10 bg-foreground/5 animate-pulse"
+                      style={{ width: 80 + Math.random() * 40 }}
                     >
-                      {text.length > 30 ? text.slice(0, 30) + "..." : text}
-                    </motion.button>
-                  );
-                })}
+                      &nbsp;
+                    </div>
+                  ))
+                ) : usingAI ? (
+                  // AI-generated suggestions (strings)
+                  flatSuggestions.map((suggestion, index) => {
+                    const text = typeof suggestion === "string" ? suggestion : t(`suggestions.items.${(suggestion as Suggestion).textKey}`);
+                    return (
+                      <motion.button
+                        key={`ai-${index}`}
+                        onClick={() => handleSelect(text)}
+                        className={cn(
+                          "px-2.5 py-1 rounded-full text-xs border transition-colors",
+                          "border-primary/30 hover:bg-primary/10",
+                          "text-foreground/70 hover:text-foreground"
+                        )}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: index * 0.03 }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        {text.length > 35 ? text.slice(0, 35) + "..." : text}
+                      </motion.button>
+                    );
+                  })
+                ) : (
+                  // Fallback suggestions (Suggestion objects)
+                  flatSuggestions.map((suggestion, index) => {
+                    const s = suggestion as Suggestion;
+                    const colors = categoryColors[s.category] || defaultColors;
+                    const text = t(`suggestions.items.${s.textKey}`);
+                    return (
+                      <motion.button
+                        key={s.textKey}
+                        onClick={() => handleSelect(text)}
+                        className={cn(
+                          "px-2.5 py-1 rounded-full text-xs border transition-colors",
+                          colors.border,
+                          colors.bg,
+                          "text-foreground/70 hover:text-foreground"
+                        )}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: index * 0.03 }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        {text.length > 30 ? text.slice(0, 30) + "..." : text}
+                      </motion.button>
+                    );
+                  })
+                )}
                 <motion.button
                   onClick={handleShuffle}
-                  className="px-2.5 py-1 rounded-full text-xs border border-foreground/10 text-foreground/40 hover:text-foreground/60 hover:bg-foreground/5 transition-colors"
-                  whileHover={{ rotate: 180 }}
+                  className={cn(
+                    "px-2.5 py-1 rounded-full text-xs border border-foreground/10 text-foreground/40 hover:text-foreground/60 hover:bg-foreground/5 transition-colors",
+                    loadingAI && "opacity-50 pointer-events-none"
+                  )}
+                  whileHover={{ rotate: loadingAI ? 0 : 180 }}
                   transition={{ duration: 0.3 }}
+                  disabled={loadingAI}
                 >
-                  <RefreshCw className="w-3 h-3" />
+                  {loadingAI ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <RefreshCw className="w-3 h-3" />
+                  )}
                 </motion.button>
               </div>
             </motion.div>
@@ -219,63 +302,104 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
               <div className="flex items-center gap-2">
                 <Lightbulb className="w-4 h-4 text-primary" />
                 <span className="text-sm font-semibold">{t("suggestions.header")}</span>
+                {loadingAI && <Loader2 className="w-3.5 h-3.5 animate-spin text-foreground/50" />}
               </div>
               <motion.button
                 onClick={handleShuffle}
-                className="p-1.5 rounded-lg hover:bg-foreground/5 text-foreground/50 hover:text-foreground transition-colors"
-                whileHover={{ rotate: 180 }}
+                className={cn(
+                  "p-1.5 rounded-lg hover:bg-foreground/5 text-foreground/50 hover:text-foreground transition-colors",
+                  loadingAI && "opacity-50 pointer-events-none"
+                )}
+                whileHover={{ rotate: loadingAI ? 0 : 180 }}
                 transition={{ duration: 0.3 }}
                 aria-label={t("suggestions.shuffle")}
+                disabled={loadingAI}
               >
-                <RefreshCw className="w-4 h-4" />
+                {loadingAI ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <RefreshCw className="w-4 h-4" />
+                )}
               </motion.button>
             </div>
 
             {/* Suggestions list */}
             <div className="overflow-y-auto max-h-[calc(50vh-80px)] p-2">
-              {Object.entries(groupedSuggestions).map(([category, suggestions], catIndex) => {
-                const colors = categoryColors[category as CategoryKey] || defaultColors;
-
-                return (
-                  <motion.div
-                    key={`${shuffleKey}-${category}`}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: catIndex * 0.05 }}
-                    className="mb-3 last:mb-0"
-                  >
-                    {/* Category header */}
-                    <div className="flex items-center gap-2 px-2 py-1.5">
-                      <span className={`w-2 h-2 rounded-full ${colors.dot}`} />
-                      <span className="text-[11px] font-medium text-foreground/50 uppercase tracking-wider">
-                        {t(`suggestions.categories.${category}`)}
+              {loadingAI && aiSuggestions.length === 0 ? (
+                // Loading skeleton
+                <div className="space-y-2 p-2">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="h-10 rounded-lg bg-foreground/5 animate-pulse"
+                    />
+                  ))}
+                </div>
+              ) : aiSuggestions.length > 0 ? (
+                // AI-generated suggestions (flat list)
+                <div className="space-y-0.5">
+                  {aiSuggestions.map((suggestion, index) => (
+                    <motion.button
+                      key={`ai-floating-${index}`}
+                      onClick={() => handleSelect(suggestion)}
+                      className="w-full text-left px-3 py-2 rounded-lg transition-colors hover:bg-primary/10"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.03 }}
+                      whileHover={{ x: 4 }}
+                    >
+                      <span className="text-sm text-foreground/80">
+                        {suggestion}
                       </span>
-                    </div>
+                    </motion.button>
+                  ))}
+                </div>
+              ) : (
+                // Fallback: grouped suggestions
+                Object.entries(groupedSuggestions).map(([category, suggestions], catIndex) => {
+                  const colors = categoryColors[category as CategoryKey] || defaultColors;
 
-                    {/* Suggestions */}
-                    <div className="space-y-0.5">
-                      {suggestions.map((suggestion, index) => {
-                        const text = t(`suggestions.items.${suggestion.textKey}`);
-                        return (
-                          <motion.button
-                            key={suggestion.textKey}
-                            onClick={() => handleSelect(text)}
-                            className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${colors.bg}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: catIndex * 0.05 + index * 0.02 }}
-                            whileHover={{ x: 4 }}
-                          >
-                            <span className="text-sm text-foreground/80">
-                              {text}
-                            </span>
-                          </motion.button>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                );
-              })}
+                  return (
+                    <motion.div
+                      key={`${shuffleKey}-${category}`}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: catIndex * 0.05 }}
+                      className="mb-3 last:mb-0"
+                    >
+                      {/* Category header */}
+                      <div className="flex items-center gap-2 px-2 py-1.5">
+                        <span className={`w-2 h-2 rounded-full ${colors.dot}`} />
+                        <span className="text-[11px] font-medium text-foreground/50 uppercase tracking-wider">
+                          {t(`suggestions.categories.${category}`)}
+                        </span>
+                      </div>
+
+                      {/* Suggestions */}
+                      <div className="space-y-0.5">
+                        {suggestions.map((suggestion, index) => {
+                          const text = t(`suggestions.items.${suggestion.textKey}`);
+                          return (
+                            <motion.button
+                              key={suggestion.textKey}
+                              onClick={() => handleSelect(text)}
+                              className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${colors.bg}`}
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: catIndex * 0.05 + index * 0.02 }}
+                              whileHover={{ x: 4 }}
+                            >
+                              <span className="text-sm text-foreground/80">
+                                {text}
+                              </span>
+                            </motion.button>
+                          );
+                        })}
+                      </div>
+                    </motion.div>
+                  );
+                })
+              )}
             </div>
 
             {/* Footer hint */}

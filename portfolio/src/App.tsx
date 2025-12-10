@@ -10,7 +10,8 @@ import { CustomCursor } from "@/components/ui/CustomCursor";
 import { VisualModeExitButton } from "@/components/visual-mode-exit";
 import { useTheme } from "@/theme/provider/ThemeContext";
 import { useVisualMode } from "@/visual-mode";
-import { applyDynamicVisualMode } from "@/visual-mode/utils/apply-dynamic-visual-mode";
+import { applyDynamicVisualMode, clearDynamicVisualMode } from "@/visual-mode/utils/apply-dynamic-visual-mode";
+import { clearVisualModeFromDocument } from "@/visual-mode/utils/apply-visual-mode";
 import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
@@ -130,6 +131,8 @@ function App() {
     clearBackground();
     clearMessages();
     setCurrentPage("accueil");
+    clearDynamicVisualMode();
+    clearVisualModeFromDocument();
   }
 
   // Listen to navigation events emitted by ChatPreview's link buttons
