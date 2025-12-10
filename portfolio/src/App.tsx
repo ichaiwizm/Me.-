@@ -15,7 +15,7 @@ import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
 import { useChatPanel } from "@/lib/hooks/useChatPanel";
-import { useIsMobile } from "@/lib/hooks/useMediaQuery";
+import { useIsMobile, useChatPanelWidth } from "@/lib/hooks/useMediaQuery";
 import { isValidThemeId } from "@/theme/config/theme-registry";
 import { IMAGE_REGISTRY, type ImageMeta } from "@/lib/constants/images";
 import type { ExecutorContext, PageId, DynamicStyleOptions } from "@/lib/commands/types";
@@ -54,6 +54,7 @@ function App() {
   const { isVisualModeActive } = useVisualMode();
   const isMobile = useIsMobile();
   const { isOpen: isChatOpen, toggle: toggleChat, close: closeChat } = useChatPanel();
+  const chatPanelWidth = useChatPanelWidth();
 
   // Global lightbox state for gallery images
   const [lightboxState, setLightboxState] = useState<{
@@ -142,6 +143,30 @@ function App() {
     return () => window.removeEventListener("app:navigate", handler as any);
   }, [ctx]);
 
+  // Listen for AI visual mode generation requests
+  useEffect(() => {
+    const handler = (e: any) => {
+      const prompt = e?.detail?.prompt as string | undefined;
+      if (!prompt) return;
+      // Send the AI-generated visual mode request to chat
+      handleSubmit(prompt);
+    };
+    window.addEventListener("app:ai-visual-mode", handler as any);
+    return () => window.removeEventListener("app:ai-visual-mode", handler as any);
+  }, [handleSubmit]);
+
+  // Listen for inline suggestion clicks from HomePage
+  useEffect(() => {
+    const handler = (e: any) => {
+      const prompt = e?.detail?.prompt as string | undefined;
+      if (!prompt) return;
+      // Send the inline suggestion to chat
+      handleSubmit(prompt);
+    };
+    window.addEventListener("app:inline-suggestion", handler as any);
+    return () => window.removeEventListener("app:inline-suggestion", handler as any);
+  }, [handleSubmit]);
+
   // Render la page actuelle with animation wrapper
   const renderPage = () => {
     const pages: Record<PageId, React.ReactNode> = {
@@ -179,10 +204,17 @@ function App() {
             onReset={resetToDefault}
             currentPage={currentPage}
             onNavigate={(page) => ctx.navigateToPage(page)}
+            isChatOpen={currentPage === "accueil" && isChatOpen}
           />
 
-          {/* Page principale */}
-          <main className="relative">
+          {/* Page principale - adjust for chat panel */}
+          <main
+            className="relative transition-all duration-300"
+            style={{
+              // Shift content left when chat is open to center it in remaining space
+              marginRight: currentPage === "accueil" && isChatOpen ? `${chatPanelWidth}px` : 0,
+            }}
+          >
             {renderPage()}
           </main>
 
@@ -192,6 +224,9 @@ function App() {
               messages={messages}
               loading={loading}
               onSubmit={handleSubmit}
+              isOpenOverride={isChatOpen}
+              onCloseOverride={closeChat}
+              onToggleOverride={toggleChat}
             />
           )}
         </>

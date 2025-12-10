@@ -67,7 +67,8 @@
     "zoomOut": "התרחק",
     "previousImage": "תמונה קודמת",
     "nextImage": "תמונה הבאה",
-    "promptInput": "קלט הנחיה"
+    "promptInput": "קלט הנחיה",
+    "generatePrompt": "צור הנחיה AI"
   },
   "visualModes": {
     "header": "מצב ויזואלי",
@@ -93,6 +94,10 @@
     "glitch": {
       "label": "גליץ' ארט",
       "description": "D̷A̶T̵A̸ C̵O̶R̵R̸U̴P̴T̵İ̶O̵N̸ ~ RGB split"
+    },
+    "aiMode": {
+      "label": "מצב AI",
+      "description": "הפתעה! תן ל-AI לבחור"
     }
   },
   "suggestions": {

@@ -25,6 +25,7 @@ export function VisualModeSwitcher() {
           modes={modes}
           activeModeId={visualModeId}
           onSelectMode={handleSelectMode}
+          onClose={() => setIsOpen(false)}
         />
       )}
     </div>

@@ -5,6 +5,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { VisualModeSwitcher } from "@/components/visual-mode-switcher";
 import { useVisualMode } from "@/visual-mode";
+import { useChatPanelWidth } from "@/lib/hooks/useMediaQuery";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { PageId } from "@/lib/commands/types";
@@ -13,9 +14,11 @@ type HeaderProps = {
   onReset?: () => void;
   currentPage?: PageId;
   onNavigate?: (page: PageId) => void;
+  /** Whether the chat panel is open (for layout adjustment) */
+  isChatOpen?: boolean;
 };
 
-export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderProps) {
+export function Header({ onReset, currentPage = "accueil", onNavigate, isChatOpen = false }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
   const { t } = useTranslation("navigation");
@@ -38,13 +41,20 @@ export function Header({ onReset, currentPage = "accueil", onNavigate }: HeaderP
     { id: "contact", labelKey: "contact" },
   ];
 
+  // Chat panel width for layout calculations (responsive)
+  const chatWidth = useChatPanelWidth();
+
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 z-50 transition-all duration-500 ${
         isScrolled
           ? "py-2 bg-background/90 backdrop-blur-xl border-b border-foreground/10 shadow-sm"
           : "py-4 bg-transparent backdrop-blur-none border-b border-transparent"
       }`}
+      style={{
+        // Adjust header width when chat is open
+        right: isChatOpen ? `${chatWidth}px` : 0,
+      }}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}

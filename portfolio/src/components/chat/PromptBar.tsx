@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { useTranslation } from "react-i18next"
+import { motion, AnimatePresence } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Sparkles, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 type PromptBarProps = {
@@ -12,21 +13,62 @@ type PromptBarProps = {
   variant?: "standalone" | "panel"
 }
 
+// Get base URL for API calls
+function getBaseUrl(): string {
+  const env = import.meta as any
+  return (
+    env.env?.VITE_SERVER_URL ||
+    (env.env?.DEV ? "http://localhost:3001" : "")
+  )
+}
+
 export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptBarProps) {
-  const { t } = useTranslation("common")
+  const { t, i18n } = useTranslation("common")
   const [value, setValue] = useState("")
+  const [isGenerating, setIsGenerating] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     const trimmed = value.trim()
-    if (!trimmed || loading) return
+    if (!trimmed || loading || isGenerating) return
 
     // Clear field immediately after submit
     setValue("")
     await onSubmit(trimmed)
   }
 
+  // Generate a prompt using AI
+  const handleGeneratePrompt = useCallback(async () => {
+    if (loading || isGenerating) return
+
+    setIsGenerating(true)
+    try {
+      const baseUrl = getBaseUrl()
+      const response = await fetch(`${baseUrl}/api/generate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "prompt",
+          language: i18n.language || "fr"
+        }),
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        if (data.content) {
+          setValue(data.content)
+        }
+      }
+    } catch (error) {
+      console.error("Failed to generate prompt:", error)
+    } finally {
+      setIsGenerating(false)
+    }
+  }, [loading, isGenerating, i18n.language])
+
   const isPanel = variant === "panel"
+  const isEmpty = !value.trim()
+  const isDisabled = loading || isGenerating
 
   return (
     <div className={cn(
@@ -49,16 +91,60 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
           placeholder={t("placeholders.chatInput")}
           aria-label={t("aria.promptInput")}
           className="flex-1 bg-transparent border-0 focus-visible:ring-0"
+          disabled={isGenerating}
         />
-        <Button
-          type="submit"
-          size="icon"
-          aria-label={t("aria.sendMessage")}
-          disabled={loading}
-          className={cn(isPanel ? "rounded-lg" : "rounded-full")}
-        >
-          <ArrowRight className="size-4" />
-        </Button>
+
+        <AnimatePresence mode="wait">
+          {isEmpty ? (
+            // AI Generate button when empty
+            <motion.div
+              key="ai-button"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <Button
+                type="button"
+                size="icon"
+                onClick={handleGeneratePrompt}
+                disabled={isDisabled}
+                className={cn(
+                  isPanel ? "rounded-lg" : "rounded-full",
+                  "bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600",
+                  "text-white border-0 shadow-lg shadow-violet-500/25",
+                  "transition-all duration-200"
+                )}
+                title={t("aria.generatePrompt", "Générer un prompt IA")}
+              >
+                {isGenerating ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <Sparkles className="size-4" />
+                )}
+              </Button>
+            </motion.div>
+          ) : (
+            // Send button when has content
+            <motion.div
+              key="send-button"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <Button
+                type="submit"
+                size="icon"
+                aria-label={t("aria.sendMessage")}
+                disabled={isDisabled}
+                className={cn(isPanel ? "rounded-lg" : "rounded-full")}
+              >
+                <ArrowRight className="size-4" />
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </form>
     </div>
   )

@@ -51,3 +51,32 @@ export function useIsMobile(): boolean {
 export function useIsDesktop(): boolean {
   return useMediaQuery("(min-width: 768px)");
 }
+
+/**
+ * Convenience hook for large desktop detection
+ * @returns true if viewport is large desktop (≥1280px)
+ */
+export function useIsLargeDesktop(): boolean {
+  return useMediaQuery("(min-width: 1280px)");
+}
+
+/**
+ * Convenience hook for medium desktop (tablets and small laptops)
+ * @returns true if viewport is between 768px and 1279px
+ */
+export function useIsMediumDesktop(): boolean {
+  return useMediaQuery("(min-width: 768px) and (max-width: 1279px)");
+}
+
+/**
+ * Get the appropriate chat panel width based on screen size
+ * @returns chat panel width in pixels
+ */
+export function useChatPanelWidth(): number {
+  const isLargeDesktop = useIsLargeDesktop();
+  const isMobile = useIsMobile();
+
+  if (isMobile) return 0; // Full screen on mobile
+  if (isLargeDesktop) return 400;
+  return 340; // Smaller on medium desktops
+}

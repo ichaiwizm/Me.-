@@ -67,7 +67,8 @@
     "zoomOut": "Zoom out",
     "previousImage": "Previous image",
     "nextImage": "Next image",
-    "promptInput": "Prompt input"
+    "promptInput": "Prompt input",
+    "generatePrompt": "Generate AI prompt"
   },
   "visualModes": {
     "header": "Visual Mode",
@@ -93,6 +94,10 @@
     "glitch": {
       "label": "Glitch Art",
       "description": "D̷A̶T̵A̸ C̵O̶R̵R̸U̴P̴T̵İ̶O̵N̸ ~ RGB split"
+    },
+    "aiMode": {
+      "label": "AI Mode",
+      "description": "Surprise! Let AI choose"
     }
   },
   "suggestions": {

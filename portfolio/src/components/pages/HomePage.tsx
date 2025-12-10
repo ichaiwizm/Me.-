@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { usePersonalInfo } from "@/data/hooks";
 import { useTypeWriter } from "@/components/ui/TypeWriter";
 import { EASINGS } from "@/lib/constants/animation";
 import { useIsMobile } from "@/lib/hooks/useMediaQuery";
+import { useCallback } from "react";
 
 // Floating shape component
 function FloatingShape({
@@ -33,9 +35,54 @@ function FloatingShape({
   );
 }
 
+// Interactive suggestion link component
+function InlineSuggestion({
+  children,
+  prompt,
+}: {
+  children: React.ReactNode;
+  prompt: string;
+}) {
+  const handleClick = useCallback(() => {
+    // Dispatch event to send message to chat
+    window.dispatchEvent(new CustomEvent("app:inline-suggestion", {
+      detail: { prompt }
+    }));
+  }, [prompt]);
+
+  return (
+    <motion.button
+      onClick={handleClick}
+      className="relative inline-flex items-center gap-1 px-2 py-0.5 mx-1 rounded-lg
+                 bg-gradient-to-r from-primary/10 to-accent/10
+                 border border-primary/20
+                 text-primary font-medium
+                 cursor-pointer transition-all duration-300
+                 hover:from-primary/20 hover:to-accent/20 hover:border-primary/40
+                 hover:shadow-lg hover:shadow-primary/10
+                 group"
+      whileHover={{ scale: 1.02, y: -1 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      <span className="relative z-10">{children}</span>
+      {/* Subtle glow effect on hover */}
+      <motion.span
+        className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/0 to-accent/0 group-hover:from-primary/5 group-hover:to-accent/5"
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+      />
+      {/* Sparkle indicator */}
+      <span className="text-xs opacity-60 group-hover:opacity-100 transition-opacity">
+        ✨
+      </span>
+    </motion.button>
+  );
+}
+
 export function HomePage() {
   const personalInfo = usePersonalInfo();
   const isMobile = useIsMobile();
+  const { t } = useTranslation("pages");
   const { displayedText, isComplete } = useTypeWriter(personalInfo.fullName, 100, 800);
 
   const titleVariants = {
@@ -164,16 +211,29 @@ export function HomePage() {
           <div className="h-px w-16 bg-gradient-to-l from-transparent to-foreground/30" />
         </motion.div>
 
-        {/* Quick bio */}
-        <motion.p
-          className="text-body text-foreground/50 max-w-xl mx-auto leading-relaxed"
+        {/* Interactive site description */}
+        <motion.div
+          className="text-body text-foreground/60 max-w-2xl mx-auto leading-relaxed text-center"
           custom={3}
           variants={titleVariants}
           initial="hidden"
           animate="visible"
         >
-          {personalInfo.bio.short}
-        </motion.p>
+          <p className="mb-3">
+            {t("home.interactiveIntro.line1")}
+            <InlineSuggestion prompt={t("home.interactiveIntro.suggestion1")}>
+              {t("home.interactiveIntro.suggestionText1")}
+            </InlineSuggestion>
+            {t("home.interactiveIntro.line2")}
+          </p>
+          <p className="text-sm text-foreground/40">
+            {t("home.interactiveIntro.line3")}
+            <InlineSuggestion prompt={t("home.interactiveIntro.suggestion2")}>
+              {t("home.interactiveIntro.suggestionText2")}
+            </InlineSuggestion>
+            {t("home.interactiveIntro.line4")}
+          </p>
+        </motion.div>
       </motion.div>
     </div>
   );

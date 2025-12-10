@@ -7,7 +7,7 @@ import { ChatToggleButton } from "./ChatToggleButton";
 import { PromptBar } from "./PromptBar";
 import { PromptSuggestions } from "./PromptSuggestions";
 import { useChatPanel } from "@/lib/hooks/useChatPanel";
-import { useIsMobile } from "@/lib/hooks/useMediaQuery";
+import { useIsMobile, useChatPanelWidth } from "@/lib/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
@@ -92,6 +92,7 @@ export function ChatSidePanel({
 }: ChatSidePanelProps) {
   const { isOpen: internalIsOpen, toggle: internalToggle, close: internalClose } = useChatPanel();
   const isMobile = useIsMobile();
+  const chatPanelWidth = useChatPanelWidth();
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Use overrides if provided (for mobile), otherwise use internal state (for desktop)
@@ -165,8 +166,9 @@ export function ChatSidePanel({
               "fixed z-45 flex flex-col",
               isMobile
                 ? "inset-0 pb-[calc(64px+env(safe-area-inset-bottom,0px))] bg-background/95 backdrop-blur-2xl"
-                : "right-0 top-16 bottom-0 w-[400px] border-l border-foreground/10 bg-background/80 backdrop-blur-xl shadow-[-10px_0_40px_-15px_rgba(0,0,0,0.15)]"
+                : "right-0 top-0 bottom-0 border-l border-foreground/10 bg-background/80 backdrop-blur-xl shadow-[-10px_0_40px_-15px_rgba(0,0,0,0.15)]"
             )}
+            style={!isMobile ? { width: `${chatPanelWidth}px` } : undefined}
             variants={isMobile ? mobileVariants : panelVariants}
             initial="closed"
             animate="open"

@@ -46,7 +46,7 @@ function groupByCategory(suggestions: Suggestion[]): Record<string, Suggestion[]
 
 export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floating" }: PromptSuggestionsProps) {
   const { t } = useTranslation("common");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); // Open by default
   const [shuffleKey, setShuffleKey] = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);

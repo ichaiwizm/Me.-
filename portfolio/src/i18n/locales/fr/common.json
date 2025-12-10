@@ -67,7 +67,8 @@
     "zoomOut": "Dézoomer",
     "previousImage": "Image précédente",
     "nextImage": "Image suivante",
-    "promptInput": "Saisie de prompt"
+    "promptInput": "Saisie de prompt",
+    "generatePrompt": "Générer un prompt IA"
   },
   "visualModes": {
     "header": "Mode Visuel",
@@ -93,6 +94,10 @@
     "glitch": {
       "label": "Glitch Art",
       "description": "D̷A̶T̵A̸ C̵O̶R̵R̸U̴P̴T̵İ̶O̵N̸ ~ RGB split"
+    },
+    "aiMode": {
+      "label": "Mode IA",
+      "description": "Surprise ! Laisse l'IA choisir"
     }
   },
   "suggestions": {
