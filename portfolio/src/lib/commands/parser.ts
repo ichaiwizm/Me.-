@@ -56,6 +56,8 @@ function getCommandMarker(cmd: Command): string {
       return ""; // UI changes are silent
     case "navigate":
       return `[[CMD:navigate:${cmd.page}]]`;
+    case "create_visual_mode":
+      return `[[CMD:create_visual_mode:${cmd.name}]]`;
     default:
       return "";
   }

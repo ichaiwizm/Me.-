@@ -10,6 +10,7 @@ import { CustomCursor } from "@/components/ui/CustomCursor";
 import { VisualModeExitButton } from "@/components/visual-mode-exit";
 import { useTheme } from "@/theme/provider/ThemeContext";
 import { useVisualMode } from "@/visual-mode";
+import { applyDynamicVisualMode } from "@/visual-mode/utils/apply-dynamic-visual-mode";
 import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
@@ -113,6 +114,9 @@ function App() {
       setCurrentPage(page);
       // Scroll to top when navigating
       window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    applyDynamicVisualMode: (name: string, cssVariables: Record<string, string>, customCSS?: string) => {
+      applyDynamicVisualMode(name, cssVariables, customCSS);
     },
   };
 

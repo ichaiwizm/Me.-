@@ -99,5 +99,32 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
     }
   }
 
+  if (t === "create_visual_mode") {
+    if (!cmd.name || typeof cmd.name !== "string") {
+      return { valid: false, error: "Nom du visual mode requis" };
+    }
+    if (!cmd.cssVariables || typeof cmd.cssVariables !== "object") {
+      return { valid: false, error: "cssVariables requis" };
+    }
+    // Security: block injection patterns
+    const forbidden = /url\s*\(|@import|expression\s*\(|javascript:|data:/i;
+    for (const value of Object.values(cmd.cssVariables)) {
+      if (typeof value === "string" && forbidden.test(value)) {
+        return { valid: false, error: "Valeur CSS interdite détectée dans cssVariables" };
+      }
+    }
+    if (cmd.customCSS) {
+      if (typeof cmd.customCSS !== "string") {
+        return { valid: false, error: "customCSS doit être une chaîne" };
+      }
+      if (cmd.customCSS.length > 15000) {
+        return { valid: false, error: "customCSS trop long (max 15KB)" };
+      }
+      if (forbidden.test(cmd.customCSS)) {
+        return { valid: false, error: "customCSS contient des patterns interdits" };
+      }
+    }
+  }
+
   return { valid: true };
 }

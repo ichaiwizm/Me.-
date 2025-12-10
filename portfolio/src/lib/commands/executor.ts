@@ -157,6 +157,9 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
       case "navigate":
         ctx.navigateToPage(cmd.page);
         break;
+      case "create_visual_mode":
+        ctx.applyDynamicVisualMode(cmd.name, cmd.cssVariables, cmd.customCSS);
+        break;
     }
   } catch (error) {
     console.error(`Error executing command ${cmd.type}:`, error);

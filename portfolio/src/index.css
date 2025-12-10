@@ -335,3 +335,23 @@
     pointer-events: none;
   }
 }
+
+/* ============================================
+   DYNAMIC VISUAL MODE - AI Generated Themes
+   ============================================ */
+
+/* Animated transitions when dynamic visual mode is being applied */
+html.dynamic-visual-mode-transitioning * {
+  transition:
+    background-color 250ms ease-out,
+    color 250ms ease-out,
+    border-color 250ms ease-out,
+    box-shadow 250ms ease-out,
+    fill 250ms ease-out,
+    stroke 250ms ease-out !important;
+}
+
+/* Marker class for active dynamic visual mode */
+html.dynamic-visual-mode-active {
+  /* This class is used to detect if a dynamic mode is active */
+}

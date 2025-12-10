@@ -13,7 +13,8 @@ export type Command =
   | { type: "display_image"; imageId?: string; imageUrl?: string; transforms?: string; inWindow?: boolean; title?: string; width?: number; height?: number }
   | { type: "display_gallery"; title?: string; tag?: string; category?: string; limit?: number; inWindow?: boolean; width?: number; height?: number }
   | { type: "set_ui"; chatExpanded?: boolean }
-  | { type: "navigate"; page: PageId };
+  | { type: "navigate"; page: PageId }
+  | { type: "create_visual_mode"; name: string; cssVariables: Record<string, string>; customCSS?: string };
 
 export type ExecutorContext = {
   createWindow: (spec: WindowSpec) => void;
@@ -24,6 +25,7 @@ export type ExecutorContext = {
   setBackground: (style: string) => void;
   setChatExpanded: (expanded: boolean) => void;
   navigateToPage: (page: PageId) => void;
+  applyDynamicVisualMode: (name: string, cssVariables: Record<string, string>, customCSS?: string) => void;
 };
 
 export const AVAILABLE_IMAGES = [
