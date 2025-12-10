@@ -45,35 +45,6 @@ function ModePreview({ modeId }: { modeId: VisualModeId }) {
           <div className="h-[1.5px] bg-[#1a1a1a]/40 w-3/5" />
         </div>
       );
-    case "vaporwave":
-      // Vaporwave: sunset gradient with grid lines
-      return (
-        <div
-          className="w-7 h-7 rounded-sm overflow-hidden relative"
-          style={{
-            background: "linear-gradient(180deg, #1a0a2e 0%, #2d1b4e 40%, #ff71ce 70%, #fffb96 100%)",
-          }}
-        >
-          {/* Perspective grid */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-3"
-            style={{
-              backgroundImage: "linear-gradient(90deg, rgba(1, 205, 254, 0.5) 1px, transparent 1px), linear-gradient(rgba(1, 205, 254, 0.5) 1px, transparent 1px)",
-              backgroundSize: "4px 4px",
-              transform: "perspective(20px) rotateX(30deg)",
-              transformOrigin: "bottom",
-            }}
-          />
-          {/* Sun */}
-          <div
-            className="absolute top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full"
-            style={{
-              background: "linear-gradient(180deg, #ff71ce, #fffb96)",
-              boxShadow: "0 0 4px rgba(255, 113, 206, 0.8)",
-            }}
-          />
-        </div>
-      );
     case "matrix":
       // Matrix: black with falling green code
       return (
