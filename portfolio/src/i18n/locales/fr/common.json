@@ -85,6 +85,18 @@
     "newspaper": {
       "label": "Journal",
       "description": "Éditorial, typographie serif"
+    },
+    "vaporwave": {
+      "label": "Vaporwave",
+      "description": "A E S T H E T I C ~ 夢 ~ Néons 80s"
+    },
+    "matrix": {
+      "label": "Matrix",
+      "description": "> Terminal hacker, pluie de code"
+    },
+    "glitch": {
+      "label": "Glitch Art",
+      "description": "D̷A̶T̵A̸ C̵O̶R̵R̸U̴P̴T̵İ̶O̵N̸ ~ RGB split"
     }
   },
   "suggestions": {

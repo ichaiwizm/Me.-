@@ -1,0 +1,844 @@
+/* ============================================
+   GLITCH ART MODE
+   D̷͓̈́A̶̰͐T̵̰̾A̸̭͝ ̶͇̈́C̵̣̈O̶̰͋R̵̰͝R̸̺̈́U̴̲͑P̴̣̈́T̵̰̾İ̶̲O̵̰͋N̸̺̈́
+   RGB split, scan errors, visual chaos
+   Aesthetic digital decay
+   ============================================ */
+
+html.visual-mode-glitch {
+  /* Glitch palette - high contrast with neon accents */
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+
+  --primary: #ff0055;
+  --primary-foreground: #ffffff;
+
+  --accent: #00ffff;
+  --accent-foreground: #0a0a0a;
+
+  --secondary: #ffff00;
+  --secondary-foreground: #0a0a0a;
+
+  --muted: #1a1a1a;
+  --muted-foreground: #888888;
+
+  --card: rgba(20, 20, 20, 0.9);
+  --card-foreground: #ffffff;
+
+  --popover: rgba(20, 20, 20, 0.95);
+  --popover-foreground: #ffffff;
+
+  --border: rgba(255, 0, 85, 0.5);
+  --input: rgba(255, 0, 85, 0.3);
+  --ring: #00ffff;
+
+  --destructive: #ff0055;
+
+  /* Semantic colors */
+  --color-success: #00ff88;
+  --color-success-muted: rgba(0, 255, 136, 0.2);
+  --color-warning: #ffff00;
+  --color-warning-muted: rgba(255, 255, 0, 0.2);
+  --color-error: #ff0055;
+  --color-error-muted: rgba(255, 0, 85, 0.2);
+  --color-info: #00ffff;
+  --color-info-muted: rgba(0, 255, 255, 0.2);
+
+  /* Skill levels */
+  --color-level-expert: #ff0055;
+  --color-level-advanced: #00ffff;
+  --color-level-intermediate: #ffff00;
+  --color-level-fundamental: #00ff88;
+  --color-level-beginner: #ff00ff;
+
+  /* Sharp for digital feel */
+  --radius: 0px;
+
+  /* Chart colors */
+  --chart-1: #ff0055;
+  --chart-2: #00ffff;
+  --chart-3: #ffff00;
+  --chart-4: #00ff88;
+  --chart-5: #ff00ff;
+
+  /* Effects */
+  --shimmer-color: rgba(255, 0, 85, 0.4);
+  --image-bg: #1a1a1a;
+}
+
+/* ============================================
+   ANIMATED GLITCH BACKGROUND
+   ============================================ */
+
+html.visual-mode-glitch {
+  background: #0a0a0a;
+  position: relative;
+}
+
+/* Static noise overlay */
+html.visual-mode-glitch::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+  animation: noiseShift 0.5s steps(10) infinite;
+}
+
+@keyframes noiseShift {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -2%); }
+  20% { transform: translate(2%, 2%); }
+  30% { transform: translate(-1%, 1%); }
+  40% { transform: translate(1%, -1%); }
+  50% { transform: translate(-2%, 1%); }
+  60% { transform: translate(2%, -2%); }
+  70% { transform: translate(-1%, -1%); }
+  80% { transform: translate(1%, 1%); }
+  90% { transform: translate(-2%, 2%); }
+}
+
+/* Scan lines with occasional glitch */
+html.visual-mode-glitch::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 99998;
+  animation: scanlineGlitch 8s ease-in-out infinite;
+}
+
+@keyframes scanlineGlitch {
+  0%, 95%, 100% { opacity: 1; transform: translateY(0); }
+  96% { opacity: 0.8; transform: translateY(2px); }
+  97% { opacity: 1; transform: translateY(-1px); }
+  98% { opacity: 0.9; transform: translateY(1px); }
+}
+
+/* ============================================
+   RGB SPLIT / CHROMATIC ABERRATION
+   ============================================ */
+
+@keyframes rgbSplit {
+  0%, 90%, 100% {
+    text-shadow:
+      0 0 0 transparent,
+      0 0 0 transparent;
+  }
+  92% {
+    text-shadow:
+      -3px 0 0 rgba(255, 0, 85, 0.7),
+      3px 0 0 rgba(0, 255, 255, 0.7);
+  }
+  94% {
+    text-shadow:
+      3px 0 0 rgba(255, 0, 85, 0.7),
+      -3px 0 0 rgba(0, 255, 255, 0.7);
+  }
+  96% {
+    text-shadow:
+      -2px 1px 0 rgba(255, 0, 85, 0.7),
+      2px -1px 0 rgba(0, 255, 255, 0.7);
+  }
+  98% {
+    text-shadow:
+      0 0 0 transparent,
+      0 0 0 transparent;
+  }
+}
+
+@keyframes rgbSplitHeavy {
+  0%, 80%, 100% {
+    text-shadow:
+      -2px 0 0 rgba(255, 0, 85, 0.8),
+      2px 0 0 rgba(0, 255, 255, 0.8);
+    transform: translateX(0);
+  }
+  82% {
+    text-shadow:
+      -5px 0 0 rgba(255, 0, 85, 0.9),
+      5px 0 0 rgba(0, 255, 255, 0.9);
+    transform: translateX(-3px);
+  }
+  84% {
+    text-shadow:
+      5px 0 0 rgba(255, 0, 85, 0.9),
+      -5px 0 0 rgba(0, 255, 255, 0.9);
+    transform: translateX(3px);
+  }
+  86% {
+    text-shadow:
+      -3px 2px 0 rgba(255, 0, 85, 0.8),
+      3px -2px 0 rgba(0, 255, 255, 0.8);
+    transform: translateX(-1px) skewX(-2deg);
+  }
+  88% {
+    text-shadow:
+      -2px 0 0 rgba(255, 0, 85, 0.8),
+      2px 0 0 rgba(0, 255, 255, 0.8);
+    transform: translateX(0);
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY - Corrupted Digital
+   ============================================ */
+
+html.visual-mode-glitch,
+html.visual-mode-glitch * {
+  font-family: 'Space Mono', 'Fira Code', monospace !important;
+}
+
+html.visual-mode-glitch *::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+html.visual-mode-glitch h1,
+html.visual-mode-glitch h2,
+html.visual-mode-glitch h3,
+html.visual-mode-glitch .text-headline,
+html.visual-mode-glitch .text-monumental,
+html.visual-mode-glitch .text-title {
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  position: relative;
+}
+
+html.visual-mode-glitch h1 {
+  font-size: 3rem !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+  animation: rgbSplitHeavy 4s ease-in-out infinite;
+  color: #ffffff !important;
+}
+
+/* Glitch pseudo-elements for h1 */
+html.visual-mode-glitch h1::before,
+html.visual-mode-glitch h1::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+html.visual-mode-glitch h1::before {
+  color: #ff0055;
+  animation: glitchLeft 3s ease-in-out infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+html.visual-mode-glitch h1::after {
+  color: #00ffff;
+  animation: glitchRight 2.5s ease-in-out infinite;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitchLeft {
+  0%, 90%, 100% { transform: translate(0); }
+  92% { transform: translate(-5px, -2px); }
+  94% { transform: translate(3px, 1px); }
+  96% { transform: translate(-2px, -1px); }
+}
+
+@keyframes glitchRight {
+  0%, 85%, 100% { transform: translate(0); }
+  87% { transform: translate(4px, 2px); }
+  89% { transform: translate(-3px, -1px); }
+  91% { transform: translate(2px, 1px); }
+}
+
+html.visual-mode-glitch h2 {
+  font-size: 1.8rem !important;
+  color: #00ffff !important;
+  animation: rgbSplit 5s ease-in-out infinite;
+}
+
+html.visual-mode-glitch h3 {
+  font-size: 1.2rem !important;
+  color: #ffff00 !important;
+}
+
+html.visual-mode-glitch p,
+html.visual-mode-glitch span,
+html.visual-mode-glitch label {
+  font-size: 0.95rem !important;
+  line-height: 1.7 !important;
+}
+
+/* Gradient text override */
+html.visual-mode-glitch .gradient-text,
+html.visual-mode-glitch .gradient-text-animated {
+  background: linear-gradient(90deg, #ff0055, #00ffff, #ffff00, #ff0055) !important;
+  background-size: 400% 100%;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: gradientGlitch 3s linear infinite;
+}
+
+@keyframes gradientGlitch {
+  0%, 95%, 100% { background-position: 0% 50%; }
+  96% { background-position: 100% 50%; }
+  97% { background-position: 50% 50%; }
+  98% { background-position: 0% 50%; }
+}
+
+/* ============================================
+   GLASSMORPHISM - Broken Glass
+   ============================================ */
+
+html.visual-mode-glitch .glass,
+html.visual-mode-glitch .glass-strong,
+html.visual-mode-glitch .glass-subtle,
+html.visual-mode-glitch [class*="backdrop-blur"],
+html.visual-mode-glitch [class*="bg-background/"],
+html.visual-mode-glitch [class*="bg-card/"] {
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  background: rgba(20, 20, 20, 0.85) !important;
+  border: 1px solid rgba(255, 0, 85, 0.3) !important;
+}
+
+/* ============================================
+   BORDERS & SHADOWS - Digital Decay
+   ============================================ */
+
+html.visual-mode-glitch * {
+  border-radius: 0 !important;
+}
+
+html.visual-mode-glitch button,
+html.visual-mode-glitch input,
+html.visual-mode-glitch textarea,
+html.visual-mode-glitch select,
+html.visual-mode-glitch .card {
+  border: 2px solid rgba(255, 0, 85, 0.5) !important;
+  box-shadow:
+    4px 4px 0 rgba(0, 255, 255, 0.3),
+    -2px -2px 0 rgba(255, 0, 85, 0.3) !important;
+  background: rgba(20, 20, 20, 0.9) !important;
+  position: relative;
+}
+
+/* Glitch line on cards */
+html.visual-mode-glitch .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff0055, #00ffff, #ffff00);
+  animation: scanHorizontal 4s linear infinite;
+}
+
+@keyframes scanHorizontal {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Project cards */
+html.visual-mode-glitch .group[class*="rounded-2xl"],
+html.visual-mode-glitch [class*="bg-card"][class*="rounded"] {
+  border: 2px solid rgba(255, 0, 85, 0.4) !important;
+  box-shadow:
+    4px 4px 0 rgba(0, 255, 255, 0.2),
+    -2px -2px 0 rgba(255, 0, 85, 0.2) !important;
+  background: rgba(20, 20, 20, 0.9) !important;
+  overflow: hidden;
+}
+
+/* Hover with glitch effect */
+html.visual-mode-glitch button:hover,
+html.visual-mode-glitch .card:hover {
+  animation: cardGlitch 0.3s ease-in-out;
+  border-color: #00ffff !important;
+  box-shadow:
+    6px 6px 0 rgba(255, 0, 85, 0.4),
+    -3px -3px 0 rgba(0, 255, 255, 0.4),
+    0 0 20px rgba(255, 0, 85, 0.3) !important;
+}
+
+@keyframes cardGlitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-3px, 2px); }
+  40% { transform: translate(3px, -2px); }
+  60% { transform: translate(-2px, -1px); }
+  80% { transform: translate(2px, 1px); }
+}
+
+html.visual-mode-glitch .group:hover {
+  animation: cardGlitch 0.3s ease-in-out;
+  border-color: #00ffff !important;
+}
+
+html.visual-mode-glitch .group:hover * {
+  color: inherit;
+}
+
+/* ============================================
+   BUTTONS - Corrupted Interface
+   ============================================ */
+
+html.visual-mode-glitch button {
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Scan line on buttons */
+html.visual-mode-glitch button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 255, 0.2),
+    transparent
+  );
+  animation: buttonScan 2s linear infinite;
+}
+
+@keyframes buttonScan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+html.visual-mode-glitch button[class*="bg-primary"],
+html.visual-mode-glitch button[class*="variant-default"] {
+  background: linear-gradient(135deg, #ff0055, #cc0044) !important;
+  color: #ffffff !important;
+  border: 2px solid #ff0055 !important;
+}
+
+html.visual-mode-glitch button[class*="bg-primary"]:hover,
+html.visual-mode-glitch button[class*="variant-default"]:hover {
+  background: linear-gradient(135deg, #00ffff, #00cccc) !important;
+  border-color: #00ffff !important;
+  animation: buttonGlitch 0.2s ease-in-out;
+}
+
+@keyframes buttonGlitch {
+  0%, 100% { transform: translate(0) skewX(0); }
+  25% { transform: translate(-2px, 1px) skewX(-2deg); }
+  50% { transform: translate(2px, -1px) skewX(2deg); }
+  75% { transform: translate(-1px, -1px) skewX(-1deg); }
+}
+
+html.visual-mode-glitch button[class*="variant-outline"],
+html.visual-mode-glitch button[class*="variant-ghost"] {
+  background: transparent !important;
+  border: 2px solid rgba(0, 255, 255, 0.5) !important;
+  color: #00ffff !important;
+}
+
+html.visual-mode-glitch button[class*="variant-destructive"] {
+  background: transparent !important;
+  border: 2px solid #ff0055 !important;
+  color: #ff0055 !important;
+}
+
+/* ============================================
+   ANIMATIONS - Glitchy
+   ============================================ */
+
+html.visual-mode-glitch * {
+  transition-duration: 0.1s !important;
+  transition-timing-function: steps(3) !important;
+}
+
+html.visual-mode-glitch .animate-float,
+html.visual-mode-glitch .animate-gradient,
+html.visual-mode-glitch .animate-pulse-glow,
+html.visual-mode-glitch .animate-shimmer {
+  animation: none !important;
+}
+
+/* ============================================
+   HEADER - Corrupted Bar
+   ============================================ */
+
+html.visual-mode-glitch header {
+  background: rgba(10, 10, 10, 0.95) !important;
+  border-bottom: 2px solid rgba(255, 0, 85, 0.5) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glitch bar in header */
+html.visual-mode-glitch header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ff0055, transparent 20%, #00ffff 50%, transparent 80%, #ffff00);
+  animation: headerGlitch 3s linear infinite;
+}
+
+@keyframes headerGlitch {
+  0%, 100% { opacity: 1; transform: translateX(0); }
+  45% { opacity: 1; }
+  46% { opacity: 0; transform: translateX(10px); }
+  47% { opacity: 1; transform: translateX(-5px); }
+  48% { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================
+   LINKS - Digital Corruption
+   ============================================ */
+
+html.visual-mode-glitch a {
+  color: #00ffff !important;
+  text-decoration: none !important;
+  position: relative;
+}
+
+html.visual-mode-glitch a:hover {
+  color: #ff0055 !important;
+  animation: linkGlitch 0.3s ease-in-out;
+}
+
+@keyframes linkGlitch {
+  0%, 100% {
+    text-shadow:
+      -1px 0 #ff0055,
+      1px 0 #00ffff;
+  }
+  50% {
+    text-shadow:
+      2px 0 #ff0055,
+      -2px 0 #00ffff;
+  }
+}
+
+html.visual-mode-glitch a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ff0055, #00ffff);
+  transition: width 0.2s steps(5);
+}
+
+html.visual-mode-glitch a:hover::after {
+  width: 100%;
+}
+
+/* ============================================
+   SCROLLBAR - Corrupted
+   ============================================ */
+
+html.visual-mode-glitch *::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+html.visual-mode-glitch *::-webkit-scrollbar-track {
+  background: #0a0a0a;
+  border-left: 2px solid rgba(255, 0, 85, 0.3);
+}
+
+html.visual-mode-glitch *::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff0055, #00ffff);
+  border: 2px solid #0a0a0a;
+}
+
+html.visual-mode-glitch *::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00ffff, #ffff00);
+}
+
+/* ============================================
+   IMAGES - Corrupted Data
+   ============================================ */
+
+html.visual-mode-glitch img {
+  border: 2px solid rgba(255, 0, 85, 0.5) !important;
+  box-shadow:
+    4px 4px 0 rgba(0, 255, 255, 0.3),
+    -2px -2px 0 rgba(255, 0, 85, 0.3) !important;
+  filter: saturate(1.3) contrast(1.1) !important;
+  position: relative;
+}
+
+html.visual-mode-glitch img:hover {
+  animation: imageGlitch 0.5s ease-in-out;
+  filter: saturate(1.5) contrast(1.2) hue-rotate(10deg) !important;
+}
+
+@keyframes imageGlitch {
+  0%, 100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-5px, 0);
+  }
+  40% {
+    clip-path: inset(40% 0 30% 0);
+    transform: translate(5px, 0);
+  }
+  60% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(-3px, 0);
+  }
+  80% {
+    clip-path: inset(10% 0 80% 0);
+    transform: translate(3px, 0);
+  }
+}
+
+/* ============================================
+   SPECIAL ELEMENTS
+   ============================================ */
+
+/* Chat panel */
+html.visual-mode-glitch .side-panel {
+  border-left: 2px solid rgba(255, 0, 85, 0.5) !important;
+  background: rgba(10, 10, 10, 0.98) !important;
+  box-shadow: -5px 0 20px rgba(255, 0, 85, 0.2) !important;
+}
+
+/* Progress bars - glitched segments */
+html.visual-mode-glitch [role="progressbar"] {
+  border: 2px solid rgba(255, 0, 85, 0.5) !important;
+  background: #0a0a0a !important;
+  overflow: hidden;
+}
+
+html.visual-mode-glitch [role="progressbar"] > div {
+  background: linear-gradient(90deg, #ff0055, #00ffff, #ffff00) !important;
+  position: relative;
+}
+
+html.visual-mode-glitch [role="progressbar"] > div::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 8px,
+    rgba(0, 0, 0, 0.3) 8px,
+    rgba(0, 0, 0, 0.3) 10px
+  );
+}
+
+/* Badges */
+html.visual-mode-glitch [class*="badge"],
+html.visual-mode-glitch [class*="pill"],
+html.visual-mode-glitch [class*="tag"] {
+  border: 2px solid rgba(0, 255, 255, 0.5) !important;
+  background: rgba(20, 20, 20, 0.9) !important;
+  box-shadow:
+    2px 2px 0 rgba(255, 0, 85, 0.3),
+    -1px -1px 0 rgba(0, 255, 255, 0.3) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Dividers */
+html.visual-mode-glitch hr {
+  border: none !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, #ff0055, transparent 30%, #00ffff 50%, transparent 70%, #ffff00) !important;
+  margin: 2rem 0 !important;
+  animation: dividerGlitch 4s ease-in-out infinite;
+}
+
+@keyframes dividerGlitch {
+  0%, 90%, 100% { opacity: 1; transform: scaleX(1); }
+  92% { opacity: 0.5; transform: scaleX(0.98); }
+  94% { opacity: 1; transform: scaleX(1.02); }
+  96% { opacity: 0.7; transform: scaleX(0.99); }
+}
+
+/* ============================================
+   FLOATING WINDOW - Corrupted Window
+   ============================================ */
+
+html.visual-mode-glitch [class*="FloatingWindow"],
+html.visual-mode-glitch div[style*="position: fixed"][style*="z-index"] {
+  border: 2px solid rgba(255, 0, 85, 0.5) !important;
+  box-shadow:
+    6px 6px 0 rgba(0, 255, 255, 0.3),
+    -3px -3px 0 rgba(255, 0, 85, 0.3),
+    0 0 30px rgba(255, 0, 85, 0.2) !important;
+  background: rgba(10, 10, 10, 0.98) !important;
+  backdrop-filter: blur(10px) !important;
+  overflow: hidden;
+}
+
+/* Glitch bar on windows */
+html.visual-mode-glitch [class*="FloatingWindow"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff0055, #00ffff, #ffff00);
+  animation: windowGlitch 3s linear infinite;
+}
+
+@keyframes windowGlitch {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ============================================
+   TILTCARD - Disable 3D, add glitch
+   ============================================ */
+
+html.visual-mode-glitch [style*="preserve-3d"],
+html.visual-mode-glitch [style*="perspective"] {
+  transform-style: flat !important;
+  perspective: none !important;
+}
+
+html.visual-mode-glitch [style*="rotateX"],
+html.visual-mode-glitch [style*="rotateY"] {
+  transform: none !important;
+}
+
+/* ============================================
+   BOTTOM SHEET - Mobile (Glitch)
+   ============================================ */
+
+html.visual-mode-glitch .bottom-sheet,
+html.visual-mode-glitch [class*="bottom-sheet"] {
+  border: 2px solid rgba(255, 0, 85, 0.5) !important;
+  border-bottom: none !important;
+  background: rgba(10, 10, 10, 0.98) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+html.visual-mode-glitch .bottom-sheet-backdrop {
+  backdrop-filter: blur(5px) !important;
+  background: rgba(10, 10, 10, 0.8) !important;
+}
+
+html.visual-mode-glitch .bottom-sheet-handle {
+  background: linear-gradient(90deg, #ff0055, #00ffff) !important;
+  width: 60px !important;
+  height: 4px !important;
+}
+
+/* ============================================
+   CHAT MESSAGES - Corrupted Bubbles
+   ============================================ */
+
+html.visual-mode-glitch [class*="ChatMessages"] > div,
+html.visual-mode-glitch [class*="message"] {
+  border: 2px solid rgba(255, 0, 85, 0.3) !important;
+  box-shadow:
+    3px 3px 0 rgba(0, 255, 255, 0.2),
+    -1px -1px 0 rgba(255, 0, 85, 0.2) !important;
+  background: rgba(20, 20, 20, 0.9) !important;
+}
+
+/* ============================================
+   GRADIENTS - Corrupted
+   ============================================ */
+
+html.visual-mode-glitch header [class*="bg-gradient"] {
+  background: rgba(10, 10, 10, 0.95) !important;
+}
+
+html.visual-mode-glitch .group:hover [class*="bg-gradient"][class*="opacity"] {
+  opacity: 0.3 !important;
+  background: linear-gradient(135deg,
+    rgba(255, 0, 85, 0.3),
+    rgba(0, 255, 255, 0.3)
+  ) !important;
+}
+
+/* ============================================
+   EXIT BUTTON - Emergency Exit
+   ============================================ */
+
+html.visual-mode-glitch .visual-mode-exit-button button {
+  border: 2px solid #ff0055 !important;
+  box-shadow:
+    4px 4px 0 rgba(0, 255, 255, 0.4),
+    0 0 20px rgba(255, 0, 85, 0.3) !important;
+  background: linear-gradient(135deg, #ff0055, #cc0044) !important;
+}
+
+html.visual-mode-glitch .visual-mode-exit-button button:hover {
+  animation: buttonGlitch 0.2s ease-in-out;
+}
+
+/* ============================================
+   INPUTS - Corrupted Focus
+   ============================================ */
+
+html.visual-mode-glitch input:focus,
+html.visual-mode-glitch textarea:focus {
+  border-color: #00ffff !important;
+  box-shadow:
+    4px 4px 0 rgba(255, 0, 85, 0.4),
+    -2px -2px 0 rgba(0, 255, 255, 0.4),
+    0 0 15px rgba(0, 255, 255, 0.3) !important;
+  animation: inputGlitch 0.3s ease-in-out;
+}
+
+@keyframes inputGlitch {
+  0%, 100% { transform: translate(0); }
+  25% { transform: translate(-1px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, -1px); }
+}
+
+/* ============================================
+   ERROR STATE FLICKER
+   ============================================ */
+
+html.visual-mode-glitch [class*="error"],
+html.visual-mode-glitch [class*="destructive"] {
+  animation: errorFlicker 2s ease-in-out infinite;
+}
+
+@keyframes errorFlicker {
+  0%, 95%, 100% { opacity: 1; }
+  96% { opacity: 0.5; }
+  97% { opacity: 1; }
+  98% { opacity: 0.7; }
+}
+
+/* ============================================
+   CURSOR - Glitched
+   ============================================ */
+
+html.visual-mode-glitch,
+html.visual-mode-glitch * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M0,0 L0,16 L4,12 L7,18 L9,17 L6,11 L12,11 Z' fill='%23ff0055' stroke='%2300ffff' stroke-width='1'/%3E%3C/svg%3E") 0 0, auto !important;
+}
+
+html.visual-mode-glitch button,
+html.visual-mode-glitch a,
+html.visual-mode-glitch [role="button"] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M6,0 L6,12 L9,9 L12,16 L14,15 L11,8 L14,8 Z' fill='%2300ffff' stroke='%23ff0055' stroke-width='1'/%3E%3C/svg%3E") 6 0, pointer !important;
+}

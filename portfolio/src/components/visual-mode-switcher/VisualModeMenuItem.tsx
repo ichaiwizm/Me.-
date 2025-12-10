@@ -45,6 +45,70 @@ function ModePreview({ modeId }: { modeId: VisualModeId }) {
           <div className="h-[1.5px] bg-[#1a1a1a]/40 w-3/5" />
         </div>
       );
+    case "vaporwave":
+      // Vaporwave: sunset gradient with grid lines
+      return (
+        <div
+          className="w-7 h-7 rounded-sm overflow-hidden relative"
+          style={{
+            background: "linear-gradient(180deg, #1a0a2e 0%, #2d1b4e 40%, #ff71ce 70%, #fffb96 100%)",
+          }}
+        >
+          {/* Perspective grid */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-3"
+            style={{
+              backgroundImage: "linear-gradient(90deg, rgba(1, 205, 254, 0.5) 1px, transparent 1px), linear-gradient(rgba(1, 205, 254, 0.5) 1px, transparent 1px)",
+              backgroundSize: "4px 4px",
+              transform: "perspective(20px) rotateX(30deg)",
+              transformOrigin: "bottom",
+            }}
+          />
+          {/* Sun */}
+          <div
+            className="absolute top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full"
+            style={{
+              background: "linear-gradient(180deg, #ff71ce, #fffb96)",
+              boxShadow: "0 0 4px rgba(255, 113, 206, 0.8)",
+            }}
+          />
+        </div>
+      );
+    case "matrix":
+      // Matrix: black with falling green code
+      return (
+        <div className="w-7 h-7 bg-[#0d0208] rounded-sm overflow-hidden relative flex items-center justify-center">
+          {/* Code rain columns */}
+          <div className="absolute inset-0 flex justify-around opacity-60">
+            <div className="w-[2px] bg-gradient-to-b from-transparent via-[#00ff41] to-transparent h-full animate-pulse" style={{ animationDelay: "0ms" }} />
+            <div className="w-[2px] bg-gradient-to-b from-[#00ff41] via-transparent to-[#00ff41] h-full animate-pulse" style={{ animationDelay: "200ms" }} />
+            <div className="w-[2px] bg-gradient-to-b from-transparent to-[#00ff41] h-full animate-pulse" style={{ animationDelay: "400ms" }} />
+          </div>
+          {/* Terminal prompt */}
+          <span className="text-[#00ff41] text-[8px] font-mono z-10 drop-shadow-[0_0_2px_#00ff41]">&gt;_</span>
+        </div>
+      );
+    case "glitch":
+      // Glitch: RGB split corruption effect
+      return (
+        <div className="w-7 h-7 bg-[#0a0a0a] rounded-none overflow-hidden relative flex items-center justify-center">
+          {/* Scan lines */}
+          <div
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)",
+            }}
+          />
+          {/* RGB split text */}
+          <div className="relative">
+            <span className="absolute text-[10px] font-bold text-[#ff0055] -translate-x-[2px]" style={{ opacity: 0.7 }}>GL</span>
+            <span className="absolute text-[10px] font-bold text-[#00ffff] translate-x-[2px]" style={{ opacity: 0.7 }}>GL</span>
+            <span className="relative text-[10px] font-bold text-white">GL</span>
+          </div>
+          {/* Corruption bar */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ff0055] via-[#00ffff] to-[#ffff00]" />
+        </div>
+      );
     default:
       return null;
   }

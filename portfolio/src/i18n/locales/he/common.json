@@ -85,6 +85,18 @@
     "newspaper": {
       "label": "עיתון",
       "description": "עריכה, טיפוגרפיה סריף"
+    },
+    "vaporwave": {
+      "label": "וייפורווייב",
+      "description": "A E S T H E T I C ~ 夢 ~ ניאון שנות ה-80"
+    },
+    "matrix": {
+      "label": "מטריקס",
+      "description": "> מסוף האקר, גשם קוד"
+    },
+    "glitch": {
+      "label": "גליץ' ארט",
+      "description": "D̷A̶T̵A̸ C̵O̶R̵R̸U̴P̴T̵İ̶O̵N̸ ~ RGB split"
     }
   },
   "suggestions": {

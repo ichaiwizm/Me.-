@@ -1,16 +1,21 @@
 /**
  * Visual Mode Definitions
- * Three radical visual transformations for the portfolio
+ * Six radical visual transformations for the portfolio
  */
 
-export type VisualModeId = "neo-brutalism" | "retro-pixel" | "newspaper";
+export type VisualModeId =
+  | "neo-brutalism"
+  | "retro-pixel"
+  | "newspaper"
+  | "vaporwave"
+  | "matrix"
+  | "glitch";
 
 export type VisualModeDef = {
   id: VisualModeId;
   className: string;
   labelKey: string;
   descriptionKey: string;
-  icon: "Square" | "Grid3x3" | "Newspaper";
 };
 
 export const VISUAL_MODE_DEFINITIONS: Record<VisualModeId, VisualModeDef> = {
@@ -19,21 +24,36 @@ export const VISUAL_MODE_DEFINITIONS: Record<VisualModeId, VisualModeDef> = {
     className: "visual-mode-neo-brutalism",
     labelKey: "visualModes.neoBrutalism.label",
     descriptionKey: "visualModes.neoBrutalism.description",
-    icon: "Square",
   },
   "retro-pixel": {
     id: "retro-pixel",
     className: "visual-mode-retro-pixel",
     labelKey: "visualModes.retroPixel.label",
     descriptionKey: "visualModes.retroPixel.description",
-    icon: "Grid3x3",
   },
   "newspaper": {
     id: "newspaper",
     className: "visual-mode-newspaper",
     labelKey: "visualModes.newspaper.label",
     descriptionKey: "visualModes.newspaper.description",
-    icon: "Newspaper",
+  },
+  "vaporwave": {
+    id: "vaporwave",
+    className: "visual-mode-vaporwave",
+    labelKey: "visualModes.vaporwave.label",
+    descriptionKey: "visualModes.vaporwave.description",
+  },
+  "matrix": {
+    id: "matrix",
+    className: "visual-mode-matrix",
+    labelKey: "visualModes.matrix.label",
+    descriptionKey: "visualModes.matrix.description",
+  },
+  "glitch": {
+    id: "glitch",
+    className: "visual-mode-glitch",
+    labelKey: "visualModes.glitch.label",
+    descriptionKey: "visualModes.glitch.description",
   },
 };
 
