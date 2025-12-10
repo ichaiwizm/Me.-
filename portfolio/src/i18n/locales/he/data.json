@@ -20,11 +20,11 @@
     ]
   },
   "projects": {
-    "mutuelles-v4": {
-      "title": "Mutuelles_v4 - אפליקציית אוטומציה לשולחן עבודה",
-      "description": "אפליקציית שולחן עבודה מלאה לאוטומציה של פלטפורמות ביטוח. פיתוח בסיוע AI (Claude Code). כוללת workflows אוטומטיים, ניהול קבצים, scraping חכם ותזמור Playwright.",
+    "assurlead": {
+      "title": "AssurLead - אוטומציית ביטוח",
+      "description": "אפליקציית שולחן עבודה חזקה שפותחה בשותפות עם France Épargne (france-epargne.fr). מאטמטת פלטפורמות ביטוח עבור הלקוחות המשותפים שלנו. תזמור Playwright, ניהול קבצים חכם, workflows אוטומטיים.",
       "highlights": [
-        "פיתוח מואץ עם Claude Code",
+        "שותפות עם France Épargne",
         "אוטומציה מתקדמת דרך Playwright",
         "ממשק שולחן עבודה יציב עם Electron",
         "ניהול חכם של קבצים ו-workflows"

@@ -90,7 +90,22 @@ function ProjectCard({
                     {project.title}
                   </h2>
                 </div>
-                {project.featured && (
+                {project.isCurrent ? (
+                  <motion.div
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/30"
+                    animate={{
+                      boxShadow: showDetails
+                        ? "0 0 20px rgba(var(--primary), 0.2)"
+                        : "0 0 0px transparent",
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    <span className="text-tiny text-primary font-medium">
+                      {t("projects.currentProject")}
+                    </span>
+                  </motion.div>
+                ) : project.featured && (
                   <motion.div
                     className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--color-warning-muted)] border border-[var(--color-warning)]/30"
                     animate={{
@@ -126,9 +141,41 @@ function ProjectCard({
             </div>
 
             {/* Description */}
-            <p className="text-body text-foreground/70 leading-relaxed mb-6">
+            <p className="text-body text-foreground/70 leading-relaxed mb-4">
               {project.description}
             </p>
+
+            {/* Action links - Always visible, prominent */}
+            {(project.githubUrl || project.liveUrl) && (
+              <div className="flex items-center gap-3 mb-6">
+                {project.liveUrl && (
+                  <motion.a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-small text-primary font-medium hover:bg-primary/20 hover:border-primary/50 transition-all"
+                    whileHover={{ scale: 1.02, y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    {t("projects.viewProject")}
+                  </motion.a>
+                )}
+                {project.githubUrl && (
+                  <motion.a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-small text-foreground/70 font-medium hover:text-foreground hover:bg-foreground/10 transition-all"
+                    whileHover={{ scale: 1.02, y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Github className="w-4 h-4" />
+                    {t("projects.code")}
+                  </motion.a>
+                )}
+              </div>
+            )}
 
             {/* Technologies */}
             <div className="flex flex-wrap gap-2 mb-6">
@@ -187,43 +234,7 @@ function ProjectCard({
               )}
             </motion.div>
 
-            {/* Action buttons (if links exist) */}
-            {(project.githubUrl || project.liveUrl) && (
-              <motion.div
-                className="flex items-center gap-3 mt-4 pt-4 border-t border-foreground/10"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: showDetails ? 1 : 0.5 }}
-                transition={{ duration: 0.2 }}
-              >
-                {project.githubUrl && (
-                  <motion.a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-tiny text-foreground/60 hover:text-foreground transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Github className="w-4 h-4" />
-                    {t("projects.code")}
-                  </motion.a>
-                )}
-                {project.liveUrl && (
-                  <motion.a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-tiny text-primary hover:text-primary/80 transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    {t("projects.viewProject")}
-                  </motion.a>
-                )}
-              </motion.div>
-            )}
-          </div>
+            </div>
 
           {/* Hover glow effect */}
           <motion.div
@@ -247,12 +258,8 @@ export function ProjectsPage() {
   const isMobile = useIsMobile();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  // Sort projects by date (newest first)
-  const sortedProjects = [...projects].sort((a, b) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return dateB - dateA;
-  });
+  // Use projects in their defined order (no sorting)
+  const sortedProjects = projects;
 
   const toggleExpanded = (id: string) => {
     setExpandedId(expandedId === id ? null : id);

@@ -14,40 +14,11 @@ export type Project = {
   githubUrl?: string;
   liveUrl?: string;
   highlights?: string[];
+  isCurrent?: boolean;
 };
 
 export const PROJECTS: Project[] = [
-  {
-    id: "shoot",
-    title: "Shoot - Plateforme pour Photographes",
-    description: "Écosystème complet pour photographes professionnels : back-office admin puissant, dashboard client full-features, site vitrine personnalisable. Développement assisté par IA avec workflows automatisés.",
-    technologies: ["React", "Node.js", "Cloudflare Workers", "Neon DB", "Claude Code"],
-    category: "personnel",
-    date: "2024",
-    featured: true,
-    liveUrl: "https://shoot.ichaiwizlol.workers.dev/",
-    highlights: [
-      "Architecture full-stack moderne",
-      "Workflows automatisés pour la gestion client",
-      "Développement accéléré avec outils IA",
-      "Performances optimisées sur Cloudflare Edge",
-    ],
-  },
-  {
-    id: "mutuelles-v4",
-    title: "Mutuelles_v4 - Application Desktop d'Automatisation",
-    description: "Application desktop complète automatisant les plateformes d'assurance (mutuelles). Développement assisté par IA (Claude Code). Inclut workflows automatisés, gestion des dossiers, scraping intelligent et orchestration Playwright.",
-    technologies: ["Electron", "React", "Vite", "Playwright", "SQLite", "Node.js", "Claude Code"],
-    category: "personnel",
-    date: "2024",
-    featured: true,
-    highlights: [
-      "Développement accéléré avec Claude Code",
-      "Automatisation avancée via Playwright",
-      "Interface desktop robuste avec Electron",
-      "Gestion intelligente des dossiers et workflows",
-    ],
-  },
+  // 1. AI Blog (haut gauche)
   {
     id: "ai-blog",
     title: "AI Blog - Plateforme d'Apprentissage IA",
@@ -64,6 +35,41 @@ export const PROJECTS: Project[] = [
       "Veille constante sur les dernières avancées IA",
     ],
   },
+  // 2. AssurLead (haut droite)
+  {
+    id: "assurlead",
+    title: "AssurLead - Automatisation Assurance",
+    description: "Application desktop puissante développée en partenariat avec France Épargne (france-epargne.fr). Automatise les plateformes d'assurance pour nos clients communs. Orchestration Playwright, gestion intelligente des dossiers, workflows automatisés.",
+    technologies: ["Electron", "React", "Vite", "Playwright", "SQLite", "Node.js", "Claude Code"],
+    category: "professionnel",
+    date: "2024",
+    featured: true,
+    liveUrl: "https://www.france-epargne.fr/",
+    highlights: [
+      "Partenariat avec France Épargne",
+      "Automatisation avancée via Playwright",
+      "Interface desktop robuste avec Electron",
+      "Gestion intelligente des dossiers et workflows",
+    ],
+  },
+  // 3. Shoot (bas gauche)
+  {
+    id: "shoot",
+    title: "Shoot - Plateforme pour Photographes",
+    description: "Écosystème complet pour photographes professionnels : back-office admin puissant, dashboard client full-features, site vitrine personnalisable. Développement assisté par IA avec workflows automatisés.",
+    technologies: ["React", "Node.js", "Cloudflare Workers", "Neon DB", "Claude Code"],
+    category: "personnel",
+    date: "2024",
+    featured: true,
+    liveUrl: "https://shoot.ichaiwizlol.workers.dev/",
+    highlights: [
+      "Architecture full-stack moderne",
+      "Workflows automatisés pour la gestion client",
+      "Développement accéléré avec outils IA",
+      "Performances optimisées sur Cloudflare Edge",
+    ],
+  },
+  // 4. Portfolio (bas droite) - Projet actuel
   {
     id: "portfolio-interactif",
     title: "Portfolio Interactif avec IA",
@@ -72,6 +78,7 @@ export const PROJECTS: Project[] = [
     category: "personnel",
     date: "2025",
     featured: true,
+    isCurrent: true,
     highlights: [
       "Intégration Claude API en production",
       "Interface conversationnelle naturelle",

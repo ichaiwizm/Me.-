@@ -20,11 +20,11 @@
     ]
   },
   "projects": {
-    "mutuelles-v4": {
-      "title": "Mutuelles_v4 - Application Desktop d'Automatisation",
-      "description": "Application desktop complète automatisant les plateformes d'assurance (mutuelles). Développement assisté par IA (Claude Code). Inclut workflows automatisés, gestion des dossiers, scraping intelligent et orchestration Playwright.",
+    "assurlead": {
+      "title": "AssurLead - Automatisation Assurance",
+      "description": "Application desktop puissante développée en partenariat avec France Épargne (france-epargne.fr). Automatise les plateformes d'assurance pour nos clients communs. Orchestration Playwright, gestion intelligente des dossiers, workflows automatisés.",
       "highlights": [
-        "Développement accéléré avec Claude Code",
+        "Partenariat avec France Épargne",
         "Automatisation avancée via Playwright",
         "Interface desktop robuste avec Electron",
         "Gestion intelligente des dossiers et workflows"
