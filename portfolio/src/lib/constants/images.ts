@@ -1,6 +1,6 @@
 /**
  * Complete image registry for the portfolio
- * All 17 images properly catalogued with metadata
+ * All 5 images properly catalogued with metadata
  */
 
 // ============================================================================
@@ -43,8 +43,8 @@ export const IMAGE_REGISTRY: ImageMeta[] = [
     name: "Soirée sur le toit",
     path: "/images/rooftop-night.png",
     category: "personal",
-    tags: ["nuit", "terrasse", "ville", "détente", "ambiance"],
-    description: "Vue nocturne depuis une terrasse parisienne",
+    tags: ["nuit", "terrasse", "jérusalem", "détente", "ambiance"],
+    description: "Vue nocturne depuis ma terrasse à Jérusalem",
   },
   {
     id: "park-moment",
@@ -69,98 +69,6 @@ export const IMAGE_REGISTRY: ImageMeta[] = [
     category: "travel",
     tags: ["paris", "voyage", "france", "arc de triomphe", "champs-élysées"],
     description: "Promenade sur les Champs-Élysées à Paris",
-  },
-
-  // -------------------------------------------------------------------------
-  // CHILDHOOD & FAMILY (JPG - Archives)
-  // -------------------------------------------------------------------------
-  {
-    id: "bat-mitzvah-speech",
-    name: "Discours Bat Mitzvah",
-    path: "/images/bat-mitzvah-speech.jpg",
-    category: "personal",
-    tags: ["famille", "célébration", "discours", "bat-mitzvah", "tradition"],
-    description: "Moment émouvant lors d'un discours de Bat Mitzvah",
-  },
-  {
-    id: "childhood-ichai-siblings",
-    name: "Ichai et ses frères",
-    path: "/images/childhood-ichai-siblings.jpg",
-    category: "personal",
-    tags: ["enfance", "famille", "frères", "souvenir", "fratrie"],
-    description: "Photo de famille avec mes frères",
-  },
-  {
-    id: "childhood-tata-johanna",
-    name: "Avec Tata Johanna",
-    path: "/images/childhood-tata-johanna.jpg",
-    category: "personal",
-    tags: ["enfance", "famille", "tante", "souvenir", "complicité"],
-    description: "Moment complice avec Tata Johanna",
-  },
-  {
-    id: "childhood-yonathan",
-    name: "Avec Yonathan",
-    path: "/images/childhood-yonathan.jpg",
-    category: "personal",
-    tags: ["enfance", "famille", "frère", "souvenir", "yonathan"],
-    description: "Souvenir d'enfance avec mon frère Yonathan",
-  },
-
-  // -------------------------------------------------------------------------
-  // SPECIAL OCCASIONS
-  // -------------------------------------------------------------------------
-  {
-    id: "ichai-wedding-djellaba",
-    name: "Mariage en djellaba",
-    path: "/images/ichai-wedding-djellaba.jpg",
-    category: "personal",
-    tags: ["mariage", "tradition", "célébration", "djellaba", "fête"],
-    description: "Célébration de mariage en tenue traditionnelle",
-  },
-  {
-    id: "kimono-chez-nanou",
-    name: "Kimono chez Nanou",
-    path: "/images/kimono-chez-nanou.jpg",
-    category: "personal",
-    tags: ["tradition", "japon", "famille", "kimono", "nanou"],
-    description: "En kimono chez Nanou",
-  },
-  {
-    id: "nephew-yinone",
-    name: "Neveu Yinone",
-    path: "/images/nephew-yinone.jpg",
-    category: "personal",
-    tags: ["famille", "neveu", "enfant", "yinone", "complicité"],
-    description: "Moment avec mon neveu Yinone",
-  },
-  {
-    id: "paris-proposal",
-    name: "Demande à Paris",
-    path: "/images/paris-proposal.jpg",
-    category: "personal",
-    tags: ["paris", "amour", "couple", "demande", "romantique"],
-    description: "Un moment romantique inoubliable à Paris",
-  },
-
-  // -------------------------------------------------------------------------
-  // TRAVEL
-  // -------------------------------------------------------------------------
-  {
-    id: "mountain-funicular",
-    name: "Funiculaire en montagne",
-    path: "/images/mountain-funicular.jpg",
-    category: "travel",
-    tags: ["voyage", "montagne", "transport", "funiculaire", "aventure"],
-    description: "Montée en funiculaire dans les montagnes",
-  },
-  {
-    id: "venice-mood",
-    name: "Ambiance Venise",
-    path: "/images/venice-mood.jpg",
-    category: "travel",
-    tags: ["voyage", "italie", "venise", "romantique", "ambiance"],
-    description: "L'atmosphère unique de Venise",
   },
 ];
 
