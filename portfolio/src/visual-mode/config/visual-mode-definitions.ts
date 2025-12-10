@@ -7,7 +7,6 @@ export type VisualModeId =
   | "neo-brutalism"
   | "retro-pixel"
   | "newspaper"
-  | "vaporwave"
   | "matrix"
   | "glitch";
 
@@ -36,12 +35,6 @@ export const VISUAL_MODE_DEFINITIONS: Record<VisualModeId, VisualModeDef> = {
     className: "visual-mode-newspaper",
     labelKey: "visualModes.newspaper.label",
     descriptionKey: "visualModes.newspaper.description",
-  },
-  "vaporwave": {
-    id: "vaporwave",
-    className: "visual-mode-vaporwave",
-    labelKey: "visualModes.vaporwave.label",
-    descriptionKey: "visualModes.vaporwave.description",
   },
   "matrix": {
     id: "matrix",
