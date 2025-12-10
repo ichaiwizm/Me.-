@@ -15,7 +15,7 @@ export function sanitizeThemeId(value: string | null | undefined): ThemeId | nul
 }
 
 export function getDefaultTheme(): ThemeId {
-  return "lavande-zen";
+  return "nuit";
 }
 
 export function isValidThemeId(value: string): value is ThemeId {

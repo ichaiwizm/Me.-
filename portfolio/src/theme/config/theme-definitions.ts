@@ -1,10 +1,8 @@
 export type ThemeId =
   | "lumiere"
   | "nuit"
-  | "foret-emeraude"
   | "ocean-profond"
   | "crepuscule-dore"
-  | "lavande-zen"
   | "feu-dragon";
 
 export type ThemeCategory = "apaisant" | "energique" | "sophistique";
@@ -29,12 +27,6 @@ export const THEME_DEFINITIONS: Record<ThemeId, ThemeDef> = {
     isDark: true,
     category: "sophistique",
   },
-  "foret-emeraude": {
-    id: "foret-emeraude",
-    className: "theme-foret-emeraude",
-    isDark: true,
-    category: "apaisant",
-  },
   "ocean-profond": {
     id: "ocean-profond",
     className: "theme-ocean-profond",
@@ -46,12 +38,6 @@ export const THEME_DEFINITIONS: Record<ThemeId, ThemeDef> = {
     className: "theme-crepuscule-dore",
     isDark: false,
     category: "sophistique",
-  },
-  "lavande-zen": {
-    id: "lavande-zen",
-    className: "theme-lavande-zen",
-    isDark: false,
-    category: "apaisant",
   },
   "feu-dragon": {
     id: "feu-dragon",

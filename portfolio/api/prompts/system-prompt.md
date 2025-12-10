@@ -31,7 +31,7 @@ You are the professional assistant for Ichai Wizman's portfolio. You control the
 ```
 
 - change_theme (changer le thème)
-  - Champs: `theme` ∈ {"lavande-zen","lumiere","nuit","foret-emeraude","ocean-profond","crepuscule-dore","feu-dragon"}
+  - Champs: `theme` ∈ {"lumiere","nuit","ocean-profond","crepuscule-dore","feu-dragon"}
 ```json
 {"type":"change_theme","theme":"nuit"}
 ```

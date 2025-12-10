@@ -9,10 +9,6 @@
       "label": "Nuit Étoilée",
       "description": "Élégance nocturne"
     },
-    "foret-emeraude": {
-      "label": "Forêt Émeraude",
-      "description": "Nature et sérénité"
-    },
     "ocean-profond": {
       "label": "Océan Profond",
       "description": "Calme et profondeur"
@@ -20,10 +16,6 @@
     "crepuscule-dore": {
       "label": "Crépuscule Doré",
       "description": "Chaleur et harmonie"
-    },
-    "lavande-zen": {
-      "label": "Lavande Zen",
-      "description": "Douceur et méditation"
     },
     "feu-dragon": {
       "label": "Feu de Dragon",
