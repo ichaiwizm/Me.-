@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { Loader2 } from "lucide-react";
 import { usePersonalInfo } from "@/data/hooks";
 import { useTypeWriter } from "@/components/ui/TypeWriter";
 import { EASINGS } from "@/lib/constants/animation";
 import { useIsMobile } from "@/lib/hooks/useMediaQuery";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 // Floating shape component
 function FloatingShape({
@@ -74,6 +75,79 @@ function InlineSuggestion({
       {/* Sparkle indicator */}
       <span className="text-xs opacity-60 group-hover:opacity-100 transition-opacity">
         ✨
+      </span>
+    </motion.button>
+  );
+}
+
+// AI-powered suggestion that generates prompt on click
+function AIInlineSuggestion({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { i18n } = useTranslation();
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleClick = useCallback(async () => {
+    if (isGenerating) return;
+
+    setIsGenerating(true);
+    try {
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "visualMode",
+          language: i18n.language || "fr"
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.content) {
+          window.dispatchEvent(new CustomEvent("app:ai-visual-mode", {
+            detail: { prompt: data.content }
+          }));
+        }
+      }
+    } catch (error) {
+      console.error("Failed to generate visual mode:", error);
+    } finally {
+      setIsGenerating(false);
+    }
+  }, [isGenerating, i18n.language]);
+
+  return (
+    <motion.button
+      onClick={handleClick}
+      disabled={isGenerating}
+      className="relative inline-flex items-center gap-1 px-2 py-0.5 mx-1 rounded-lg
+                 bg-gradient-to-r from-primary/10 to-accent/10
+                 border border-primary/20
+                 text-primary font-medium
+                 cursor-pointer transition-all duration-300
+                 hover:from-primary/20 hover:to-accent/20 hover:border-primary/40
+                 hover:shadow-lg hover:shadow-primary/10
+                 disabled:opacity-70 disabled:cursor-wait
+                 group"
+      whileHover={isGenerating ? {} : { scale: 1.02, y: -1 }}
+      whileTap={isGenerating ? {} : { scale: 0.98 }}
+    >
+      <span className="relative z-10">{children}</span>
+      {/* Subtle glow effect on hover */}
+      <motion.span
+        className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/0 to-accent/0 group-hover:from-primary/5 group-hover:to-accent/5"
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+      />
+      {/* Sparkle or loader indicator */}
+      <span className="text-xs opacity-60 group-hover:opacity-100 transition-opacity">
+        {isGenerating ? (
+          <Loader2 className="w-3 h-3 animate-spin" />
+        ) : (
+          "✨"
+        )}
       </span>
     </motion.button>
   );
@@ -228,9 +302,9 @@ export function HomePage() {
           </p>
           <p className="text-sm text-foreground/40">
             {t("home.interactiveIntro.line3")}
-            <InlineSuggestion prompt={t("home.interactiveIntro.suggestion2")}>
+            <AIInlineSuggestion>
               {t("home.interactiveIntro.suggestionText2")}
-            </InlineSuggestion>
+            </AIInlineSuggestion>
             {t("home.interactiveIntro.line4")}
           </p>
         </motion.div>
