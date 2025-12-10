@@ -1,17 +1,17 @@
 {
   "personalInfo": {
-    "title": "Ingénieur Logiciel Full-Stack",
-    "subtitle": "Développeur chez PhoneGS",
+    "title": "Full-Stack Engineer | IA & Automatisation",
+    "subtitle": "Ingénieur Logiciel chez PhoneGS",
     "location": "Jérusalem, Israël",
     "bio": {
-      "short": "Ingénieur Full-Stack passionné, obsédé par la création de produits puissants. Entre deux lignes de code, je profite de la famille et des bonnes pizzas sur les toits de Jérusalem.",
-      "long": "Je suis un ingénieur logiciel full-stack qui vit pour construire. Depuis plusieurs années, je conçois, développe et scale des applications complètes — du front au backend en passant par l'infra. Passionné par l'IA et l'automatisation, j'intègre ces technologies dans chacun de mes projets pour aller plus vite, viser plus haut et livrer mieux.\n\nMais la vie c'est pas que du code : j'accorde une place importante à la famille, aux voyages (entre Paris et Jérusalem), et aux moments simples — une pizza sur le toit avec vue sur la ville, une balade au parc, ou une photo fun à l'aquarium. C'est cet équilibre qui me garde motivé et créatif.\n\nQuand je code pas, je code quand même — c'est simple : je suis lancé et je m'arrête pas."
+      "short": "Ingénieur Full-Stack spécialisé en IA et automatisation. Père de deux enfants, je construis des solutions qui ont un impact concret. Toujours à la pointe des dernières technologies IA que j'intègre dans chacun de mes projets.",
+      "long": "Ingénieur Full-Stack avec plusieurs années d'expérience dans la conception, le développement et le déploiement d'applications complètes. Ma spécialité : l'intégration de l'IA et l'automatisation des workflows pour maximiser l'efficacité et la valeur livrée.\n\nJ'utilise quotidiennement les outils IA les plus avancés — Claude, GPT, Cursor, Gemini — et je partage mes connaissances via un blog technique actif destiné aux développeurs. Cette veille constante me permet d'être toujours à jour sur les meilleures pratiques.\n\nPère de deux enfants, j'accorde une importance particulière à l'équilibre entre vie professionnelle et personnelle. Cette stabilité nourrit ma créativité et ma capacité à rester concentré sur les résultats.\n\nMes forces : autonomie complète sur les projets, résolution de problèmes complexes, apprentissage rapide et vision produit. Je suis pragmatique, orienté résultats, et passionné par ce que je fais."
     },
     "qualities": [
-      { "trait": "Builder", "icon": "Zap" },
-      { "trait": "Famille first", "icon": "Heart" },
+      { "trait": "Expert IA", "icon": "Zap" },
+      { "trait": "Père de famille", "icon": "Heart" },
       { "trait": "Autonome", "icon": "Rocket" },
-      { "trait": "Fun", "icon": "Smile" }
+      { "trait": "Pragmatique", "icon": "Target" }
     ],
     "languages": [
       { "name": "Français", "level": "Natif" },
@@ -22,46 +22,47 @@
   "projects": {
     "mutuelles-v4": {
       "title": "Mutuelles_v4 - Application Desktop d'Automatisation",
-      "description": "Application desktop complète automatisant les plateformes d'assurance (mutuelles). Inclut workflows automatisés, gestion des dossiers, scraping intelligent et orchestration Playwright.",
+      "description": "Application desktop complète automatisant les plateformes d'assurance (mutuelles). Développement assisté par IA (Claude Code). Inclut workflows automatisés, gestion des dossiers, scraping intelligent et orchestration Playwright.",
       "highlights": [
-        "Interface desktop solide avec Electron",
+        "Développement accéléré avec Claude Code",
         "Automatisation avancée via Playwright",
-        "Gestion intelligente des dossiers",
-        "Performance et fiabilité optimisées"
+        "Interface desktop robuste avec Electron",
+        "Gestion intelligente des dossiers et workflows"
       ]
     },
     "shoot": {
       "title": "Shoot - Plateforme pour Photographes",
-      "description": "Écosystème complet pour photographes professionnels : back-office admin puissant, dashboard client full-features, site vitrine personnalisable. Architecture robuste et UX clean.",
+      "description": "Écosystème complet pour photographes professionnels : back-office admin puissant, dashboard client full-features, site vitrine personnalisable. Développement assisté par IA avec workflows automatisés.",
       "highlights": [
-        "Back-office admin complet",
-        "Dashboard client riche en fonctionnalités",
-        "Site vitrine personnalisable",
-        "Automatisations et performances optimisées"
+        "Architecture full-stack moderne",
+        "Workflows automatisés pour la gestion client",
+        "Développement accéléré avec outils IA",
+        "Performances optimisées sur Cloudflare Edge"
       ]
     },
     "ai-blog": {
-      "title": "AI Blog - Apprentissage IA pour Développeurs",
-      "description": "Blog éducatif pour développeurs : apprendre à maîtriser l'IA et booster son niveau grâce aux bons outils et bonnes pratiques. Contenu pédagogique, moderne et IA-oriented.",
+      "title": "AI Blog - Plateforme d'Apprentissage IA",
+      "description": "Blog technique actif destiné aux développeurs souhaitant maîtriser l'IA. Contenu pédagogique sur les outils IA (Claude, GPT, Cursor), les bonnes pratiques et l'intégration dans les workflows de développement.",
       "highlights": [
-        "Contenu pédagogique sur l'IA",
-        "Interface moderne et claire",
-        "Orienté développeurs",
-        "Déployé sur Vercel"
+        "Audience active de développeurs",
+        "Contenu expert sur Claude, GPT, Cursor",
+        "Tutoriels pratiques et cas d'usage",
+        "Veille constante sur les dernières avancées IA"
       ]
     },
     "portfolio-interactif": {
       "title": "Portfolio Interactif avec IA",
-      "description": "Portfolio personnel innovant avec interface conversationnelle alimentée par IA, permettant une navigation intuitive via commandes naturelles. Système de fenêtres flottantes interactives et thèmes dynamiques.",
+      "description": "Portfolio personnel démontrant l'intégration avancée de l'IA. Interface conversationnelle alimentée par Claude API, navigation intuitive via commandes naturelles, génération dynamique de contenu et modes visuels personnalisés.",
       "highlights": [
-        "Interface conversationnelle avec IA",
-        "Système de fenêtres interactives",
-        "Thèmes personnalisables",
-        "Architecture modulaire et évolutive"
+        "Intégration Claude API en production",
+        "Interface conversationnelle naturelle",
+        "Génération dynamique de contenu via IA",
+        "Développement complet assisté par Claude Code"
       ]
     }
   },
   "skillCategories": {
+    "ai": "IA & Automatisation",
     "frontend": "Frontend",
     "backend": "Backend",
     "database": "Bases de données",
@@ -72,26 +73,26 @@
     "phonegs": {
       "position": "Ingénieur Logiciel Full-Stack",
       "location": "Jérusalem, Israël",
-      "description": "Développement complet d'une application de téléphonie professionnelle (VoIP), pilotée en React/Node, intégrée à Asterisk et FusionPBX.",
+      "description": "Développement complet d'une application de téléphonie professionnelle (VoIP), pilotée en React/Node, intégrée à Asterisk et FusionPBX. Utilisation quotidienne d'outils IA pour accélérer le développement.",
       "responsibilities": [
-        "Développement full-stack de l'application interne : UI React, API Node.js, backend PHP/Laravel",
+        "Développement full-stack : UI React, API Node.js, backend PHP/Laravel",
         "Intégration avancée avec les systèmes téléphoniques : Asterisk, FusionPBX, WebRTC",
+        "Utilisation d'outils IA (Claude, GPT, Cursor) pour accélérer le développement",
         "Architecture et optimisation des performances",
-        "Automatisation des workflows",
-        "Mise en place de dashboards et interfaces d'administration",
-        "Participation aux décisions produit avec forte autonomie technique"
+        "Automatisation des workflows internes",
+        "Forte autonomie technique et décisions produit"
       ]
     },
     "freelance": {
-      "position": "Développeur Full-Stack",
+      "position": "Développeur Full-Stack & Automatisation",
       "location": "France",
-      "description": "Missions variées en développement web et automatisation pour divers clients.",
+      "description": "Missions variées en développement web et automatisation pour divers clients. Spécialisation progressive dans les workflows automatisés et le scraping intelligent.",
       "responsibilities": [
-        "Création de sites vitrines professionnels",
-        "Développement de SaaS",
-        "Scrapers et automatisations avancées",
+        "Développement de SaaS et applications web complètes",
+        "Scrapers avancés et automatisations de workflows",
         "Intégration API et développement de back-offices",
-        "Création de dashboards sur mesure"
+        "Création de dashboards sur mesure",
+        "Solutions d'automatisation pour entreprises"
       ]
     }
   },

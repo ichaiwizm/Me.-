@@ -4,8 +4,8 @@
 
 export const PERSONAL_INFO = {
   fullName: "Ichai Wizman",
-  title: "Ingénieur Logiciel Full-Stack",
-  subtitle: "Développeur chez PhoneGS",
+  title: "Full-Stack Engineer | IA & Automatisation",
+  subtitle: "Ingénieur Logiciel chez PhoneGS",
 
   contact: {
     email: "ichaiwizm@gmail.com",
@@ -14,25 +14,22 @@ export const PERSONAL_INFO = {
   },
 
   bio: {
-    short: "Ingénieur Full-Stack passionné, obsédé par la création de produits puissants. Entre deux lignes de code, je profite de la famille et des bonnes pizzas sur les toits de Jérusalem.",
+    short: "Ingénieur Full-Stack spécialisé en IA et automatisation. Père de deux enfants, je construis des solutions qui ont un impact concret. Toujours à la pointe des dernières technologies IA que j'intègre dans chacun de mes projets.",
 
-    long: `Je suis un ingénieur logiciel full-stack qui vit pour construire. Depuis plusieurs années,
-    je conçois, développe et scale des applications complètes — du front au backend en passant par l'infra.
-    Passionné par l'IA et l'automatisation, j'intègre ces technologies dans chacun de mes projets pour
-    aller plus vite, viser plus haut et livrer mieux.
+    long: `Ingénieur Full-Stack avec plusieurs années d'expérience dans la conception, le développement et le déploiement d'applications complètes. Ma spécialité : l'intégration de l'IA et l'automatisation des workflows pour maximiser l'efficacité et la valeur livrée.
 
-    Mais la vie c'est pas que du code : j'accorde une place importante à la famille, aux voyages
-    (entre Paris et Jérusalem), et aux moments simples — une pizza sur le toit avec vue sur la ville,
-    une balade au parc, ou une photo fun à l'aquarium. C'est cet équilibre qui me garde motivé et créatif.
+    J'utilise quotidiennement les outils IA les plus avancés — Claude, GPT, Cursor, Gemini — et je partage mes connaissances via un blog technique actif destiné aux développeurs. Cette veille constante me permet d'être toujours à jour sur les meilleures pratiques.
 
-    Quand je code pas, je code quand même — c'est simple : je suis lancé et je m'arrête pas.`,
+    Père de deux enfants, j'accorde une importance particulière à l'équilibre entre vie professionnelle et personnelle. Cette stabilité nourrit ma créativité et ma capacité à rester concentré sur les résultats.
+
+    Mes forces : autonomie complète sur les projets, résolution de problèmes complexes, apprentissage rapide et vision produit. Je suis pragmatique, orienté résultats, et passionné par ce que je fais.`,
   },
 
   qualities: [
-    { trait: "Builder", icon: "Zap" },
-    { trait: "Famille first", icon: "Heart" },
+    { trait: "Expert IA", icon: "Zap" },
+    { trait: "Père de famille", icon: "Heart" },
     { trait: "Autonome", icon: "Rocket" },
-    { trait: "Fun", icon: "Smile" },
+    { trait: "Pragmatique", icon: "Target" },
   ],
 
   languages: [

@@ -3,16 +3,23 @@
  */
 
 import type { LucideIcon } from "lucide-react";
-import { Circle, Square, Diamond, Palette, Wind, Hexagon, Code, Code2, Database, BarChart3, GitBranch, Github, Laptop, Terminal, Box, Play, Phone, Server } from "lucide-react";
+import { Circle, Square, Diamond, Palette, Wind, Hexagon, Code, Code2, Database, BarChart3, GitBranch, Github, Laptop, Terminal, Box, Play, Phone, Server, Bot, Sparkles, Brain, Wand2, MessageSquare } from "lucide-react";
 
 export type Skill = {
   name: string;
   level: number; // 0-100
-  category: "frontend" | "backend" | "database" | "tools" | "other";
+  category: "frontend" | "backend" | "database" | "tools" | "ai" | "other";
   icon?: LucideIcon;
 };
 
 export const SKILLS: Skill[] = [
+  // AI & Automation
+  { name: "Claude API", level: 90, category: "ai", icon: Bot },
+  { name: "OpenAI / GPT", level: 85, category: "ai", icon: Sparkles },
+  { name: "Prompt Engineering", level: 90, category: "ai", icon: MessageSquare },
+  { name: "AI Workflow Automation", level: 85, category: "ai", icon: Wand2 },
+  { name: "Cursor / AI Dev Tools", level: 90, category: "ai", icon: Brain },
+
   // Frontend
   { name: "React", level: 90, category: "frontend", icon: Circle },
   { name: "JavaScript", level: 90, category: "frontend", icon: Square },
@@ -46,6 +53,11 @@ export const SKILLS: Skill[] = [
 ];
 
 export const SKILL_CATEGORIES = {
+  ai: {
+    label: "IA & Automatisation",
+    color: "#06b6d4",
+    gradient: "linear-gradient(90deg, #06b6d4, #22d3ee)",
+  },
   frontend: {
     label: "Frontend",
     color: "#8b5cf6",
