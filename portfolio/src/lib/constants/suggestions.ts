@@ -37,4 +37,10 @@ export const SUGGESTIONS: Suggestion[] = [
   // Customization
   { textKey: "darkTheme", category: "customization" },
   { textKey: "purpleGradient", category: "customization" },
+  { textKey: "modeMadMax", category: "customization" },
+  { textKey: "modeCyberpunk", category: "customization" },
+  { textKey: "modeNature", category: "customization" },
+  { textKey: "modeRetroArcade", category: "customization" },
+  { textKey: "modeVaporwave", category: "customization" },
+  { textKey: "modeHacker", category: "customization" },
 ];

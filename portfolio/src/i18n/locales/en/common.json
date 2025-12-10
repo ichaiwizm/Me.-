@@ -123,7 +123,13 @@
       "visualizeSkills": "Visualize your skills",
       "favoriteTech": "Your favorite technologies",
       "darkTheme": "Switch to dark theme",
-      "purpleGradient": "Purple gradient background"
+      "purpleGradient": "Purple gradient background",
+      "modeMadMax": "Mad Max post-apocalyptic mode",
+      "modeCyberpunk": "Cyberpunk neon vibes",
+      "modeNature": "Ultra zen nature style",
+      "modeRetroArcade": "80s retro arcade mode",
+      "modeVaporwave": "Vaporwave aesthetic",
+      "modeHacker": "Hacker terminal mode"
     },
     "header": "Suggestions",
     "shuffle": "Shuffle suggestions",

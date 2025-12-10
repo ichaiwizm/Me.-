@@ -123,7 +123,13 @@
       "visualizeSkills": "הדגם את הכישורים שלך",
       "favoriteTech": "הטכנולוגיות האהובות עליך",
       "darkTheme": "עבור למצב כהה",
-      "purpleGradient": "רקע גרדיאנט סגול"
+      "purpleGradient": "רקע גרדיאנט סגול",
+      "modeMadMax": "מצב מאד מקס פוסט-אפוקליפטי",
+      "modeCyberpunk": "אווירת סייברפאנק ניאון",
+      "modeNature": "סגנון טבע אולטרה זן",
+      "modeRetroArcade": "מצב רטרו ארקייד שנות ה-80",
+      "modeVaporwave": "אסתטיקת וייפורוויב",
+      "modeHacker": "מצב טרמינל האקר"
     },
     "header": "הצעות",
     "shuffle": "ערבב הצעות",

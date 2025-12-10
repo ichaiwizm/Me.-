@@ -123,7 +123,13 @@
       "visualizeSkills": "Visualise tes compétences",
       "favoriteTech": "Tes technos préférées",
       "darkTheme": "Change le thème en mode sombre",
-      "purpleGradient": "Fond dégradé violet"
+      "purpleGradient": "Fond dégradé violet",
+      "modeMadMax": "Mode Mad Max post-apocalyptique",
+      "modeCyberpunk": "Ambiance Cyberpunk néon",
+      "modeNature": "Style nature ultra zen",
+      "modeRetroArcade": "Mode retro arcade 80s",
+      "modeVaporwave": "Esthétique Vaporwave",
+      "modeHacker": "Mode terminal hacker"
     },
     "header": "Suggestions",
     "shuffle": "Mélanger les suggestions",
