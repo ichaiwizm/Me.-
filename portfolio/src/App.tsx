@@ -68,7 +68,7 @@ function App() {
     setLightboxState(s => ({ ...s, isOpen: false }));
   }, []);
 
-  const { wmRef, windowCount, createWindow, closeWindow, minimizeWindow, modifyWindow, resizeWindow, resetAll } =
+  const { wmRef, windowCount, minimizedCount, setMinimizedCount, createWindow, closeWindow, minimizeWindow, modifyWindow, resizeWindow, resetAll } =
     useWindowManager();
 
   // Listen for postMessage from gallery iframes
@@ -265,6 +265,7 @@ function App() {
         ref={wmRef}
         showDock={!isMobile && currentPage === "accueil"}
         mobileMode={isMobile}
+        onMinimizedCountChange={setMinimizedCount}
       />
 
       <Toaster position={isMobile ? "top-center" : "top-right"} richColors />
@@ -278,7 +279,7 @@ function App() {
       />
 
       {/* Visual mode exit button - floating, always visible when mode is active */}
-      <VisualModeExitButton />
+      <VisualModeExitButton isDockVisible={!isMobile && currentPage === "accueil" && minimizedCount > 0} />
     </>
   );
 }

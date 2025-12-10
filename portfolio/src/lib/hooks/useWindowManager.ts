@@ -4,6 +4,7 @@ import type { WindowManagerHandle, WindowSpec } from "@/components/windows/Windo
 export function useWindowManager() {
   const wmRef = useRef<WindowManagerHandle>(null);
   const [windowCount, setWindowCount] = useState(0);
+  const [minimizedCount, setMinimizedCount] = useState(0);
 
   function createWindow(spec: WindowSpec) {
     wmRef.current?.createWindow(spec);
@@ -34,6 +35,8 @@ export function useWindowManager() {
   return {
     wmRef,
     windowCount,
+    minimizedCount,
+    setMinimizedCount,
     createWindow,
     closeWindow,
     minimizeWindow,

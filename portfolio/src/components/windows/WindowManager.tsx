@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import FloatingWindow from "@/components/windows/FloatingWindow";
 import { WindowDock } from "@/components/windows/WindowDock";
 import { BottomSheet } from "@/components/mobile/BottomSheet";
@@ -24,9 +24,10 @@ const makeId = () => `w_${Date.now().toString(36)}_${Math.random().toString(36).
 type WindowManagerProps = {
   showDock?: boolean;
   mobileMode?: boolean;
+  onMinimizedCountChange?: (count: number) => void;
 };
 
-export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>(({ showDock = true, mobileMode = false }, ref) => {
+export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>(({ showDock = true, mobileMode = false, onMinimizedCountChange }, ref) => {
   const [items, setItems] = useState<Item[]>([]);
   const [, setNextZ] = useState(1000);
 
@@ -118,6 +119,11 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
   useImperativeHandle(ref, () => ({ createWindow, closeWindow, minimizeWindow, modifyWindow, resizeWindow, resetAll }), [createWindow, closeWindow, minimizeWindow, modifyWindow, resizeWindow, resetAll]);
 
   const docked = useMemo(() => items.filter(w=>w.minimized), [items]);
+
+  // Notify parent of minimized count changes
+  useEffect(() => {
+    onMinimizedCountChange?.(docked.length);
+  }, [docked.length, onMinimizedCountChange]);
 
   const handleRestore = useCallback((id: string) => {
     setItems(ws=>ws.map(i=>i.id===id?{...i,minimized:false}:i));

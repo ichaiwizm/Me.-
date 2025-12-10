@@ -9,12 +9,17 @@ import {
   clearDynamicVisualMode,
 } from "@/visual-mode/utils/apply-dynamic-visual-mode";
 
+type Props = {
+  /** When true, repositions to middle-left to avoid overlapping with WindowDock */
+  isDockVisible?: boolean;
+};
+
 /**
  * Floating exit button that appears when a visual mode is active.
  * Supports both predefined visual modes and dynamic AI-generated modes.
- * Positioned in the bottom-left corner to avoid conflicts with other UI.
+ * Positioned in the bottom-left corner by default, or middle-left when dock is visible.
  */
-export function VisualModeExitButton() {
+export function VisualModeExitButton({ isDockVisible = false }: Props) {
   const { isVisualModeActive, exitVisualMode, visualModeId } = useVisualMode();
   const { t } = useTranslation("common");
 
@@ -69,6 +74,11 @@ export function VisualModeExitButton() {
     return null;
   };
 
+  // Position classes: middle-left when dock visible, bottom-left otherwise
+  const positionClasses = isDockVisible
+    ? "top-1/2 left-6 -translate-y-1/2"
+    : "bottom-6 left-6";
+
   return (
     <AnimatePresence>
       {isAnyModeActive && (
@@ -77,7 +87,7 @@ export function VisualModeExitButton() {
           animate={{ opacity: 1, scale: 1, x: 0 }}
           exit={{ opacity: 0, scale: 0.8, x: -20 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="visual-mode-exit-button fixed bottom-6 left-6 z-[100000]"
+          className={`visual-mode-exit-button fixed z-[100000] transition-all duration-300 ${positionClasses}`}
         >
           <Button
             onClick={handleExit}
