@@ -29,12 +29,6 @@ Le prompt doit être:
 - Intrigant ou amusant
 - Lié aux capacités du site (navigation, thèmes, modes visuels, photos, projets...)
 
-Exemples de styles:
-- "Montre-moi ton projet le plus fou"
-- "Transforme le site en mode cyberpunk néon"
-- "C'est quoi ta stack préférée ?"
-- "Surprends-moi avec un fond dégradé arc-en-ciel"
-
 RÉPONDS UNIQUEMENT AVEC LE PROMPT, sans guillemets ni explication.`,
 
   suggestions: `${PORTFOLIO_CONTEXT}
