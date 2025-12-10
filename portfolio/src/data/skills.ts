@@ -13,13 +13,6 @@ export type Skill = {
 };
 
 export const SKILLS: Skill[] = [
-  // AI & Automation
-  { name: "Claude API", level: 90, category: "ai", icon: Bot },
-  { name: "OpenAI / GPT", level: 85, category: "ai", icon: Sparkles },
-  { name: "Prompt Engineering", level: 90, category: "ai", icon: MessageSquare },
-  { name: "AI Workflow Automation", level: 85, category: "ai", icon: Wand2 },
-  { name: "Cursor / AI Dev Tools", level: 90, category: "ai", icon: Brain },
-
   // Frontend
   { name: "React", level: 90, category: "frontend", icon: Circle },
   { name: "JavaScript", level: 90, category: "frontend", icon: Square },
@@ -45,6 +38,13 @@ export const SKILLS: Skill[] = [
   { name: "VS Code", level: 95, category: "tools", icon: Laptop },
   { name: "Linux", level: 85, category: "tools", icon: Terminal },
 
+  // AI & Automation (avant Other)
+  { name: "Claude Code", level: 100, category: "ai", icon: Bot },
+  { name: "Codex", level: 100, category: "ai", icon: Sparkles },
+  { name: "Cursor", level: 100, category: "ai", icon: Brain },
+  { name: "Prompt Engineering", level: 95, category: "ai", icon: MessageSquare },
+  { name: "AI Workflow Automation", level: 100, category: "ai", icon: Wand2 },
+
   // Other
   { name: "Electron", level: 85, category: "other", icon: Laptop },
   { name: "Playwright", level: 85, category: "other", icon: Play },
@@ -53,11 +53,6 @@ export const SKILLS: Skill[] = [
 ];
 
 export const SKILL_CATEGORIES = {
-  ai: {
-    label: "IA & Automatisation",
-    color: "#06b6d4",
-    gradient: "linear-gradient(90deg, #06b6d4, #22d3ee)",
-  },
   frontend: {
     label: "Frontend",
     color: "#8b5cf6",
@@ -77,6 +72,11 @@ export const SKILL_CATEGORIES = {
     label: "Tools & DevOps",
     color: "#10b981",
     gradient: "linear-gradient(90deg, #10b981, #34d399)",
+  },
+  ai: {
+    label: "IA & Automatisation",
+    color: "#06b6d4",
+    gradient: "linear-gradient(90deg, #06b6d4, #22d3ee)",
   },
   other: {
     label: "Other",

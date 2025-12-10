@@ -14,6 +14,7 @@ import {
   Wrench,
   Zap,
   Layers,
+  Bot,
 } from "lucide-react";
 
 // Category icons mapping
@@ -25,6 +26,7 @@ const categoryIcons: Record<string, React.ReactNode> = {
   tools: <Wrench className="w-5 h-5" />,
   design: <Palette className="w-5 h-5" />,
   languages: <Code2 className="w-5 h-5" />,
+  ai: <Bot className="w-5 h-5" />,
   other: <Zap className="w-5 h-5" />,
 };
 
@@ -220,15 +222,17 @@ function CategorySection({
   t: (key: string) => string;
 }) {
   const icon = categoryIcons[category] || categoryIcons.other;
+  const isFirst = index === 0;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
+      animate={isFirst ? { opacity: 1, y: 0 } : undefined}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{
         duration: 0.6,
-        delay: index * 0.1,
+        delay: isFirst ? 0.2 : index * 0.1,
         ease: EASINGS.standard,
       }}
     >

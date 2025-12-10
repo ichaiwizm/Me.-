@@ -18,21 +18,6 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    id: "mutuelles-v4",
-    title: "Mutuelles_v4 - Application Desktop d'Automatisation",
-    description: "Application desktop complète automatisant les plateformes d'assurance (mutuelles). Développement assisté par IA (Claude Code). Inclut workflows automatisés, gestion des dossiers, scraping intelligent et orchestration Playwright.",
-    technologies: ["Electron", "React", "Vite", "Playwright", "SQLite", "Node.js", "Claude Code"],
-    category: "personnel",
-    date: "2024",
-    featured: true,
-    highlights: [
-      "Développement accéléré avec Claude Code",
-      "Automatisation avancée via Playwright",
-      "Interface desktop robuste avec Electron",
-      "Gestion intelligente des dossiers et workflows",
-    ],
-  },
-  {
     id: "shoot",
     title: "Shoot - Plateforme pour Photographes",
     description: "Écosystème complet pour photographes professionnels : back-office admin puissant, dashboard client full-features, site vitrine personnalisable. Développement assisté par IA avec workflows automatisés.",
@@ -46,6 +31,21 @@ export const PROJECTS: Project[] = [
       "Workflows automatisés pour la gestion client",
       "Développement accéléré avec outils IA",
       "Performances optimisées sur Cloudflare Edge",
+    ],
+  },
+  {
+    id: "mutuelles-v4",
+    title: "Mutuelles_v4 - Application Desktop d'Automatisation",
+    description: "Application desktop complète automatisant les plateformes d'assurance (mutuelles). Développement assisté par IA (Claude Code). Inclut workflows automatisés, gestion des dossiers, scraping intelligent et orchestration Playwright.",
+    technologies: ["Electron", "React", "Vite", "Playwright", "SQLite", "Node.js", "Claude Code"],
+    category: "personnel",
+    date: "2024",
+    featured: true,
+    highlights: [
+      "Développement accéléré avec Claude Code",
+      "Automatisation avancée via Playwright",
+      "Interface desktop robuste avec Electron",
+      "Gestion intelligente des dossiers et workflows",
     ],
   },
   {
