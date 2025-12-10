@@ -107,13 +107,11 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
               <Button
                 type="button"
                 size="icon"
+                variant="default"
                 onClick={handleGeneratePrompt}
                 disabled={isDisabled}
                 className={cn(
-                  isPanel ? "rounded-lg" : "rounded-full",
-                  "bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600",
-                  "text-white border-0 shadow-lg shadow-violet-500/25",
-                  "transition-all duration-200"
+                  isPanel ? "rounded-lg" : "rounded-full"
                 )}
                 title={t("aria.generatePrompt", "Générer un prompt IA")}
               >

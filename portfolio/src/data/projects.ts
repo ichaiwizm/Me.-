@@ -44,7 +44,6 @@ export const PROJECTS: Project[] = [
     category: "professionnel",
     date: "2024",
     featured: true,
-    liveUrl: "https://www.france-epargne.fr/",
     highlights: [
       "Partenariat avec France Épargne",
       "Automatisation avancée via Playwright",
