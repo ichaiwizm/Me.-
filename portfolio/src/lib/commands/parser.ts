@@ -72,6 +72,8 @@ export function parseWindowCommands(content: string, currentWindowCount = 0): Pa
   const jsonBlockRegex = /```json[\s\r\n]+([\s\S]*?)[\s\r\n]+```/g;
   const matches = [...content.matchAll(jsonBlockRegex)];
 
+  console.log("[Parser] Found", matches.length, "JSON blocks in response");
+
   matches.forEach((match, index) => {
     try {
       const parsed = JSON.parse(match[1]);
@@ -127,7 +129,9 @@ export function parseWindowCommands(content: string, currentWindowCount = 0): Pa
       commands.push(parsed as Command);
       const marker = getCommandMarker(parsed as Command);
       displayContent = displayContent.replace(match[0], marker);
+      console.log("[Parser] Valid command:", parsed.type, parsed);
     } catch (e) {
+      console.error("[Parser] JSON parse error:", e);
       errors.push(`JSON invalide (commande ${index + 1})`);
     }
   });

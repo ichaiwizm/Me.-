@@ -18,6 +18,10 @@ export async function applyDynamicVisualMode(
   styles?: DynamicStyleOptions,
   customCSS?: string
 ): Promise<void> {
+  console.log("[DynamicVisualMode] Applying:", name);
+  console.log("[DynamicVisualMode] CSS Variables:", cssVariables);
+  console.log("[DynamicVisualMode] Custom CSS length:", customCSS?.length || 0);
+
   const root = document.documentElement;
 
   // Clear any existing dynamic mode first
@@ -56,11 +60,13 @@ export async function applyDynamicVisualMode(
       document.head.appendChild(styleEl);
     }
     styleEl.textContent = finalCSS;
+    console.log("[DynamicVisualMode] CSS injected, length:", finalCSS.length);
   }
 
   // 4. Mark as active
   root.classList.add("dynamic-visual-mode-active");
   root.setAttribute("data-dynamic-visual-mode", name);
+  console.log("[DynamicVisualMode] Active class added, mode:", name);
 
   // 5. Remove transition class after animation completes
   setTimeout(() => {
