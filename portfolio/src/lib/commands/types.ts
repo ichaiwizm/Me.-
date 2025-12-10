@@ -2,6 +2,33 @@ import type { WindowSpec } from "@/components/windows/WindowManager";
 
 export type PageId = "accueil" | "projets" | "competences" | "a-propos" | "contact";
 
+// V3: Full CSS Generation by Haiku
+export type DynamicStyleOptions = {
+  // Typography
+  fontFamily?: "sans" | "serif" | "mono" | "pixel";
+  fontWeight?: "normal" | "bold" | "black";
+  textTransform?: "none" | "uppercase";
+  letterSpacing?: "tight" | "normal" | "wide";
+  // Borders
+  borderRadius?: "none" | "small" | "medium" | "large";
+  borderWidth?: "none" | "thin" | "medium" | "thick";
+  // Shadows
+  boxShadow?: "none" | "soft" | "hard" | "glow" | "offset";
+  textShadow?: "none" | "soft" | "glow" | "multi-glow";
+  // Transitions
+  transitionSpeed?: "instant" | "fast" | "normal" | "slow";
+  transitionStyle?: "smooth" | "steps";
+  // Effects
+  scanlines?: boolean;
+  noise?: boolean;
+  crt?: boolean;
+  rgbSplit?: boolean;
+  // Pseudo-elements
+  headingPrefix?: string;
+  headingSuffix?: string;
+  buttonWrapper?: "[" | "{" | "<" | "none";
+};
+
 export type Command =
   | { type: "create_window"; window: WindowSpec }
   | { type: "change_theme"; theme: string }
@@ -14,7 +41,7 @@ export type Command =
   | { type: "display_gallery"; title?: string; tag?: string; category?: string; limit?: number; inWindow?: boolean; width?: number; height?: number }
   | { type: "set_ui"; chatExpanded?: boolean }
   | { type: "navigate"; page: PageId }
-  | { type: "create_visual_mode"; name: string; cssVariables: Record<string, string>; customCSS?: string };
+  | { type: "create_visual_mode"; name: string; cssVariables: Record<string, string>; styles?: DynamicStyleOptions; customCSS?: string };
 
 export type ExecutorContext = {
   createWindow: (spec: WindowSpec) => void;
@@ -25,7 +52,7 @@ export type ExecutorContext = {
   setBackground: (style: string) => void;
   setChatExpanded: (expanded: boolean) => void;
   navigateToPage: (page: PageId) => void;
-  applyDynamicVisualMode: (name: string, cssVariables: Record<string, string>, customCSS?: string) => void;
+  applyDynamicVisualMode: (name: string, cssVariables: Record<string, string>, styles?: DynamicStyleOptions, customCSS?: string) => void;
 };
 
 export const AVAILABLE_IMAGES = [

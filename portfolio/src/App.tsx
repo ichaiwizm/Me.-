@@ -18,7 +18,7 @@ import { useChatPanel } from "@/lib/hooks/useChatPanel";
 import { useIsMobile } from "@/lib/hooks/useMediaQuery";
 import { isValidThemeId } from "@/theme/config/theme-registry";
 import { IMAGE_REGISTRY, type ImageMeta } from "@/lib/constants/images";
-import type { ExecutorContext, PageId } from "@/lib/commands/types";
+import type { ExecutorContext, PageId, DynamicStyleOptions } from "@/lib/commands/types";
 import { HomePage, ProjectsPage, SkillsPage, AboutPage, ContactPage } from "@/components/pages";
 
 // Page transition variants
@@ -115,8 +115,8 @@ function App() {
       // Scroll to top when navigating
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
-    applyDynamicVisualMode: (name: string, cssVariables: Record<string, string>, customCSS?: string) => {
-      applyDynamicVisualMode(name, cssVariables, customCSS);
+    applyDynamicVisualMode: (name: string, cssVariables: Record<string, string>, styles?: DynamicStyleOptions, customCSS?: string) => {
+      applyDynamicVisualMode(name, cssVariables, styles, customCSS);
     },
   };
 

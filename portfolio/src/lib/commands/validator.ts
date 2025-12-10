@@ -106,22 +106,94 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
     if (!cmd.cssVariables || typeof cmd.cssVariables !== "object") {
       return { valid: false, error: "cssVariables requis" };
     }
-    // Security: block injection patterns
+    // Security: block injection patterns in CSS variables
     const forbidden = /url\s*\(|@import|expression\s*\(|javascript:|data:/i;
     for (const value of Object.values(cmd.cssVariables)) {
       if (typeof value === "string" && forbidden.test(value)) {
         return { valid: false, error: "Valeur CSS interdite détectée dans cssVariables" };
       }
     }
+    // V3: Validate styles object (DynamicStyleOptions)
+    if (cmd.styles && typeof cmd.styles === "object") {
+      const validFontFamily = ["sans", "serif", "mono", "pixel"];
+      const validFontWeight = ["normal", "bold", "black"];
+      const validTextTransform = ["none", "uppercase"];
+      const validLetterSpacing = ["tight", "normal", "wide"];
+      const validBorderRadius = ["none", "small", "medium", "large"];
+      const validBorderWidth = ["none", "thin", "medium", "thick"];
+      const validBoxShadow = ["none", "soft", "hard", "glow", "offset"];
+      const validTextShadow = ["none", "soft", "glow", "multi-glow"];
+      const validTransitionSpeed = ["instant", "fast", "normal", "slow"];
+      const validTransitionStyle = ["smooth", "steps"];
+      const validButtonWrapper = ["[", "{", "<", "none"];
+
+      const s = cmd.styles;
+      if (s.fontFamily && !validFontFamily.includes(s.fontFamily)) {
+        return { valid: false, error: `fontFamily invalide. Valides: ${validFontFamily.join(", ")}` };
+      }
+      if (s.fontWeight && !validFontWeight.includes(s.fontWeight)) {
+        return { valid: false, error: `fontWeight invalide. Valides: ${validFontWeight.join(", ")}` };
+      }
+      if (s.textTransform && !validTextTransform.includes(s.textTransform)) {
+        return { valid: false, error: `textTransform invalide. Valides: ${validTextTransform.join(", ")}` };
+      }
+      if (s.letterSpacing && !validLetterSpacing.includes(s.letterSpacing)) {
+        return { valid: false, error: `letterSpacing invalide. Valides: ${validLetterSpacing.join(", ")}` };
+      }
+      if (s.borderRadius && !validBorderRadius.includes(s.borderRadius)) {
+        return { valid: false, error: `borderRadius invalide. Valides: ${validBorderRadius.join(", ")}` };
+      }
+      if (s.borderWidth && !validBorderWidth.includes(s.borderWidth)) {
+        return { valid: false, error: `borderWidth invalide. Valides: ${validBorderWidth.join(", ")}` };
+      }
+      if (s.boxShadow && !validBoxShadow.includes(s.boxShadow)) {
+        return { valid: false, error: `boxShadow invalide. Valides: ${validBoxShadow.join(", ")}` };
+      }
+      if (s.textShadow && !validTextShadow.includes(s.textShadow)) {
+        return { valid: false, error: `textShadow invalide. Valides: ${validTextShadow.join(", ")}` };
+      }
+      if (s.transitionSpeed && !validTransitionSpeed.includes(s.transitionSpeed)) {
+        return { valid: false, error: `transitionSpeed invalide. Valides: ${validTransitionSpeed.join(", ")}` };
+      }
+      if (s.transitionStyle && !validTransitionStyle.includes(s.transitionStyle)) {
+        return { valid: false, error: `transitionStyle invalide. Valides: ${validTransitionStyle.join(", ")}` };
+      }
+      if (s.buttonWrapper && !validButtonWrapper.includes(s.buttonWrapper)) {
+        return { valid: false, error: `buttonWrapper invalide. Valides: ${validButtonWrapper.join(", ")}` };
+      }
+      // Validate boolean fields
+      if (s.scanlines !== undefined && typeof s.scanlines !== "boolean") {
+        return { valid: false, error: "scanlines doit être un booléen" };
+      }
+      if (s.noise !== undefined && typeof s.noise !== "boolean") {
+        return { valid: false, error: "noise doit être un booléen" };
+      }
+      if (s.crt !== undefined && typeof s.crt !== "boolean") {
+        return { valid: false, error: "crt doit être un booléen" };
+      }
+      if (s.rgbSplit !== undefined && typeof s.rgbSplit !== "boolean") {
+        return { valid: false, error: "rgbSplit doit être un booléen" };
+      }
+      // Validate string pseudo-elements (block injection)
+      if (s.headingPrefix && (typeof s.headingPrefix !== "string" || s.headingPrefix.length > 10)) {
+        return { valid: false, error: "headingPrefix invalide (max 10 chars)" };
+      }
+      if (s.headingSuffix && (typeof s.headingSuffix !== "string" || s.headingSuffix.length > 10)) {
+        return { valid: false, error: "headingSuffix invalide (max 10 chars)" };
+      }
+    }
+    // Validate customCSS (raw CSS from Haiku - full freedom but security checks)
     if (cmd.customCSS) {
       if (typeof cmd.customCSS !== "string") {
         return { valid: false, error: "customCSS doit être une chaîne" };
       }
-      if (cmd.customCSS.length > 15000) {
-        return { valid: false, error: "customCSS trop long (max 15KB)" };
+      if (cmd.customCSS.length > 50000) {
+        return { valid: false, error: "customCSS trop long (max 50KB)" };
       }
-      if (forbidden.test(cmd.customCSS)) {
-        return { valid: false, error: "customCSS contient des patterns interdits" };
+      // Block dangerous patterns only (allow most CSS)
+      const dangerous = /@import|expression\s*\(|javascript:|behavior\s*:/i;
+      if (dangerous.test(cmd.customCSS)) {
+        return { valid: false, error: "customCSS contient des patterns dangereux" };
       }
     }
   }

@@ -1,17 +1,21 @@
 /**
  * Dynamic visual mode application with staggered animations.
- * Allows Haiku to create custom visual modes on-the-fly.
+ * V3: Full CSS generation from style options.
  */
 
-const STAGGER_DELAY = 60; // ms between each variable (~500ms total for 8 vars)
+import type { DynamicStyleOptions } from "@/lib/commands/types";
+import { generateDynamicCSS } from "./generate-dynamic-css";
+
+const STAGGER_DELAY = 50; // ms between each variable (~400ms total for 8 vars)
 
 /**
  * Apply a dynamic visual mode with staggered CSS variable animation.
- * Each variable is applied with a delay, creating a wave effect.
+ * V3: Now accepts styles object for full CSS generation.
  */
 export async function applyDynamicVisualMode(
   name: string,
   cssVariables: Record<string, string>,
+  styles?: DynamicStyleOptions,
   customCSS?: string
 ): Promise<void> {
   const root = document.documentElement;
@@ -30,15 +34,28 @@ export async function applyDynamicVisualMode(
     root.style.setProperty(`--${key}`, value);
   }
 
-  // 3. Inject custom CSS if provided
-  if (customCSS) {
-    let styleEl = document.getElementById("dynamic-visual-mode-style") as HTMLStyleElement | null;
+  // 3. Collect all CSS to inject
+  let finalCSS = "";
+
+  // 3a. Generate CSS from style options (if provided)
+  if (styles && Object.keys(styles).length > 0) {
+    finalCSS += generateDynamicCSS(styles);
+  }
+
+  // 3b. Append raw customCSS from Haiku (full creative freedom)
+  if (customCSS && customCSS.trim().length > 0) {
+    finalCSS += "\n\n/* Custom CSS by Haiku */\n" + customCSS;
+  }
+
+  // 3c. Inject combined CSS
+  if (finalCSS.trim().length > 0) {
+    let styleEl = document.getElementById("dynamic-visual-mode-css") as HTMLStyleElement | null;
     if (!styleEl) {
       styleEl = document.createElement("style");
-      styleEl.id = "dynamic-visual-mode-style";
+      styleEl.id = "dynamic-visual-mode-css";
       document.head.appendChild(styleEl);
     }
-    styleEl.textContent = customCSS;
+    styleEl.textContent = finalCSS;
   }
 
   // 4. Mark as active
@@ -89,8 +106,8 @@ export function clearDynamicVisualMode(): void {
   // Remove custom CSS variables (restore theme values)
   OVERRIDABLE_VARS.forEach((v) => root.style.removeProperty(`--${v}`));
 
-  // Remove custom style element
-  document.getElementById("dynamic-visual-mode-style")?.remove();
+  // Remove generated CSS style elements
+  document.getElementById("dynamic-visual-mode-css")?.remove();
 }
 
 /**

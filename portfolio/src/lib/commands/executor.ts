@@ -158,7 +158,7 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
         ctx.navigateToPage(cmd.page);
         break;
       case "create_visual_mode":
-        ctx.applyDynamicVisualMode(cmd.name, cmd.cssVariables, cmd.customCSS);
+        ctx.applyDynamicVisualMode(cmd.name, cmd.cssVariables, cmd.styles, cmd.customCSS);
         break;
     }
   } catch (error) {
