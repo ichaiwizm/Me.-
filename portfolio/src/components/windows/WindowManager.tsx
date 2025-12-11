@@ -3,6 +3,7 @@ import FloatingWindow from "@/components/windows/FloatingWindow";
 import { WindowDock } from "@/components/windows/WindowDock";
 import { BottomSheet } from "@/components/mobile/BottomSheet";
 import SandboxedContent from "@/components/windows/SandboxedContent";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 
 export type WindowSpec = { title: string; contentHtml: string; width?: number; height?: number; key?: string };
 export type WindowManagerHandle = {
@@ -30,6 +31,7 @@ type WindowManagerProps = {
 export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>(({ showDock = true, mobileMode = false, onMinimizedCountChange }, ref) => {
   const [items, setItems] = useState<Item[]>([]);
   const [, setNextZ] = useState(1000);
+  const { trackWindow } = useAnalytics();
 
   const bringFront = useCallback((id: string) => {
     // Use functional updates to avoid stale closure issues
@@ -57,6 +59,8 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
             ));
             return newZ;
           });
+          // Track window restore
+          trackWindow('create', { windowKey: spec.key, windowTitle: spec.title });
           // Return current state unchanged (will be updated by setNextZ callback)
           return ws;
         }
@@ -74,6 +78,9 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
       setNextZ(z => z + 1);
       const newZ = Date.now(); // Use timestamp as temporary z-index
 
+      // Track window creation
+      trackWindow('create', { windowKey: spec.key || id, windowTitle: spec.title });
+
       return [...ws, {
         id,
         key: spec.key,
@@ -88,15 +95,27 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
         maximized: false
       }];
     });
-  }, []);
+  }, [trackWindow]);
 
   const closeWindow = useCallback((key: string) => {
-    setItems(ws => ws.filter(i => i.key !== key));
-  }, []);
+    setItems(ws => {
+      const window = ws.find(i => i.key === key);
+      if (window) {
+        trackWindow('close', { windowKey: key, windowTitle: window.title });
+      }
+      return ws.filter(i => i.key !== key);
+    });
+  }, [trackWindow]);
 
   const minimizeWindow = useCallback((key: string) => {
-    setItems(ws => ws.map(i => i.key === key ? { ...i, minimized: true } : i));
-  }, []);
+    setItems(ws => {
+      const window = ws.find(i => i.key === key);
+      if (window) {
+        trackWindow('minimize', { windowKey: key, windowTitle: window.title });
+      }
+      return ws.map(i => i.key === key ? { ...i, minimized: true } : i);
+    });
+  }, [trackWindow]);
 
   const modifyWindow = useCallback((key: string, contentHtml: string) => {
     setItems(ws => ws.map(i => i.key === key ? { ...i, contentHtml } : i));
@@ -126,14 +145,30 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
   }, [docked.length, onMinimizedCountChange]);
 
   const handleRestore = useCallback((id: string) => {
-    setItems(ws=>ws.map(i=>i.id===id?{...i,minimized:false}:i));
+    setItems(ws => {
+      const window = ws.find(i => i.id === id);
+      if (window) {
+        trackWindow('create', { windowKey: window.key || id, windowTitle: window.title });
+      }
+      return ws.map(i => i.id === id ? { ...i, minimized: false } : i);
+    });
     bringFront(id);
-  }, [bringFront]);
+  }, [bringFront, trackWindow]);
 
   const toggleMaximize = useCallback((id: string) => {
-    setItems(ws=>ws.map(i=>i.id===id?{...i,maximized:!i.maximized}:i));
+    setItems(ws => {
+      const window = ws.find(i => i.id === id);
+      if (window) {
+        trackWindow('maximize', {
+          windowKey: window.key || id,
+          windowTitle: window.title,
+          maximizeAction: window.maximized ? 'restore' : 'maximize'
+        });
+      }
+      return ws.map(i => i.id === id ? { ...i, maximized: !i.maximized } : i);
+    });
     bringFront(id);
-  }, [bringFront]);
+  }, [bringFront, trackWindow]);
 
   return (
     <>
@@ -145,8 +180,14 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
             <FloatingWindow key={w.id} id={w.id} title={w.title} zIndex={w.z}
               initialPos={{ x: w.x, y: w.y }} width={w.width} height={w.height} contentHtml={w.contentHtml}
               isMaximized={w.maximized}
-              onClose={(id)=>setItems(ws=>ws.filter(i=>i.id!==id))}
-              onMinimize={(id)=>setItems(ws=>ws.map(i=>i.id===id?{...i,minimized:true}:i))}
+              onClose={(id)=>{
+                trackWindow('close', { windowKey: w.key || id, windowTitle: w.title });
+                setItems(ws=>ws.filter(i=>i.id!==id));
+              }}
+              onMinimize={(id)=>{
+                trackWindow('minimize', { windowKey: w.key || id, windowTitle: w.title });
+                setItems(ws=>ws.map(i=>i.id===id?{...i,minimized:true}:i));
+              }}
               onMaximize={toggleMaximize}
               onFocus={bringFront}
               onMove={(id,pos)=>setItems(ws=>ws.map(i=>i.id===id?{...i,x:pos.x,y:pos.y}:i))}
@@ -160,7 +201,10 @@ export const WindowManager = forwardRef<WindowManagerHandle, WindowManagerProps>
         <BottomSheet
           key={w.id}
           isOpen={true}
-          onClose={() => setItems(ws => ws.filter(i => i.id !== w.id))}
+          onClose={() => {
+            trackWindow('close', { windowKey: w.key || w.id, windowTitle: w.title });
+            setItems(ws => ws.filter(i => i.id !== w.id));
+          }}
           title={w.title}
           snapPoints={["half", "full"]}
           initialSnap="half"

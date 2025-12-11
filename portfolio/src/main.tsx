@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { inject } from "@vercel/analytics";
+import { initGA4 } from "./lib/analytics";
 import "./index.css";
 import "./styles/typography.css";
 import "./i18n/config/i18n"; // Initialize i18next before App
@@ -10,8 +11,11 @@ import { VisualModeProvider } from "./visual-mode";
 import { I18nProvider } from "./i18n";
 import { ErrorBoundary } from "./components/layout/ErrorBoundary";
 
-// Initialize Vercel Web Analytics
+// Initialize Vercel Web Analytics (basic pageviews only)
 inject();
+
+// Initialize Google Analytics 4 (detailed tracking)
+initGA4();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

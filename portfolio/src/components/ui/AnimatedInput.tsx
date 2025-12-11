@@ -26,6 +26,10 @@ export interface AnimatedInputProps {
   /** Error message to display */
   error?: string;
   className?: string;
+  /** Called when input receives focus */
+  onFocus?: () => void;
+  /** Called when input loses focus */
+  onBlur?: () => void;
 }
 
 export function AnimatedInput({
@@ -40,6 +44,8 @@ export function AnimatedInput({
   rows,
   error,
   className,
+  onFocus,
+  onBlur,
 }: AnimatedInputProps) {
   const [isFocused, setIsFocused] = useState(false);
   const hasValue = value.length > 0;
@@ -82,8 +88,14 @@ export function AnimatedInput({
         name={name}
         value={value}
         onChange={onChange}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onFocus={() => {
+          setIsFocused(true);
+          onFocus?.();
+        }}
+        onBlur={() => {
+          setIsFocused(false);
+          onBlur?.();
+        }}
         disabled={disabled}
         aria-invalid={!!error}
         aria-describedby={error ? `${name}-error` : undefined}

@@ -1,11 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { usePersonalInfo } from "@/data/hooks";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { toast } from "sonner";
 import { FadeInView } from "@/components/animations";
 import { AnimatedInput } from "@/components/ui/AnimatedInput";
 import { SPRINGS } from "@/lib/constants/animation";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import {
   Mail,
   Phone,
@@ -82,11 +83,13 @@ function SocialLink({
   label,
   href,
   delay,
+  onClick,
 }: {
   icon: React.ElementType;
   label: string;
   href: string;
   delay: number;
+  onClick?: () => void;
 }) {
   return (
     <motion.a
@@ -99,6 +102,7 @@ function SocialLink({
       transition={{ delay, duration: 0.4 }}
       whileHover={{ scale: 1.05, y: -2 }}
       whileTap={{ scale: 0.95 }}
+      onClick={onClick}
     >
       <Icon className="w-5 h-5 text-foreground/70 group-hover:text-primary transition-colors" />
       <span className="text-body font-medium group-hover:text-primary transition-colors">
@@ -118,6 +122,7 @@ function SocialLink({
 export function ContactPage() {
   const { t } = useTranslation("pages");
   const personalInfo = usePersonalInfo();
+  const { trackContactForm, trackSocialLink } = useAnalytics();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -126,14 +131,22 @@ export function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const formStartTime = useRef<number>(0);
+  const hasTrackedStart = useRef(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
       toast.error(t("contact.allFieldsRequired"));
+      trackContactForm('error', { errorType: 'validation_required_fields' });
       return;
     }
+
+    trackContactForm('submit', {
+      timeOnFormMs: formStartTime.current ? Date.now() - formStartTime.current : 0,
+      fieldsFilledCount: Object.values(formData).filter(v => v.length > 0).length
+    });
 
     setIsSubmitting(true);
 
@@ -142,12 +155,14 @@ export function ContactPage() {
 
     setIsSubmitting(false);
     setIsSuccess(true);
+    trackContactForm('success');
     toast.success(t("contact.messageSent"));
 
     // Reset after animation
     setTimeout(() => {
       setFormData({ name: "", email: "", message: "" });
       setIsSuccess(false);
+      hasTrackedStart.current = false;
     }, 2000);
   };
 
@@ -159,6 +174,26 @@ export function ContactPage() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const handleFieldFocus = useCallback((fieldName: string) => {
+    if (!hasTrackedStart.current) {
+      hasTrackedStart.current = true;
+      formStartTime.current = Date.now();
+      trackContactForm('start');
+    }
+    trackContactForm('field_focus', { fieldName });
+  }, [trackContactForm]);
+
+  const handleFieldBlur = useCallback((fieldName: string, value: string) => {
+    trackContactForm('field_blur', {
+      fieldName,
+      fieldValueLength: value.length
+    });
+  }, [trackContactForm]);
+
+  const handleSocialLinkClick = useCallback((platform: string, url: string) => {
+    trackSocialLink(platform, url, 'contact_page');
+  }, [trackSocialLink]);
 
   return (
     <div className="min-h-screen pt-24 md:pt-32 pb-24 px-4 md:px-8">
@@ -280,6 +315,8 @@ export function ContactPage() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    onFocus={() => handleFieldFocus('name')}
+                    onBlur={() => handleFieldBlur('name', formData.name)}
                     placeholder={t("contact.form.namePlaceholder")}
                     required
                   />
@@ -290,6 +327,8 @@ export function ContactPage() {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onFocus={() => handleFieldFocus('email')}
+                    onBlur={() => handleFieldBlur('email', formData.email)}
                     placeholder={t("contact.form.emailPlaceholder")}
                     required
                   />
@@ -299,6 +338,8 @@ export function ContactPage() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    onFocus={() => handleFieldFocus('message')}
+                    onBlur={() => handleFieldBlur('message', formData.message)}
                     placeholder={t("contact.form.messagePlaceholder")}
                     required
                     rows={5}
@@ -371,12 +412,14 @@ export function ContactPage() {
               label="GitHub"
               href={personalInfo.social.github}
               delay={0.7}
+              onClick={() => handleSocialLinkClick('github', personalInfo.social.github)}
             />
             <SocialLink
               icon={Linkedin}
               label="LinkedIn"
               href={personalInfo.social.linkedin}
               delay={0.8}
+              onClick={() => handleSocialLinkClick('linkedin', personalInfo.social.linkedin)}
             />
           </div>
         </motion.div>

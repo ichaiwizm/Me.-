@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useProjects, type LocalizedProject } from "@/data/hooks";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { FadeInView } from "@/components/animations";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { EASINGS, SPRINGS } from "@/lib/constants/animation";
 import { useIsMobile } from "@/lib/hooks/useMediaQuery";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import { ExternalLink, Github, Star, Calendar, Folder } from "lucide-react";
 
 const categoryColors: Record<string, string> = {
@@ -24,6 +25,9 @@ function ProjectCard({
   isExpanded,
   onToggle,
   isMobile,
+  onProjectViewStart,
+  onProjectViewEnd,
+  onProjectLinkClick,
 }: {
   project: LocalizedProject;
   index: number;
@@ -31,11 +35,39 @@ function ProjectCard({
   isExpanded: boolean;
   onToggle: () => void;
   isMobile: boolean;
+  onProjectViewStart: (projectId: string) => void;
+  onProjectViewEnd: (projectId: string, title: string, category: string, technologies: string[], wasExpanded: boolean) => void;
+  onProjectLinkClick: (projectId: string, title: string, linkType: 'live' | 'github', category: string) => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
   // On mobile, use expanded state from parent; on desktop, use hover state
   const showDetails = isMobile ? isExpanded : isHovered;
+
+  const handleMouseEnter = () => {
+    if (!isMobile) {
+      setIsHovered(true);
+      onProjectViewStart(project.id);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setIsHovered(false);
+      onProjectViewEnd(project.id, project.title, project.category, project.technologies, false);
+    }
+  };
+
+  const handleToggle = () => {
+    if (isExpanded) {
+      // Collapsing
+      onProjectViewEnd(project.id, project.title, project.category, project.technologies, true);
+    } else {
+      // Expanding
+      onProjectViewStart(project.id);
+    }
+    onToggle();
+  };
 
   return (
     <motion.div
@@ -48,11 +80,11 @@ function ProjectCard({
         ease: EASINGS.standard,
       }}
     >
-      <TiltCard onTap={isMobile ? onToggle : undefined}>
+      <TiltCard onTap={isMobile ? handleToggle : undefined}>
         <motion.div
           className="group relative overflow-hidden rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm transition-all duration-500"
-          onMouseEnter={() => !isMobile && setIsHovered(true)}
-          onMouseLeave={() => !isMobile && setIsHovered(false)}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           whileHover={!isMobile ? {
             boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
             borderColor: "rgba(var(--primary), 0.3)",
@@ -156,6 +188,7 @@ function ProjectCard({
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-small text-primary font-medium hover:bg-primary/20 hover:border-primary/50 transition-all"
                     whileHover={{ scale: 1.02, y: -1 }}
                     whileTap={{ scale: 0.98 }}
+                    onClick={() => onProjectLinkClick(project.id, project.title, 'live', project.category)}
                   >
                     <ExternalLink className="w-4 h-4" />
                     {t("projects.viewProject")}
@@ -169,6 +202,7 @@ function ProjectCard({
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-small text-foreground/70 font-medium hover:text-foreground hover:bg-foreground/10 transition-all"
                     whileHover={{ scale: 1.02, y: -1 }}
                     whileTap={{ scale: 0.98 }}
+                    onClick={() => onProjectLinkClick(project.id, project.title, 'github', project.category)}
                   >
                     <Github className="w-4 h-4" />
                     {t("projects.code")}
@@ -257,6 +291,7 @@ export function ProjectsPage() {
   const projects = useProjects();
   const isMobile = useIsMobile();
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const { trackProjectStart, trackProjectEnd, trackProjectLink } = useAnalytics();
 
   // Use projects in their defined order (no sorting)
   const sortedProjects = projects;
@@ -264,6 +299,29 @@ export function ProjectsPage() {
   const toggleExpanded = (id: string) => {
     setExpandedId(expandedId === id ? null : id);
   };
+
+  const handleProjectViewStart = useCallback((projectId: string) => {
+    trackProjectStart(projectId);
+  }, [trackProjectStart]);
+
+  const handleProjectViewEnd = useCallback((
+    projectId: string,
+    title: string,
+    category: string,
+    technologies: string[],
+    wasExpanded: boolean
+  ) => {
+    trackProjectEnd(projectId, title, category, technologies, wasExpanded);
+  }, [trackProjectEnd]);
+
+  const handleProjectLinkClick = useCallback((
+    projectId: string,
+    title: string,
+    linkType: 'live' | 'github',
+    category: string
+  ) => {
+    trackProjectLink(projectId, title, linkType, category);
+  }, [trackProjectLink]);
 
   return (
     <div className="min-h-screen pt-32 pb-24 px-8">
@@ -312,6 +370,9 @@ export function ProjectsPage() {
               isExpanded={expandedId === project.id}
               onToggle={() => toggleExpanded(project.id)}
               isMobile={isMobile}
+              onProjectViewStart={handleProjectViewStart}
+              onProjectViewEnd={handleProjectViewEnd}
+              onProjectLinkClick={handleProjectLinkClick}
             />
           ))}
         </div>

@@ -10,6 +10,7 @@ import { CustomCursor } from "@/components/ui/CustomCursor";
 import { VisualModeExitButton } from "@/components/visual-mode-exit";
 import { useTheme } from "@/theme/provider/ThemeContext";
 import { useVisualMode } from "@/visual-mode";
+import { useI18n } from "@/i18n";
 import { applyDynamicVisualMode, clearDynamicVisualMode } from "@/visual-mode/utils/apply-dynamic-visual-mode";
 import { clearVisualModeFromDocument } from "@/visual-mode/utils/apply-visual-mode";
 import { useWindowManager } from "@/lib/hooks/useWindowManager";
@@ -17,6 +18,10 @@ import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
 import { useChatPanel } from "@/lib/hooks/useChatPanel";
 import { useIsMobile, useChatPanelWidth } from "@/lib/hooks/useMediaQuery";
+import { useScrollTracking } from "@/lib/hooks/useScrollTracking";
+import { usePerformanceTracking } from "@/lib/hooks/usePerformanceTracking";
+import { useErrorTracking } from "@/lib/hooks/useErrorTracking";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import { isValidThemeId } from "@/theme/config/theme-registry";
 import { IMAGE_REGISTRY, type ImageMeta } from "@/lib/constants/images";
 import type { ExecutorContext, PageId, DynamicStyleOptions } from "@/lib/commands/types";
@@ -51,11 +56,24 @@ const pageTransition = {
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageId>("accueil");
-  const { setThemeId } = useTheme();
-  const { isVisualModeActive } = useVisualMode();
+  const { themeId, setThemeId } = useTheme();
+  const { isVisualModeActive, visualModeId } = useVisualMode();
+  const { languageId } = useI18n();
   const isMobile = useIsMobile();
   const { isOpen: isChatOpen, toggle: toggleChat, close: closeChat } = useChatPanel();
   const chatPanelWidth = useChatPanelWidth();
+
+  // GA4 Analytics tracking hooks
+  const { trackPage, trackReset, trackLightbox, setCurrentPage: setAnalyticsPage } = useAnalytics();
+  useScrollTracking({ pageId: currentPage });
+  usePerformanceTracking();
+  useErrorTracking({ componentName: 'App' });
+
+  // Track page views when page changes
+  useEffect(() => {
+    trackPage(currentPage, languageId, themeId);
+    setAnalyticsPage(currentPage);
+  }, [currentPage, languageId, themeId, trackPage, setAnalyticsPage]);
 
   // Global lightbox state for gallery images
   const [lightboxState, setLightboxState] = useState<{
@@ -64,9 +82,10 @@ function App() {
     index: number;
   }>({ isOpen: false, images: [], index: 0 });
 
-  const closeLightbox = useCallback(() => {
+  const closeLightbox = useCallback((method: 'button' | 'backdrop' | 'escape' | 'swipe' = 'button') => {
+    trackLightbox('close', { closeMethod: method });
     setLightboxState(s => ({ ...s, isOpen: false }));
-  }, []);
+  }, [trackLightbox]);
 
   const { wmRef, windowCount, minimizedCount, setMinimizedCount, createWindow, closeWindow, minimizeWindow, modifyWindow, resizeWindow, resetAll } =
     useWindowManager();
@@ -79,10 +98,18 @@ function App() {
           .map((id: string) => IMAGE_REGISTRY.find(img => img.id === id))
           .filter((img: ImageMeta | undefined): img is ImageMeta => img !== undefined);
         if (images.length > 0) {
+          const initialIndex = typeof e.data.index === 'number' ? e.data.index : 0;
           setLightboxState({
             isOpen: true,
             images,
-            index: typeof e.data.index === 'number' ? e.data.index : 0
+            index: initialIndex
+          });
+          // Track lightbox open
+          trackLightbox('open', {
+            imageId: images[initialIndex]?.id,
+            imageIndex: initialIndex,
+            totalImages: images.length,
+            sourceGallery: 'gallery'
           });
           // Minimize the gallery window when lightbox opens
           if (isMobile) {
@@ -95,7 +122,7 @@ function App() {
     };
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [isMobile, minimizeWindow, closeWindow]);
+  }, [isMobile, minimizeWindow, closeWindow, trackLightbox]);
   const { setBackground, clearBackground } = useAppBackground();
 
   const ctx: ExecutorContext = {
@@ -126,6 +153,9 @@ function App() {
     useChatState(windowCount, ctx);
 
   function resetToDefault() {
+    // Track reset before clearing state
+    trackReset(themeId, languageId, visualModeId || null, windowCount);
+
     resetAll();
     setThemeId("crepuscule-dore");
     clearBackground();

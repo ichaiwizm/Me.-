@@ -1,9 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
 import type { ImageMeta } from "@/lib/constants/images";
 import { TRANSITIONS, EASINGS, SPRINGS } from "@/lib/constants/animation";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 
 /**
  * Lightbox - A modal image viewer with navigation
@@ -40,9 +41,11 @@ export function Lightbox({
   enableZoom = true,
 }: LightboxProps) {
   const { t } = useTranslation("common");
+  const { trackLightbox } = useAnalytics();
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isZoomed, setIsZoomed] = useState(false);
   const [direction, setDirection] = useState(0);
+  const lastNavigationMethod = useRef<'click' | 'keyboard' | 'swipe'>('click');
 
   const currentImage = images[currentIndex];
 
@@ -61,12 +64,15 @@ export function Lightbox({
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
         case "Escape":
+          trackLightbox('close', { closeMethod: 'escape' });
           onClose();
           break;
         case "ArrowLeft":
+          lastNavigationMethod.current = 'keyboard';
           goToPrevious();
           break;
         case "ArrowRight":
+          lastNavigationMethod.current = 'keyboard';
           goToNext();
           break;
       }
@@ -74,7 +80,7 @@ export function Lightbox({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, currentIndex]);
+  }, [isOpen, currentIndex, onClose, trackLightbox]);
 
   // Lock body scroll when open
   useEffect(() => {
@@ -90,19 +96,51 @@ export function Lightbox({
 
   const goToPrevious = useCallback(() => {
     setDirection(-1);
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+    setCurrentIndex((prev) => {
+      const newIndex = prev > 0 ? prev - 1 : images.length - 1;
+      const newImage = images[newIndex];
+      trackLightbox('navigate', {
+        imageId: newImage?.id,
+        imageIndex: newIndex,
+        totalImages: images.length,
+        direction: 'previous',
+        method: lastNavigationMethod.current
+      });
+      lastNavigationMethod.current = 'click'; // Reset to default
+      return newIndex;
+    });
     setIsZoomed(false);
-  }, [images.length]);
+  }, [images, trackLightbox]);
 
   const goToNext = useCallback(() => {
     setDirection(1);
-    setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+    setCurrentIndex((prev) => {
+      const newIndex = prev < images.length - 1 ? prev + 1 : 0;
+      const newImage = images[newIndex];
+      trackLightbox('navigate', {
+        imageId: newImage?.id,
+        imageIndex: newIndex,
+        totalImages: images.length,
+        direction: 'next',
+        method: lastNavigationMethod.current
+      });
+      lastNavigationMethod.current = 'click'; // Reset to default
+      return newIndex;
+    });
     setIsZoomed(false);
-  }, [images.length]);
+  }, [images, trackLightbox]);
 
   const toggleZoom = useCallback(() => {
-    setIsZoomed((prev) => !prev);
-  }, []);
+    setIsZoomed((prev) => {
+      const newZoomed = !prev;
+      trackLightbox('zoom', {
+        imageId: currentImage?.id,
+        zoomAction: newZoomed ? 'in' : 'out',
+        zoomMethod: 'button'
+      });
+      return newZoomed;
+    });
+  }, [currentImage?.id, trackLightbox]);
 
   if (!currentImage) return null;
 
@@ -137,7 +175,10 @@ export function Lightbox({
           {/* Backdrop - Glassmorphism, NOT black! */}
           <motion.div
             className="absolute inset-0 bg-[var(--image-bg)]/95 backdrop-blur-xl"
-            onClick={onClose}
+            onClick={() => {
+              trackLightbox('close', { closeMethod: 'backdrop' });
+              onClose();
+            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -146,7 +187,10 @@ export function Lightbox({
           {/* Close button */}
           <motion.button
             className="absolute top-4 right-4 z-10 p-3 rounded-full glass hover:bg-foreground/10 transition-colors"
-            onClick={onClose}
+            onClick={() => {
+              trackLightbox('close', { closeMethod: 'button' });
+              onClose();
+            }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label={t("aria.closeImage")}
@@ -214,8 +258,13 @@ export function Lightbox({
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.2}
                 onDragEnd={(_event: MouseEvent | TouchEvent | PointerEvent, info: { offset: { x: number; y: number } }) => {
-                  if (info.offset.x > 100) goToPrevious();
-                  else if (info.offset.x < -100) goToNext();
+                  if (info.offset.x > 100) {
+                    lastNavigationMethod.current = 'swipe';
+                    goToPrevious();
+                  } else if (info.offset.x < -100) {
+                    lastNavigationMethod.current = 'swipe';
+                    goToNext();
+                  }
                 }}
               >
                 <motion.img
@@ -271,6 +320,13 @@ export function Lightbox({
                   }`}
                   onClick={() => {
                     setDirection(index > currentIndex ? 1 : -1);
+                    trackLightbox('navigate', {
+                      imageId: image.id,
+                      imageIndex: index,
+                      totalImages: images.length,
+                      direction: 'jump',
+                      method: 'click'
+                    });
                     setCurrentIndex(index);
                     setIsZoomed(false);
                   }}

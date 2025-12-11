@@ -1,10 +1,11 @@
 import { motion, useInView } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useSkills, useSkillCategories } from "@/data/hooks";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import type { Skill } from "@/data/skills";
 import { FadeInView } from "@/components/animations";
 import { EASINGS, SPRINGS } from "@/lib/constants/animation";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import {
   Code2,
   Database,
@@ -214,18 +215,46 @@ function CategorySection({
   index,
   categoryLabel,
   t,
+  onCategoryView,
 }: {
   category: string;
   skills: Skill[];
   index: number;
   categoryLabel: string;
   t: (key: string) => string;
+  onCategoryView: (categoryId: string, categoryName: string, skillCount: number) => void;
 }) {
   const icon = categoryIcons[category] || categoryIcons.other;
   const isFirst = index === 0;
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const hasTrackedView = useRef(false);
+  const viewStartTime = useRef<number>(0);
+
+  // Track when category comes into view
+  useEffect(() => {
+    const element = sectionRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasTrackedView.current) {
+            hasTrackedView.current = true;
+            viewStartTime.current = Date.now();
+            onCategoryView(category, categoryLabel, skills.length);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [category, categoryLabel, skills.length, onCategoryView]);
 
   return (
     <motion.div
+      ref={sectionRef}
       initial={{ opacity: 0, y: 30 }}
       animate={isFirst ? { opacity: 1, y: 0 } : undefined}
       whileInView={{ opacity: 1, y: 0 }}
@@ -272,7 +301,12 @@ export function SkillsPage() {
   const { t } = useTranslation("pages");
   const skills = useSkills();
   const skillCategories = useSkillCategories();
+  const { trackSkillCategory } = useAnalytics();
   // Note: Mobile responsive grid (1 col) is already set in CategorySection
+
+  const handleCategoryView = useCallback((categoryId: string, categoryName: string, skillCount: number) => {
+    trackSkillCategory(categoryId, categoryName, skillCount);
+  }, [trackSkillCategory]);
 
   // Group by category
   const byCategory = skills.reduce((acc, skill) => {
@@ -351,6 +385,7 @@ export function SkillsPage() {
               index={index}
               categoryLabel={skillCategories[category]?.label || category}
               t={t}
+              onCategoryView={handleCategoryView}
             />
           ))}
         </div>
