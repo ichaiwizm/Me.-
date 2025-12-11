@@ -38,6 +38,7 @@ Les suggestions doivent:
 - Être courtes (5-15 mots)
 - Couvrir différentes catégories (projets, photos, thèmes, modes visuels, compétences, personnel)
 - Être engageantes et variées
+- IMPORTANT: Chaque suggestion doit demander UNE SEULE action (pas de "et", "puis", "ensuite")
 
 RÉPONDS EN JSON UNIQUEMENT, format:
 ["suggestion1", "suggestion2", "suggestion3", "suggestion4", "suggestion5", "suggestion6"]`,

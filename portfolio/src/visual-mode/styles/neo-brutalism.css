@@ -386,3 +386,19 @@ html.visual-mode-neo-brutalism .visual-mode-exit-button button {
   box-shadow: 4px 4px 0 var(--foreground) !important;
   background: var(--destructive) !important;
 }
+
+/* ============================================
+   WINDOW DOCK - Minimized windows
+   ============================================ */
+
+html.visual-mode-neo-brutalism .window-dock button {
+  border: 3px solid var(--foreground) !important;
+  box-shadow: 4px 4px 0 var(--foreground) !important;
+  background: var(--background) !important;
+  backdrop-filter: none !important;
+}
+
+html.visual-mode-neo-brutalism .window-dock button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--foreground) !important;
+}

@@ -23,7 +23,7 @@ export function WindowDock({ items, onRestore }: Props) {
 
   return (
     <motion.div
-      className="fixed bottom-4 left-4 z-[900] flex flex-col gap-2"
+      className="window-dock fixed bottom-4 left-4 z-[900] flex flex-col gap-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

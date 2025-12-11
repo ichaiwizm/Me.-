@@ -12,7 +12,6 @@ import { useTheme } from "@/theme/provider/ThemeContext";
 import { useVisualMode } from "@/visual-mode";
 import { useI18n } from "@/i18n";
 import { applyDynamicVisualMode, clearDynamicVisualMode } from "@/visual-mode/utils/apply-dynamic-visual-mode";
-import { clearVisualModeFromDocument } from "@/visual-mode/utils/apply-visual-mode";
 import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
@@ -57,7 +56,7 @@ const pageTransition = {
 function App() {
   const [currentPage, setCurrentPage] = useState<PageId>("accueil");
   const { themeId, setThemeId } = useTheme();
-  const { isVisualModeActive, visualModeId } = useVisualMode();
+  const { isVisualModeActive, visualModeId, exitVisualMode } = useVisualMode();
   const { languageId } = useI18n();
   const isMobile = useIsMobile();
   const { isOpen: isChatOpen, toggle: toggleChat, close: closeChat } = useChatPanel();
@@ -161,8 +160,9 @@ function App() {
     clearBackground();
     clearMessages();
     setCurrentPage("accueil");
+    // Clear visual modes (both predefined and dynamic)
+    exitVisualMode();
     clearDynamicVisualMode();
-    clearVisualModeFromDocument();
   }
 
   // Listen to navigation events emitted by ChatPreview's link buttons

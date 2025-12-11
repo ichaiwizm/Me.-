@@ -490,3 +490,20 @@ html.visual-mode-newspaper .visual-mode-exit-button button {
   background: var(--primary) !important;
   font-family: 'Merriweather', Georgia, serif !important;
 }
+
+/* ============================================
+   WINDOW DOCK - Minimized windows
+   ============================================ */
+
+html.visual-mode-newspaper .window-dock button {
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+  background: var(--card) !important;
+  backdrop-filter: none !important;
+  font-family: 'Merriweather', Georgia, serif !important;
+}
+
+html.visual-mode-newspaper .window-dock button:hover {
+  border-color: var(--foreground) !important;
+  background: var(--muted) !important;
+}

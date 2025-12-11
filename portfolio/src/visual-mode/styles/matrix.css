@@ -1134,3 +1134,19 @@ html.visual-mode-matrix [class*="skill-bar"] > div::after {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
 }
+
+/* ============================================
+   WINDOW DOCK - Minimized windows
+   ============================================ */
+
+html.visual-mode-matrix .window-dock button {
+  border: 1px solid rgba(0, 255, 65, 0.4) !important;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.2) !important;
+  background: rgba(0, 10, 0, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+html.visual-mode-matrix .window-dock button:hover {
+  border-color: #00ff41 !important;
+  box-shadow: 0 0 25px rgba(0, 255, 65, 0.4) !important;
+}
