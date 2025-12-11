@@ -5,6 +5,7 @@ import { usePersonalInfo } from "@/data/hooks";
 import { useTypeWriter } from "@/components/ui/TypeWriter";
 import { EASINGS } from "@/lib/constants/animation";
 import { useIsMobile } from "@/lib/hooks/useMediaQuery";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import { useCallback, useState } from "react";
 
 // Floating shape component
@@ -44,12 +45,15 @@ function InlineSuggestion({
   children: React.ReactNode;
   prompt: string;
 }) {
+  const { trackInlineSuggestion } = useAnalytics();
+
   const handleClick = useCallback(() => {
+    trackInlineSuggestion('regular', 'homepage');
     // Dispatch event to send message to chat
     window.dispatchEvent(new CustomEvent("app:inline-suggestion", {
       detail: { prompt }
     }));
-  }, [prompt]);
+  }, [prompt, trackInlineSuggestion]);
 
   return (
     <motion.button
@@ -88,10 +92,12 @@ function AIInlineSuggestion({
 }) {
   const { i18n } = useTranslation();
   const [isGenerating, setIsGenerating] = useState(false);
+  const { trackInlineSuggestion, trackPromptGeneration } = useAnalytics();
 
   const handleClick = useCallback(async () => {
     if (isGenerating) return;
 
+    trackInlineSuggestion('ai_generated', 'homepage');
     setIsGenerating(true);
     try {
       const response = await fetch("/api/generate", {
@@ -103,6 +109,8 @@ function AIInlineSuggestion({
         }),
       });
 
+      trackPromptGeneration('visual_mode', response.ok);
+
       if (response.ok) {
         const data = await response.json();
         if (data.content) {
@@ -113,10 +121,11 @@ function AIInlineSuggestion({
       }
     } catch (error) {
       console.error("Failed to generate visual mode:", error);
+      trackPromptGeneration('visual_mode', false);
     } finally {
       setIsGenerating(false);
     }
-  }, [isGenerating, i18n.language]);
+  }, [isGenerating, i18n.language, trackInlineSuggestion, trackPromptGeneration]);
 
   return (
     <motion.button

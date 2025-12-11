@@ -4,6 +4,7 @@ import { Globe, Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useI18n } from "@/i18n";
 import { useClickOutside } from "@/lib/hooks/useClickOutside";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import { cn } from "@/lib/utils";
 
 export function LanguageSwitcher() {
@@ -11,6 +12,7 @@ export function LanguageSwitcher() {
   const { t } = useTranslation("common");
   const { languageId, setLanguageId, languages, isRTL } = useI18n();
   const menuRef = useRef<HTMLDivElement>(null);
+  const { trackLanguageChange } = useAnalytics();
 
   useClickOutside(menuRef, () => setIsOpen(false));
 
@@ -54,6 +56,7 @@ export function LanguageSwitcher() {
               <button
                 key={lang.id}
                 onClick={() => {
+                  trackLanguageChange(languageId, lang.id);
                   setLanguageId(lang.id);
                   setIsOpen(false);
                 }}

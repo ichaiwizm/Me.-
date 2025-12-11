@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkles, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useAnalytics } from "@/lib/hooks/useAnalytics"
 
 type PromptBarProps = {
   onSubmit: (message: string) => Promise<void> | void
@@ -26,11 +27,15 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
   const { t, i18n } = useTranslation("common")
   const [value, setValue] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
+  const { trackChatMessage, trackPromptGeneration } = useAnalytics()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     const trimmed = value.trim()
     if (!trimmed || loading || isGenerating) return
+
+    // Track message before submission
+    trackChatMessage(trimmed.length, variant)
 
     // Clear field immediately after submit
     setValue("")
@@ -53,6 +58,9 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
         }),
       })
 
+      // Track prompt generation
+      trackPromptGeneration('prompt_bar', response.ok)
+
       if (response.ok) {
         const data = await response.json()
         if (data.content) {
@@ -61,10 +69,11 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
       }
     } catch (error) {
       console.error("Failed to generate prompt:", error)
+      trackPromptGeneration('prompt_bar', false)
     } finally {
       setIsGenerating(false)
     }
-  }, [loading, isGenerating, i18n.language])
+  }, [loading, isGenerating, i18n.language, trackPromptGeneration])
 
   const isPanel = variant === "panel"
   const isEmpty = !value.trim()

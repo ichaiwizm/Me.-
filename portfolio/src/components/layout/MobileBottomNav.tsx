@@ -4,6 +4,7 @@ import { Home, FolderKanban, Zap, User, Mail } from "lucide-react";
 import type { PageId } from "@/lib/commands/types";
 import { cn } from "@/lib/utils";
 import { MOBILE_SPRINGS } from "@/lib/constants/animation";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 
 // ============================================================================
 // TYPES
@@ -38,6 +39,7 @@ const NAV_ITEMS: NavItem[] = [
 
 export function MobileBottomNav({ currentPage, onNavigate }: MobileBottomNavProps) {
   const { t } = useTranslation("navigation");
+  const { trackNavigation } = useAnalytics();
 
   return (
     <motion.nav
@@ -55,7 +57,10 @@ export function MobileBottomNav({ currentPage, onNavigate }: MobileBottomNavProp
           return (
             <motion.button
               key={id}
-              onClick={() => onNavigate(id)}
+              onClick={() => {
+                trackNavigation(id, 'mobile_nav');
+                onNavigate(id);
+              }}
               className={cn(
                 "mobile-nav-item touch-feedback",
                 isActive ? "mobile-nav-item-active" : "mobile-nav-item-inactive"

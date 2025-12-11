@@ -3,16 +3,19 @@ import { useVisualMode } from "@/visual-mode";
 import { VisualModeSwitcherButton } from "./VisualModeSwitcherButton";
 import { VisualModeMenu } from "./VisualModeMenu";
 import { useClickOutside } from "@/lib/hooks/useClickOutside";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import type { VisualModeId } from "@/visual-mode";
 
 export function VisualModeSwitcher() {
   const { visualModeId, setVisualModeId, modes } = useVisualMode();
   const [isOpen, setIsOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const { trackVisualModeChange } = useAnalytics();
 
   useClickOutside(containerRef, () => setIsOpen(false));
 
   const handleSelectMode = (id: VisualModeId) => {
+    trackVisualModeChange(visualModeId || 'none', id);
     setVisualModeId(id);
     setIsOpen(false);
   };

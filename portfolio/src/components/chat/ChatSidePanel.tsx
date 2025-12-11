@@ -8,6 +8,7 @@ import { PromptBar } from "./PromptBar";
 import { PromptSuggestions } from "./PromptSuggestions";
 import { useChatPanel } from "@/lib/hooks/useChatPanel";
 import { useIsMobile, useChatPanelWidth } from "@/lib/hooks/useMediaQuery";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import { cn } from "@/lib/utils";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
@@ -94,11 +95,27 @@ export function ChatSidePanel({
   const isMobile = useIsMobile();
   const chatPanelWidth = useChatPanelWidth();
   const panelRef = useRef<HTMLDivElement>(null);
+  const { trackChatOpen, trackChatClose } = useAnalytics();
 
   // Use overrides if provided (for mobile), otherwise use internal state (for desktop)
   const isOpen = isOpenOverride !== undefined ? isOpenOverride : internalIsOpen;
   const close = onCloseOverride || internalClose;
   const toggle = onToggleOverride || internalToggle;
+
+  // Track chat open/close events
+  useEffect(() => {
+    if (isOpen) {
+      trackChatOpen('button');
+    } else {
+      // Only track close if the chat was previously open (not on initial mount)
+      const wasOpen = sessionStorage.getItem('chat-was-open');
+      if (wasOpen) {
+        trackChatClose();
+      }
+    }
+    // Remember if chat was opened
+    sessionStorage.setItem('chat-was-open', isOpen ? 'true' : '');
+  }, [isOpen, trackChatOpen, trackChatClose]);
 
   // Lock body scroll on mobile when panel is open
   useEffect(() => {

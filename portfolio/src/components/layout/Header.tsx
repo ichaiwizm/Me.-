@@ -6,6 +6,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { VisualModeSwitcher } from "@/components/visual-mode-switcher";
 import { useVisualMode } from "@/visual-mode";
 import { useChatPanelWidth } from "@/lib/hooks/useMediaQuery";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { PageId } from "@/lib/commands/types";
@@ -23,6 +24,7 @@ export function Header({ onReset, currentPage = "accueil", onNavigate, isChatOpe
   const { scrollY } = useScroll();
   const { t } = useTranslation("navigation");
   const { isVisualModeActive } = useVisualMode();
+  const { trackNavigation } = useAnalytics();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
@@ -30,6 +32,7 @@ export function Header({ onReset, currentPage = "accueil", onNavigate, isChatOpe
 
   const handleNavClick = (e: React.MouseEvent, page: PageId) => {
     e.preventDefault();
+    trackNavigation(page, 'header');
     onNavigate?.(page);
   };
 

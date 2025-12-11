@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Lightbulb, RefreshCw, X, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import { SUGGESTIONS, type Suggestion, type CategoryKey } from "@/lib/constants/suggestions";
 import { cn } from "@/lib/utils";
+import { useAnalytics } from "@/lib/hooks/useAnalytics";
 
 type PromptSuggestionsProps = {
   onSelectSuggestion: (text: string) => void;
@@ -50,6 +51,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
   const [shuffleKey, setShuffleKey] = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const { trackSuggestionClick } = useAnalytics();
 
   // AI-generated suggestions state
   const [aiSuggestions, setAiSuggestions] = useState<string[]>([]);
@@ -116,7 +118,8 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
   }, [isOpen, isInline]);
 
   // Handle suggestion click
-  const handleSelect = (text: string) => {
+  const handleSelect = (text: string, category: string = 'unknown') => {
+    trackSuggestionClick(variant, category);
     onSelectSuggestion(text);
     setIsOpen(false);
   };
@@ -181,7 +184,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
                     return (
                       <motion.button
                         key={`ai-${index}`}
-                        onClick={() => handleSelect(text)}
+                        onClick={() => handleSelect(text, 'ai_generated')}
                         className={cn(
                           "px-2.5 py-1 rounded-full text-xs border transition-colors",
                           "border-primary/30 hover:bg-primary/10",
@@ -206,7 +209,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
                     return (
                       <motion.button
                         key={s.textKey}
-                        onClick={() => handleSelect(text)}
+                        onClick={() => handleSelect(text, s.category)}
                         className={cn(
                           "px-2.5 py-1 rounded-full text-xs border transition-colors",
                           colors.border,
@@ -341,7 +344,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
                   {aiSuggestions.map((suggestion, index) => (
                     <motion.button
                       key={`ai-floating-${index}`}
-                      onClick={() => handleSelect(suggestion)}
+                      onClick={() => handleSelect(suggestion, 'ai_generated')}
                       className="w-full text-left px-3 py-2 rounded-lg transition-colors hover:bg-primary/10"
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -382,7 +385,7 @@ export function PromptSuggestions({ onSelectSuggestion, loading, variant = "floa
                           return (
                             <motion.button
                               key={suggestion.textKey}
-                              onClick={() => handleSelect(text)}
+                              onClick={() => handleSelect(text, suggestion.category)}
                               className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${colors.bg}`}
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
