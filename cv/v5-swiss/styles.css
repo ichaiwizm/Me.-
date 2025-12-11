@@ -1,0 +1,441 @@
+/* CV V5 - Swiss International Style (Bauhaus) */
+/* Minimalisme suisse, grilles mathématiques, typographie fonctionnelle */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --red: #ff0000;
+  --gray-100: #f5f5f5;
+  --gray-200: #e5e5e5;
+  --gray-400: #a3a3a3;
+  --gray-600: #525252;
+  --gray-800: #262626;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+body {
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 8pt;
+  line-height: 1.35;
+  color: var(--black);
+  background: var(--white);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  font-weight: 400;
+}
+
+.cv-container {
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto;
+  background: var(--white);
+  position: relative;
+}
+
+.content {
+  padding: 10mm 14mm;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HEADER - Bold Swiss Typography
+   ═══════════════════════════════════════════════════════════════ */
+.header {
+  margin-bottom: 6mm;
+  border-bottom: 2px solid var(--black);
+  padding-bottom: 5mm;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 5mm;
+}
+
+.header h1 {
+  font-size: 32pt;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1;
+  color: var(--black);
+  text-transform: uppercase;
+}
+
+.header-number {
+  font-size: 48pt;
+  font-weight: 300;
+  color: var(--red);
+  line-height: 1;
+  margin-top: -5px;
+}
+
+.header .title {
+  font-size: 10pt;
+  font-weight: 500;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 2mm;
+}
+
+.header .bio {
+  font-size: 8pt;
+  color: var(--gray-600);
+  max-width: 70%;
+  margin-top: 2mm;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN GRID LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 55mm;
+  gap: 8mm;
+  flex: 1;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
+  border-left: 1px solid var(--gray-200);
+  padding-left: 6mm;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════════ */
+.section {
+  margin-bottom: 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 3mm;
+  margin-bottom: 3mm;
+  border-bottom: 1px solid var(--black);
+  padding-bottom: 1mm;
+}
+
+.section-number {
+  font-size: 16pt;
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1;
+}
+
+.section-title {
+  font-size: 8pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--black);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EXPERIENCE
+   ═══════════════════════════════════════════════════════════════ */
+.experience-item {
+  margin-bottom: 4mm;
+  padding-left: 0;
+}
+
+.experience-item:last-child {
+  margin-bottom: 0;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1mm;
+}
+
+.experience-title {
+  font-size: 9pt;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.experience-date {
+  font-size: 7pt;
+  font-weight: 500;
+  color: var(--red);
+}
+
+.experience-company {
+  font-size: 7pt;
+  color: var(--gray-600);
+  margin-bottom: 2mm;
+  font-weight: 500;
+}
+
+.experience-responsibilities {
+  list-style: none;
+  padding-left: 0;
+}
+
+.experience-responsibilities li {
+  font-size: 7.5pt;
+  color: var(--gray-800);
+  margin-bottom: 1mm;
+  padding-left: 10px;
+  position: relative;
+  line-height: 1.35;
+}
+
+.experience-responsibilities li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROJECTS
+   ═══════════════════════════════════════════════════════════════ */
+.project-item {
+  margin-bottom: 3mm;
+  padding-bottom: 3mm;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.project-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1mm;
+}
+
+.project-title {
+  font-size: 8pt;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.project-date {
+  font-size: 6.5pt;
+  color: var(--gray-400);
+}
+
+.project-description {
+  font-size: 9pt;
+  color: var(--gray-600);
+  margin-bottom: 2mm;
+  line-height: 1.5;
+}
+
+.project-tech {
+  font-size: 8pt;
+  color: var(--gray-400);
+  font-weight: 500;
+}
+
+.project-link {
+  color: var(--red);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTACT (Right Column)
+   ═══════════════════════════════════════════════════════════════ */
+.contact-section .section-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin-bottom: 3mm;
+  font-size: 8.5pt;
+}
+
+.contact-item svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--red);
+  flex-shrink: 0;
+}
+
+.contact-item a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+.contact-item span {
+  color: var(--gray-800);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SKILLS (Right Column)
+   ═══════════════════════════════════════════════════════════════ */
+.skill-category {
+  margin-bottom: 4mm;
+}
+
+.skill-category:last-child {
+  margin-bottom: 0;
+}
+
+.skill-category-title {
+  font-size: 8pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--black);
+  margin-bottom: 2mm;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.skill-category-title::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--red);
+}
+
+.skill-list {
+  font-size: 8.5pt;
+  color: var(--gray-600);
+  padding-left: 14px;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LANGUAGES (Right Column)
+   ═══════════════════════════════════════════════════════════════ */
+.language-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9pt;
+  margin-bottom: 2mm;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.language-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.language-level {
+  font-size: 8pt;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EDUCATION
+   ═══════════════════════════════════════════════════════════════ */
+.education-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.education-degree {
+  font-size: 9pt;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 1mm;
+}
+
+.education-school {
+  font-size: 8.5pt;
+  color: var(--gray-600);
+}
+
+.education-date {
+  font-size: 9pt;
+  color: var(--red);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+.footer {
+  margin-top: auto;
+  padding-top: 5mm;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 7pt;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.footer-left::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--red);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRINT & SCREEN
+   ═══════════════════════════════════════════════════════════════ */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+@media screen {
+  body {
+    background: var(--gray-100);
+    padding: 20px 0;
+  }
+
+  .cv-container {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}

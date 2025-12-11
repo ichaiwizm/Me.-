@@ -1,0 +1,427 @@
+/* CV V8 - Japanese Zen Minimalist */
+/* Wabi-sabi, whitespace, asymmetrie zen, papier washi */
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap');
+
+:root {
+  --ink: #1a1a1a;
+  --ink-light: #333333;
+  --ink-faded: #666666;
+  --vermillion: #d93025;
+  --vermillion-light: #e84a3f;
+  --washi: #f5f2eb;
+  --washi-dark: #ebe7dc;
+  --gray-warm: #a89f91;
+  --gray-light: #d4cfc6;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 8.5pt;
+  line-height: 1.4;
+  color: var(--ink);
+  background: var(--washi);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  font-weight: 400;
+}
+
+.cv-container {
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto;
+  background: var(--washi);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Vertical accent line */
+.cv-container::before {
+  content: '';
+  position: absolute;
+  left: 25mm;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--vermillion);
+}
+
+.content {
+  padding: 12mm 14mm 10mm 28mm;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HEADER - Asymmetric Zen
+   ═══════════════════════════════════════════════════════════════ */
+.header {
+  margin-bottom: 8mm;
+  position: relative;
+}
+
+.header-kanji {
+  position: absolute;
+  left: -22mm;
+  top: 0;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 48pt;
+  font-weight: 300;
+  color: var(--vermillion);
+  opacity: 0.15;
+  writing-mode: vertical-rl;
+  letter-spacing: 8px;
+}
+
+.header h1 {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 24pt;
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: 3px;
+  margin-bottom: 2mm;
+}
+
+.header .title {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 10pt;
+  font-weight: 400;
+  color: var(--ink-faded);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 5mm;
+}
+
+.header .bio {
+  font-size: 10.5pt;
+  color: var(--ink-light);
+  max-width: 130mm;
+  line-height: 1.8;
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTACT - Horizontal minimal bar
+   ═══════════════════════════════════════════════════════════════ */
+.contact-bar {
+  display: flex;
+  gap: 5mm;
+  margin-bottom: 10mm;
+  padding-bottom: 6mm;
+  border-bottom: 1px solid var(--gray-light);
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 8.5pt;
+  color: var(--ink-faded);
+}
+
+.contact-bar span {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.contact-bar a {
+  color: var(--vermillion);
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN CONTENT - Two Column
+   ═══════════════════════════════════════════════════════════════ */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 55mm;
+  gap: 10mm;
+  flex: 1;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8mm;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6mm;
+  padding-left: 6mm;
+  border-left: 1px solid var(--gray-light);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════════ */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin-bottom: 5mm;
+}
+
+.section-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--vermillion);
+  border-radius: 50%;
+}
+
+.section-title {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 9pt;
+  font-weight: 500;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EXPERIENCE
+   ═══════════════════════════════════════════════════════════════ */
+.experience-item {
+  margin-bottom: 7mm;
+  position: relative;
+}
+
+.experience-item:last-child {
+  margin-bottom: 0;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2mm;
+}
+
+.experience-title {
+  font-size: 12pt;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.experience-date {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 8pt;
+  color: var(--vermillion);
+  font-weight: 400;
+}
+
+.experience-company {
+  font-size: 9.5pt;
+  color: var(--ink-faded);
+  font-style: italic;
+  margin-bottom: 3mm;
+}
+
+.experience-responsibilities {
+  list-style: none;
+  padding-left: 0;
+}
+
+.experience-responsibilities li {
+  font-size: 9.5pt;
+  color: var(--ink-light);
+  margin-bottom: 2mm;
+  padding-left: 12px;
+  position: relative;
+  line-height: 1.65;
+}
+
+.experience-responsibilities li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--vermillion);
+  font-size: 14pt;
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROJECTS
+   ═══════════════════════════════════════════════════════════════ */
+.project-item {
+  margin-bottom: 6mm;
+  padding-bottom: 6mm;
+  border-bottom: 1px dotted var(--gray-light);
+}
+
+.project-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2mm;
+}
+
+.project-title {
+  font-size: 11pt;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.project-date {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 8pt;
+  color: var(--gray-warm);
+}
+
+.project-description {
+  font-size: 9.5pt;
+  color: var(--ink-faded);
+  margin-bottom: 2mm;
+  line-height: 1.6;
+}
+
+.project-tech {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 8pt;
+  color: var(--gray-warm);
+}
+
+.project-link {
+  color: var(--vermillion);
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EDUCATION
+   ═══════════════════════════════════════════════════════════════ */
+.education-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.education-degree {
+  font-size: 10.5pt;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 1mm;
+}
+
+.education-school {
+  font-size: 9pt;
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+.education-date {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 8pt;
+  color: var(--vermillion);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SKILLS (Right Column)
+   ═══════════════════════════════════════════════════════════════ */
+.skill-category {
+  margin-bottom: 4mm;
+}
+
+.skill-category:last-child {
+  margin-bottom: 0;
+}
+
+.skill-category-title {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 8pt;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink);
+  margin-bottom: 1.5mm;
+}
+
+.skill-list {
+  font-size: 9pt;
+  color: var(--ink-faded);
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LANGUAGES (Right Column)
+   ═══════════════════════════════════════════════════════════════ */
+.language-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9.5pt;
+  margin-bottom: 2mm;
+  padding-bottom: 2mm;
+}
+
+.language-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.language-item span:first-child {
+  color: var(--ink);
+}
+
+.language-level {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 8pt;
+  color: var(--gray-warm);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER - Minimal
+   ═══════════════════════════════════════════════════════════════ */
+.footer {
+  margin-top: auto;
+  padding-top: 6mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 7.5pt;
+  color: var(--gray-warm);
+  letter-spacing: 1px;
+}
+
+.footer-kanji {
+  font-size: 14pt;
+  color: var(--vermillion);
+  opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRINT & SCREEN
+   ═══════════════════════════════════════════════════════════════ */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+@media screen {
+  body {
+    background: #d4cfc6;
+    padding: 20px 0;
+  }
+
+  .cv-container {
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  }
+}

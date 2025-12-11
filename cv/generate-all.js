@@ -14,6 +14,11 @@ const VERSIONS = [
   { folder: 'v2-editorial', name: 'Editorial' },
   { folder: 'v3-brutalist', name: 'Brutalist' },
   { folder: 'v4-classique', name: 'Classique' },
+  { folder: 'v5-swiss', name: 'Swiss' },
+  { folder: 'v6-academic', name: 'Academic' },
+  { folder: 'v7-lawfirm', name: 'Lawfirm' },
+  { folder: 'v8-japanese', name: 'Japanese' },
+  { folder: 'v9-artdeco', name: 'Artdeco' },
 ];
 
 const LANGUAGES = [
@@ -60,7 +65,7 @@ async function main() {
   console.log('');
   console.log('╔══════════════════════════════════════════════════════╗');
   console.log('║     CV PDF Generator - Ichai Wizman                  ║');
-  console.log('║     4 Versions x 2 Languages = 8 PDFs                ║');
+  console.log('║     9 Versions x 2 Languages = 18 PDFs               ║');
   console.log('╚══════════════════════════════════════════════════════╝');
   console.log('');
 

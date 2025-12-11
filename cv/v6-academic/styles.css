@@ -1,0 +1,454 @@
+/* CV V6 - Academic / Thesis Style */
+/* Style publication scientifique, universitaire, citations */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@400;500;600&display=swap');
+
+:root {
+  --black: #1a1a1a;
+  --gray-700: #404040;
+  --gray-500: #666666;
+  --gray-400: #888888;
+  --gray-200: #d4d4d4;
+  --gray-100: #f0f0f0;
+  --ivory: #fffef8;
+  --paper: #fafaf7;
+  --accent: #8b0000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+body {
+  font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  font-size: 9pt;
+  line-height: 1.4;
+  color: var(--black);
+  background: var(--ivory);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cv-container {
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto;
+  background: var(--ivory);
+  position: relative;
+}
+
+.content {
+  padding: 12mm 16mm;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HEADER - Academic Paper Style
+   ═══════════════════════════════════════════════════════════════ */
+.header {
+  text-align: center;
+  margin-bottom: 5mm;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--black);
+}
+
+.header::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--black);
+  margin-top: 3px;
+}
+
+.header h1 {
+  font-size: 22pt;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--black);
+  text-transform: uppercase;
+  margin-bottom: 2mm;
+}
+
+.header .title {
+  font-size: 10pt;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--gray-700);
+  margin-bottom: 2mm;
+}
+
+.header .contact-line {
+  font-size: 8pt;
+  color: var(--gray-500);
+  font-family: 'Source Sans 3', sans-serif;
+  display: flex;
+  justify-content: center;
+  gap: 3mm;
+  flex-wrap: wrap;
+}
+
+.header .contact-line span {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.header .contact-line a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ABSTRACT
+   ═══════════════════════════════════════════════════════════════ */
+.abstract {
+  margin-bottom: 8mm;
+  padding: 4mm 6mm;
+  background: var(--paper);
+  border-left: 3px solid var(--accent);
+}
+
+.abstract-title {
+  font-size: 10pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--black);
+  margin-bottom: 2mm;
+}
+
+.abstract p {
+  font-size: 10.5pt;
+  color: var(--gray-700);
+  text-align: justify;
+  line-height: 1.65;
+  font-style: italic;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN CONTENT - Two Column Layout
+   ═══════════════════════════════════════════════════════════════ */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 58mm;
+  gap: 10mm;
+  flex: 1;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6mm;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+  padding-left: 6mm;
+  border-left: 1px solid var(--gray-200);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════════ */
+.section {
+  margin-bottom: 0;
+}
+
+.section-header {
+  margin-bottom: 4mm;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.section-number {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 2mm;
+}
+
+.section-title {
+  font-size: 12pt;
+  font-weight: 600;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EXPERIENCE - Numbered Subsections
+   ═══════════════════════════════════════════════════════════════ */
+.experience-item {
+  margin-bottom: 5mm;
+  padding-left: 5mm;
+}
+
+.experience-item:last-child {
+  margin-bottom: 0;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.5mm;
+}
+
+.experience-number {
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--accent);
+  margin-right: 2mm;
+}
+
+.experience-title {
+  font-size: 11pt;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.experience-date {
+  font-size: 9.5pt;
+  font-style: italic;
+  color: var(--gray-500);
+}
+
+.experience-company {
+  font-size: 10pt;
+  color: var(--gray-500);
+  margin-bottom: 2mm;
+  padding-left: 18px;
+}
+
+.experience-responsibilities {
+  list-style: none;
+  padding-left: 18px;
+}
+
+.experience-responsibilities li {
+  font-size: 10pt;
+  color: var(--gray-700);
+  margin-bottom: 1.5mm;
+  text-align: justify;
+  line-height: 1.55;
+  position: relative;
+  padding-left: 12px;
+}
+
+.experience-responsibilities li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROJECTS - Bibliography Style
+   ═══════════════════════════════════════════════════════════════ */
+.project-item {
+  margin-bottom: 4mm;
+  padding-left: 5mm;
+  text-align: justify;
+}
+
+.project-item:last-child {
+  margin-bottom: 0;
+}
+
+.project-number {
+  font-size: 9pt;
+  color: var(--gray-500);
+  display: inline;
+}
+
+.project-title {
+  font-size: 10.5pt;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--black);
+  display: inline;
+}
+
+.project-date {
+  font-size: 9pt;
+  color: var(--gray-500);
+  display: inline;
+}
+
+.project-description {
+  font-size: 10pt;
+  color: var(--gray-700);
+  margin: 1.5mm 0;
+  line-height: 1.55;
+}
+
+.project-tech {
+  font-size: 9pt;
+  color: var(--gray-500);
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.project-link {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EDUCATION
+   ═══════════════════════════════════════════════════════════════ */
+.education-item {
+  padding-left: 5mm;
+}
+
+.education-degree {
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--black);
+  display: inline;
+}
+
+.education-school {
+  font-size: 10pt;
+  font-style: italic;
+  color: var(--gray-500);
+  display: inline;
+}
+
+.education-date {
+  font-size: 9.5pt;
+  color: var(--gray-500);
+  display: inline;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SKILLS (Right Column) - Compact List
+   ═══════════════════════════════════════════════════════════════ */
+.skill-category {
+  margin-bottom: 3mm;
+}
+
+.skill-category:last-child {
+  margin-bottom: 0;
+}
+
+.skill-category-title {
+  font-size: 9pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--black);
+  margin-bottom: 1mm;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.skill-list {
+  font-size: 9.5pt;
+  color: var(--gray-700);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LANGUAGES (Right Column)
+   ═══════════════════════════════════════════════════════════════ */
+.language-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10pt;
+  margin-bottom: 2mm;
+  padding-bottom: 2mm;
+  border-bottom: 1px dotted var(--gray-200);
+}
+
+.language-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.language-level {
+  font-size: 9pt;
+  font-style: italic;
+  color: var(--gray-500);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   KEYWORDS (Right Column)
+   ═══════════════════════════════════════════════════════════════ */
+.keywords {
+  font-size: 9pt;
+  color: var(--gray-500);
+  font-style: italic;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.keywords strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--black);
+  font-family: 'Source Sans 3', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 8.5pt;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTNOTES
+   ═══════════════════════════════════════════════════════════════ */
+.footnotes {
+  margin-top: auto;
+  padding-top: 4mm;
+  border-top: 1px solid var(--gray-200);
+  font-size: 8pt;
+  color: var(--gray-500);
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.footnote {
+  margin-bottom: 1mm;
+}
+
+.footnote sup {
+  color: var(--accent);
+  margin-right: 1mm;
+}
+
+.footnote a {
+  color: var(--accent);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRINT & SCREEN
+   ═══════════════════════════════════════════════════════════════ */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+@media screen {
+  body {
+    background: #e8e8e8;
+    padding: 20px 0;
+  }
+
+  .cv-container {
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  }
+}
