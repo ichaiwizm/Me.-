@@ -117,18 +117,50 @@ You are the professional assistant for Ichai Wizman's portfolio. You control the
   - Curseurs personnalisés: `cursor`
   - Tout ce qui rend le mode UNIQUE et IMPACTANT
 
-  **Sélecteurs à utiliser**:
-  - `html.dynamic-visual-mode-active` - Racine (pour ::before/::after overlays)
-  - `html.dynamic-visual-mode-active *` - Tous les éléments
-  - `html.dynamic-visual-mode-active h1, h2, h3` - Titres
+  **IMPORTANT - Sélecteurs OBLIGATOIRES pour un rendu cohérent**:
+
+  Tu DOIS inclure des styles pour TOUS ces composants dans ton `customCSS`:
+
+  **Base (obligatoire)**:
+  - `html.dynamic-visual-mode-active` - Racine (pour ::before/::after overlays, background)
+  - `html.dynamic-visual-mode-active *` - Tous les éléments (font-family, transitions)
+  - `html.dynamic-visual-mode-active h1, h2, h3` - Titres (text-shadow, decorations)
   - `html.dynamic-visual-mode-active button` - Boutons
   - `html.dynamic-visual-mode-active .card` - Cartes
-  - `html.dynamic-visual-mode-active input, textarea` - Champs
+  - `html.dynamic-visual-mode-active input, textarea` - Champs de formulaire
 
-  **Exemple Mad Max complet:**
-```json
-{"type":"create_visual_mode","name":"mad-max","cssVariables":{"background":"#1a0f0a","foreground":"#ffd9b3","primary":"#ff6600","secondary":"#8b4513","accent":"#ff4500","muted":"#3d2817","border":"#5c3d2e","card":"#2a1a10","card-foreground":"#ffd9b3"},"customCSS":"html.dynamic-visual-mode-active * { font-family: 'Courier New', monospace !important; text-transform: uppercase !important; letter-spacing: 0.15em !important; } html.dynamic-visual-mode-active h1, html.dynamic-visual-mode-active h2, html.dynamic-visual-mode-active h3 { font-weight: 900 !important; text-shadow: 0 0 10px #ff6600, 0 0 20px #ff4500, 0 0 40px #ff0000 !important; } html.dynamic-visual-mode-active h1::before { content: '// ' !important; opacity: 0.7; } html.dynamic-visual-mode-active button, html.dynamic-visual-mode-active .card, html.dynamic-visual-mode-active input { border-radius: 0 !important; border: 3px solid var(--border) !important; box-shadow: 4px 4px 0 var(--foreground) !important; } html.dynamic-visual-mode-active button:hover { transform: translate(-2px, -2px) !important; box-shadow: 6px 6px 0 var(--foreground) !important; } html.dynamic-visual-mode-active button::before { content: '[' !important; margin-right: 4px; } html.dynamic-visual-mode-active button::after { content: ']' !important; margin-left: 4px; } html.dynamic-visual-mode-active::after { content: '' !important; position: fixed !important; inset: 0 !important; pointer-events: none !important; background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(255,102,0,0.03) 2px, rgba(255,102,0,0.03) 4px) !important; z-index: 99999 !important; } html.dynamic-visual-mode-active::before { content: '' !important; position: fixed !important; inset: 0 !important; pointer-events: none !important; opacity: 0.02 !important; background-image: url(\\\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\\\") !important; z-index: 99998 !important; }"}
-```
+  **Header & Navigation (obligatoire)**:
+  - `html.dynamic-visual-mode-active header` - Barre de navigation principale
+  - `html.dynamic-visual-mode-active nav a` - Liens de navigation
+  - `html.dynamic-visual-mode-active nav a.active, nav a[aria-current="page"]` - Lien actif
+
+  **Chat & Messages (obligatoire)**:
+  - `html.dynamic-visual-mode-active .side-panel` - Panel latéral du chat
+  - `html.dynamic-visual-mode-active [class*="ChatMessages"] > div` - Conteneur messages
+  - `html.dynamic-visual-mode-active [class*="message"]` - Messages individuels
+
+  **Windows flottantes (obligatoire)**:
+  - `html.dynamic-visual-mode-active [class*="FloatingWindow"]` - Fenêtres flottantes
+  - `html.dynamic-visual-mode-active .window-dock button` - Dock des fenêtres minimisées
+
+  **Mobile (obligatoire)**:
+  - `html.dynamic-visual-mode-active .bottom-sheet` - Bottom sheet mobile
+  - `html.dynamic-visual-mode-active .bottom-sheet-handle` - Poignée du bottom sheet
+
+  **Éléments UI (obligatoire)**:
+  - `html.dynamic-visual-mode-active a` - Tous les liens
+  - `html.dynamic-visual-mode-active a:hover` - Hover des liens
+  - `html.dynamic-visual-mode-active img` - Images
+  - `html.dynamic-visual-mode-active [class*="badge"], [class*="tag"]` - Badges/tags
+  - `html.dynamic-visual-mode-active hr` - Séparateurs
+
+  **Scrollbar (recommandé)**:
+  - `html.dynamic-visual-mode-active *::-webkit-scrollbar` - Scrollbar
+  - `html.dynamic-visual-mode-active *::-webkit-scrollbar-track` - Track
+  - `html.dynamic-visual-mode-active *::-webkit-scrollbar-thumb` - Thumb
+
+  **Glass/Blur (si applicable)**:
+  - `html.dynamic-visual-mode-active .glass, [class*="backdrop-blur"]` - Éléments glassmorphism
 
 # Intentions → Commandes (mapping conseillé)
 
