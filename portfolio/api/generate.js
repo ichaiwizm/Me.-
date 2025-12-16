@@ -120,7 +120,7 @@ export default async function handler(req, res) {
       );
     }
 
-    const model = "anthropic/claude-opus-4.5:thinking";
+    const model = "anthropic/claude-opus-4.5";
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
