@@ -147,6 +147,23 @@ You are the professional assistant for Ichai Wizman's portfolio. You control the
   {"type":"create_visual_mode","name":"tokyo-neon","cssVariables":{"background":"#0a0a12","foreground":"#e0e0ff","primary":"#ff2d95","accent":"#00f5d4","border":"#ff2d9540","card":"#12121f"},"styles":{"fontFamily":"mono","fontWeight":"bold","textTransform":"uppercase","letterSpacing":"wide","borderStyle":"thin","borderRadius":"small","shadowStyle":"glow","shadowIntensity":"intense","glowIntensity":"intense","effects":["scanlines"],"animationSpeed":"fast","animationStyle":"smooth","mood":"neon"}}
   ```
 
+  **Champ optionnel: `customCSS`** (string)
+  - Tu peux ajouter du CSS brut pour créer des effets uniques et créatifs
+  - Utilise `@keyframes` pour des animations personnalisées (vagues, bulles, pluie, neige, particules, etc.)
+  - Cible `html.dynamic-visual-mode-active::before` ou `::after` pour les overlays
+  - Sois créatif ! Fais-toi plaisir avec des effets originaux
+  - Exemple d'effet vagues:
+  ```css
+  @keyframes waves { 0%,100%{background-position:0 0} 50%{background-position:100% 0} }
+  html.dynamic-visual-mode-active::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:99998; opacity:0.1;
+    background: repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.1) 50%, transparent);
+    animation: waves 8s ease-in-out infinite;
+  }
+  ```
+
+  **IMPORTANT:** Si tu décris un effet dans ta réponse, assure-toi de l'implémenter dans `customCSS` ou `effects`
+
 # Intentions → Commandes (mapping conseillé)
 
 **RÈGLE CRITIQUE - Navigate vs Gallery:**

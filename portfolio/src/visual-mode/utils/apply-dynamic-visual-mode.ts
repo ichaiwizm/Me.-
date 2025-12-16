@@ -41,10 +41,8 @@ export async function applyDynamicVisualMode(
   // 3. Collect all CSS to inject
   let finalCSS = "";
 
-  // 3a. Generate CSS from style options (if provided)
-  if (styles && Object.keys(styles).length > 0) {
-    finalCSS += generateDynamicCSS(styles);
-  }
+  // 3a. Always generate CSS (base styles + any style options)
+  finalCSS += generateDynamicCSS(styles || {});
 
   // 3b. Append raw customCSS from Haiku (full creative freedom)
   if (customCSS && customCSS.trim().length > 0) {
