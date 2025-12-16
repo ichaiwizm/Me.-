@@ -43,31 +43,29 @@ Les suggestions doivent:
 RÉPONDS EN JSON UNIQUEMENT, format:
 ["suggestion1", "suggestion2", "suggestion3", "suggestion4", "suggestion5", "suggestion6"]`,
 
-  visualMode: `${PORTFOLIO_CONTEXT}
+  visualMode: `TASK: Generate an ULTRA-CREATIVE and UNEXPECTED visual mode request.
 
-TÂCHE: Génère une demande ULTRA-CRÉATIVE et INATTENDUE pour un mode visuel.
+RULES:
+- Be WEIRD, BOLD, SURPRISING
+- Mix improbable concepts
+- 5-10 words MAX
+- NO classic stuff (cyberpunk, synthwave, retro, neon, space, nature, vintage, vaporwave)
 
-RÈGLES:
-- Sois BIZARRE, AUDACIEUX, SURPRENANT
-- Mélange des concepts improbables
-- 5-10 mots MAX
-- PAS de trucs classiques (cyberpunk, synthwave, rétro, néon, space, nature, vintage)
+EXAMPLES OF EXPECTED CREATIVITY LEVEL:
+- "Fever dream after midnight mode"
+- "70s refrigerator aesthetic"
+- "Police report style"
+- "Korean karaoke at 3am vibe"
+- "Cracked phone screen mode"
+- "Corporate PowerPoint 2003 aesthetic"
+- "Crumpled receipt style"
+- "Abandoned aquarium mode"
+- "Dentist waiting room ambiance"
+- "IKEA instruction manual style"
 
-EXEMPLES DU NIVEAU DE CRÉATIVITÉ ATTENDU:
-- "Mode fever dream après minuit"
-- "Esthétique frigo des années 70"
-- "Style procès-verbal de police"
-- "Ambiance karaoké coréen 3h du mat"
-- "Mode écran cassé de téléphone"
-- "Esthétique PowerPoint corporate 2003"
-- "Style ticket de caisse froissé"
-- "Mode aquarium abandonné"
-- "Ambiance salle d'attente de dentiste"
-- "Style manuel d'instructions IKEA"
+Be TRULY original. Surprise me.
 
-Sois VRAIMENT original. Surprends-moi.
-
-RÉPONDS UNIQUEMENT AVEC LA DEMANDE, en français, sans guillemets.`
+RESPOND ONLY WITH THE REQUEST, no quotes. LANGUAGE: {{LANG}}`
 };
 
 export default async function handler(req, res) {
@@ -88,6 +86,16 @@ export default async function handler(req, res) {
     let systemPrompt = GENERATION_PROMPTS[type];
 
     // Adjust language if needed
+    const langMap = {
+      fr: "French",
+      en: "English",
+      he: "Hebrew"
+    };
+    const targetLang = langMap[language] || "French";
+
+    // Replace language placeholder for visualMode
+    systemPrompt = systemPrompt.replace("{{LANG}}", targetLang);
+
     if (language === "en") {
       systemPrompt = systemPrompt.replace(
         "RÉPONDS UNIQUEMENT AVEC LE PROMPT",
@@ -95,9 +103,6 @@ export default async function handler(req, res) {
       ).replace(
         "RÉPONDS EN JSON UNIQUEMENT",
         "RESPOND IN JSON ONLY"
-      ).replace(
-        "RÉPONDS UNIQUEMENT AVEC LA DEMANDE",
-        "RESPOND ONLY WITH THE REQUEST"
       ).replace(
         "en français",
         "in English"
@@ -109,9 +114,6 @@ export default async function handler(req, res) {
       ).replace(
         "RÉPONDS EN JSON UNIQUEMENT",
         "RESPOND IN JSON ONLY"
-      ).replace(
-        "RÉPONDS UNIQUEMENT AVEC LA DEMANDE",
-        "RESPOND ONLY WITH THE REQUEST IN HEBREW"
       ).replace(
         "en français",
         "in Hebrew"
