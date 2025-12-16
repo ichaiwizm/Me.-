@@ -75,20 +75,39 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
     }
   }, [loading, isGenerating, i18n.language, trackPromptGeneration])
 
-  // Generate a custom visual mode via AI
+  // Generate a creative visual mode prompt via AI, then send it
   const handleVisualModePrompt = useCallback(async () => {
     if (loading || isGenerating) return
 
-    // Track and send the visual mode prompt
-    const visualModePrompt = i18n.language === "he"
-      ? "צור לי מצב ויזואלי ייחודי ויצירתי"
-      : i18n.language === "en"
-        ? "Create a unique and creative visual mode for me"
-        : "Crée-moi un mode visuel unique et créatif"
+    setIsGenerating(true)
+    try {
+      const baseUrl = getBaseUrl()
+      const response = await fetch(`${baseUrl}/api/generate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "visualMode",
+          language: i18n.language || "fr"
+        }),
+      })
 
-    trackChatMessage(visualModePrompt.length, variant)
-    await onSubmit(visualModePrompt)
-  }, [loading, isGenerating, i18n.language, onSubmit, trackChatMessage, variant])
+      trackPromptGeneration('visual_mode_button', response.ok)
+
+      if (response.ok) {
+        const data = await response.json()
+        if (data.content) {
+          // Send the AI-generated creative prompt
+          trackChatMessage(data.content.length, variant)
+          await onSubmit(data.content)
+        }
+      }
+    } catch (error) {
+      console.error("Failed to generate visual mode prompt:", error)
+      trackPromptGeneration('visual_mode_button', false)
+    } finally {
+      setIsGenerating(false)
+    }
+  }, [loading, isGenerating, i18n.language, onSubmit, trackChatMessage, trackPromptGeneration, variant])
 
   const isPanel = variant === "panel"
   const isEmpty = !value.trim()

@@ -45,15 +45,27 @@ RÉPONDS EN JSON UNIQUEMENT, format:
 
   visualMode: `${PORTFOLIO_CONTEXT}
 
-TÂCHE: Génère une demande créative pour un mode visuel personnalisé.
-Le prompt doit demander un style/ambiance unique et créatif, par exemple:
-- "Mode synthwave avec néons roses"
-- "Ambiance forêt enchantée"
-- "Style journal vintage années 20"
-- "Mode espace galactique"
-- "Esthétique graffiti urbain"
+TÂCHE: Génère une demande ULTRA-CRÉATIVE et INATTENDUE pour un mode visuel.
 
-Sois créatif et surprenant! Évite les modes déjà existants (neo-brutalism, retro-pixel, journal, matrix, glitch).
+RÈGLES:
+- Sois BIZARRE, AUDACIEUX, SURPRENANT
+- Mélange des concepts improbables
+- 5-10 mots MAX
+- PAS de trucs classiques (cyberpunk, synthwave, rétro, néon, space, nature, vintage)
+
+EXEMPLES DU NIVEAU DE CRÉATIVITÉ ATTENDU:
+- "Mode fever dream après minuit"
+- "Esthétique frigo des années 70"
+- "Style procès-verbal de police"
+- "Ambiance karaoké coréen 3h du mat"
+- "Mode écran cassé de téléphone"
+- "Esthétique PowerPoint corporate 2003"
+- "Style ticket de caisse froissé"
+- "Mode aquarium abandonné"
+- "Ambiance salle d'attente de dentiste"
+- "Style manuel d'instructions IKEA"
+
+Sois VRAIMENT original. Surprends-moi.
 
 RÉPONDS UNIQUEMENT AVEC LA DEMANDE, en français, sans guillemets.`
 };
