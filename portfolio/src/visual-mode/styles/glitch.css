@@ -465,6 +465,27 @@ html.visual-mode-glitch * {
   transition-timing-function: steps(3) !important;
 }
 
+/* CRITICAL: Preserve interactive buttons and their animations */
+html.visual-mode-glitch header button,
+html.visual-mode-glitch .visual-mode-exit-button,
+html.visual-mode-glitch .visual-mode-exit-button button,
+html.visual-mode-glitch [class*="ChatToggle"],
+html.visual-mode-glitch [class*="MobileChatFAB"],
+html.visual-mode-glitch [aria-label*="chat"],
+html.visual-mode-glitch [aria-label*="Chat"] {
+  transition-timing-function: ease-out !important;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 100001 !important;
+}
+
+/* Preserve sparkles glow animations for discoverability */
+html.visual-mode-glitch .animate-sparkles-glow,
+html.visual-mode-glitch .sparkles-proximity-glow {
+  animation-timing-function: ease-in-out !important;
+  transition-timing-function: ease-out !important;
+}
+
 html.visual-mode-glitch .animate-float,
 html.visual-mode-glitch .animate-gradient,
 html.visual-mode-glitch .animate-pulse-glow,

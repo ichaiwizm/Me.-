@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { motion, AnimatePresence } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Sparkles, Loader2 } from "lucide-react"
+import { ArrowRight, Sparkles, Loader2, Palette } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAnalytics } from "@/lib/hooks/useAnalytics"
 
@@ -75,6 +75,21 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
     }
   }, [loading, isGenerating, i18n.language, trackPromptGeneration])
 
+  // Generate a custom visual mode via AI
+  const handleVisualModePrompt = useCallback(async () => {
+    if (loading || isGenerating) return
+
+    // Track and send the visual mode prompt
+    const visualModePrompt = i18n.language === "he"
+      ? "צור לי מצב ויזואלי ייחודי ויצירתי"
+      : i18n.language === "en"
+        ? "Create a unique and creative visual mode for me"
+        : "Crée-moi un mode visuel unique et créatif"
+
+    trackChatMessage(visualModePrompt.length, variant)
+    await onSubmit(visualModePrompt)
+  }, [loading, isGenerating, i18n.language, onSubmit, trackChatMessage, variant])
+
   const isPanel = variant === "panel"
   const isEmpty = !value.trim()
   const isDisabled = loading || isGenerating
@@ -94,6 +109,22 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
             : "rounded-full px-2 py-1"
         )}
       >
+        {/* Visual mode button - always visible */}
+        <Button
+          type="button"
+          size="icon"
+          variant="ghost"
+          onClick={handleVisualModePrompt}
+          disabled={isDisabled}
+          className={cn(
+            "shrink-0 text-primary hover:text-primary hover:bg-primary/10",
+            isPanel ? "rounded-lg" : "rounded-full"
+          )}
+          title={t("aria.visualModePrompt", "Mode visuel personnalisé")}
+        >
+          <Palette className="size-4" />
+        </Button>
+
         <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}
