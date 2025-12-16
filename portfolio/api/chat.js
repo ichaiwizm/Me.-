@@ -27,7 +27,7 @@ export default async function handler(req, res) {
     }
 
     const systemPrompt = readSystemPrompt();
-    const model = process.env.OPENROUTER_MODEL || "anthropic/claude-haiku-4.5";
+    const model = process.env.OPENROUTER_MODEL || "anthropic/claude-opus-4.5:thinking";
 
     const payloadMessages = [];
     if (systemPrompt) {
