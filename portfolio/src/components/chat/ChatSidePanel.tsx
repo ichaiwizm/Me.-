@@ -11,7 +11,7 @@ import { useIsMobile, useChatPanelWidth } from "@/lib/hooks/useMediaQuery";
 import { useAnalytics } from "@/lib/hooks/useAnalytics";
 import { cn } from "@/lib/utils";
 
-type ChatMessage = { role: "user" | "assistant"; content: string };
+type ChatMessage = { role: "user" | "assistant" | "system" | "tool_result"; content: string };
 
 type ChatSidePanelProps = {
   messages: ChatMessage[];

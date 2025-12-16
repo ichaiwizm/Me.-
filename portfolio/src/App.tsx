@@ -5,13 +5,14 @@ import { MobileLayout } from "@/components/layout/MobileLayout";
 import { ChatSidePanel } from "@/components/chat/ChatSidePanel";
 import WindowManager from "@/components/windows/WindowManager";
 import { Lightbox } from "@/components/media/Lightbox";
-import { Toaster } from "sonner";
+import { Toaster, toast } from "sonner";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { VisualModeExitButton } from "@/components/visual-mode-exit";
 import { useTheme } from "@/theme/provider/ThemeContext";
 import { useVisualMode } from "@/visual-mode";
 import { useI18n } from "@/i18n";
 import { applyDynamicVisualMode, clearDynamicVisualMode } from "@/visual-mode/utils/apply-dynamic-visual-mode";
+import { AgenticStylingProvider, useAgenticStyling } from "@/lib/agentic-styling";
 import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
@@ -53,7 +54,8 @@ const pageTransition = {
   },
 };
 
-function App() {
+function AppContent() {
+  const { startStyling, state: agenticState, resetStyling } = useAgenticStyling();
   const [currentPage, setCurrentPage] = useState<PageId>("accueil");
   const { themeId, setThemeId } = useTheme();
   const { isVisualModeActive, visualModeId, exitVisualMode } = useVisualMode();
@@ -163,6 +165,8 @@ function App() {
     // Clear visual modes (both predefined and dynamic)
     exitVisualMode();
     clearDynamicVisualMode();
+    // Clear agentic styles
+    resetStyling();
   }
 
   // Listen to navigation events emitted by ChatPreview's link buttons
@@ -176,18 +180,27 @@ function App() {
     return () => window.removeEventListener("app:navigate", handler as any);
   }, [ctx]);
 
-  // Listen for AI visual mode generation requests
+  // Listen for AI visual mode generation requests - use agentic styling
   useEffect(() => {
     const handler = (e: any) => {
       const prompt = e?.detail?.prompt as string | undefined;
       if (!prompt) return;
-      // Open chat panel first, then send the AI-generated visual mode request
-      openChat();
-      handleSubmit(prompt);
+      // Start agentic styling session
+      toast.info("Starting visual styling...");
+      startStyling(prompt);
     };
     window.addEventListener("app:ai-visual-mode", handler as any);
     return () => window.removeEventListener("app:ai-visual-mode", handler as any);
-  }, [handleSubmit, openChat]);
+  }, [startStyling]);
+
+  // Show toast when agentic styling completes
+  useEffect(() => {
+    if (agenticState.status === "completed" && agenticState.visualModeName) {
+      toast.success(`Style "${agenticState.visualModeName}" applied!`);
+    } else if (agenticState.status === "error") {
+      toast.error(agenticState.error || "Styling failed");
+    }
+  }, [agenticState.status, agenticState.visualModeName, agenticState.error]);
 
   // Listen for inline suggestion clicks from HomePage
   useEffect(() => {
@@ -313,6 +326,14 @@ function App() {
       {/* Visual mode exit button - floating, always visible when mode is active */}
       <VisualModeExitButton isDockVisible={!isMobile && currentPage === "accueil" && minimizedCount > 0} />
     </>
+  );
+}
+
+function App() {
+  return (
+    <AgenticStylingProvider>
+      <AppContent />
+    </AgenticStylingProvider>
   );
 }
 

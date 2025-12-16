@@ -9,7 +9,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import type { ChatError } from "@/lib/api";
 
-type ChatMessage = { role: "user" | "assistant"; content: string };
+type ChatMessage = { role: "user" | "assistant" | "system" | "tool_result"; content: string };
 
 type ChatMessagesProps = {
   messages: ChatMessage[];

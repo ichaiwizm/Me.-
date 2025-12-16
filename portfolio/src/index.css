@@ -357,6 +357,32 @@ html.dynamic-visual-mode-active {
 }
 
 /* ============================================
+   AGENTIC VISUAL MODE - AI Iterative Styling
+   ============================================ */
+
+/* Marker class for active agentic visual mode */
+html.agentic-visual-mode-active {
+  /* Smooth transitions for CSS variable changes */
+  transition:
+    --background 300ms ease-out,
+    --foreground 300ms ease-out,
+    --primary 300ms ease-out,
+    --accent 300ms ease-out,
+    --border 300ms ease-out,
+    --card 300ms ease-out;
+}
+
+/* Smooth transitions for all elements when agentic mode is active */
+html.agentic-visual-mode-active * {
+  transition:
+    background-color 200ms ease-out,
+    color 200ms ease-out,
+    border-color 200ms ease-out,
+    box-shadow 200ms ease-out,
+    transform 200ms ease-out;
+}
+
+/* ============================================
    VISUAL MODE SWITCHER DISCOVERABILITY
    ============================================ */
 

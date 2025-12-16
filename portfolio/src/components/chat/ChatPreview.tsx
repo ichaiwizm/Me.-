@@ -6,7 +6,7 @@ import { CommandChip, NavigationCard } from "./ChatElements";
 import type { PageId } from "@/lib/commands/types";
 import type { ReactNode } from "react";
 
-type ChatMessage = { role: "user" | "assistant"; content: string };
+type ChatMessage = { role: "user" | "assistant" | "system" | "tool_result"; content: string };
 
 type ChatPreviewProps = {
   messages: ChatMessage[];

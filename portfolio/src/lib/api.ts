@@ -12,7 +12,7 @@
 // TYPES
 // ============================================================================
 
-export type ChatMessage = { role: "user" | "assistant"; content: string };
+export type ChatMessage = { role: "user" | "assistant" | "system" | "tool_result"; content: string };
 
 export interface SendChatOptions {
   /** AbortSignal for request cancellation */
@@ -185,6 +185,83 @@ export async function sendChat(
 // ============================================================================
 // UTILITY EXPORTS
 // ============================================================================
+
+/**
+ * Send a message to the agentic styling API
+ * Uses a dedicated endpoint that supports the tool_result role
+ *
+ * @param messages - Array of chat messages (including system and tool_result)
+ * @param options - Request options
+ * @returns The assistant's response content
+ */
+export async function sendAgenticChat(
+  messages: ChatMessage[],
+  options: SendChatOptions = {}
+): Promise<string> {
+  const { signal, timeout = 30000, maxRetries = 2 } = options;
+
+  const baseUrl = getBaseUrl();
+  let lastError: ChatError | null = null;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const timeoutController = new AbortController();
+
+    if (signal) {
+      signal.addEventListener("abort", () => timeoutController.abort());
+    }
+
+    if (signal?.aborted) {
+      throw new ChatError("Requête annulée", "ABORTED", false);
+    }
+
+    try {
+      const response = await Promise.race([
+        fetch(`${baseUrl}/api/agentic-chat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages }),
+          signal: timeoutController.signal,
+        }),
+        createTimeoutPromise(timeout, timeoutController),
+      ]);
+
+      if (!response.ok) {
+        const isServerError = response.status >= 500;
+        throw new ChatError(
+          `Erreur serveur (${response.status})`,
+          "SERVER",
+          isServerError,
+          response.status
+        );
+      }
+
+      const data = await response.json();
+      return data?.content ?? "";
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        if (signal?.aborted) {
+          throw new ChatError("Requête annulée", "ABORTED", false);
+        }
+      }
+
+      if (error instanceof ChatError) {
+        lastError = error;
+        if (!error.retryable) {
+          throw error;
+        }
+      } else {
+        lastError = new ChatError("Erreur de connexion", "NETWORK", true);
+      }
+
+      if (attempt < maxRetries) {
+        const backoffMs = 1000 * Math.pow(2, attempt);
+        await sleep(backoffMs);
+      }
+    }
+  }
+
+  throw lastError || new ChatError("Erreur inconnue", "UNKNOWN", false);
+}
 
 /**
  * Get a user-friendly error message
