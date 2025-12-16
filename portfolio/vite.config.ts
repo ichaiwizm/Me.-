@@ -14,6 +14,13 @@ export default defineConfig({
     port: 5195,
     strictPort: true,
     host: true,
+    // Proxy API calls to Vercel dev server (run vercel dev from parent directory)
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     port: 5195,

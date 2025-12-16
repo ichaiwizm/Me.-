@@ -150,8 +150,106 @@ function AppContent() {
     },
   };
 
-  const { messages, loading, handleSubmit, clearMessages } =
+  const { messages, loading, handleSubmit: originalHandleSubmit, clearMessages } =
     useChatState(windowCount, ctx);
+
+  /**
+   * Detect visual mode requests in user messages
+   * Keywords that trigger agentic styling instead of normal chat
+   */
+  const isVisualModeRequest = useCallback((message: string): boolean => {
+    const lowerMessage = message.toLowerCase();
+    // French keywords
+    const frenchKeywords = [
+      "mode visuel",
+      "style visuel",
+      "ambiance",
+      "thème",
+      "theme",
+      "apparence",
+      "look",
+      "design",
+      "stylise",
+      "personnalise",
+      "customise",
+      "transforme l'interface",
+      "change l'apparence",
+      "effet visuel",
+    ];
+    // English keywords
+    const englishKeywords = [
+      "visual mode",
+      "visual style",
+      "style the",
+      "customize",
+      "design",
+      "theme",
+      "appearance",
+      "look and feel",
+      "make it look",
+      "transform the ui",
+      "change the style",
+      "visual effect",
+    ];
+    // Style names (common visual themes)
+    const styleNames = [
+      "cyberpunk",
+      "matrix",
+      "retro",
+      "neon",
+      "pixel",
+      "synthwave",
+      "vaporwave",
+      "brutalist",
+      "minimalist",
+      "futuristic",
+      "glitch",
+      "dark mode",
+      "light mode",
+      "newspaper",
+      "terminal",
+      "hacker",
+      "space",
+      "ocean",
+      "forest",
+      "sunset",
+      "fire",
+      "ice",
+      "gold",
+      "chrome",
+      "steampunk",
+      "art deco",
+      "bauhaus",
+      "japanese",
+      "anime",
+      "manga",
+    ];
+    // Check for keywords
+    const hasKeyword = [...frenchKeywords, ...englishKeywords].some(
+      (keyword) => lowerMessage.includes(keyword)
+    );
+    // Check for style names that suggest a visual customization
+    const hasStyleName = styleNames.some(
+      (style) => lowerMessage.includes(style)
+    );
+    // If message contains a style name along with style-related verbs
+    const styleVerbs = ["crée", "fais", "donne", "applique", "mets", "make", "create", "give", "apply", "set"];
+    const hasStyleVerb = styleVerbs.some((verb) => lowerMessage.includes(verb));
+    return hasKeyword || (hasStyleName && hasStyleVerb);
+  }, []);
+
+  /**
+   * Smart submit handler that routes visual mode requests to agentic styling
+   */
+  const handleSubmit = useCallback(async (message: string) => {
+    if (isVisualModeRequest(message)) {
+      console.log("[App] Visual mode request detected, using agentic styling");
+      toast.info("Starting visual styling...");
+      startStyling(message);
+    } else {
+      await originalHandleSubmit(message);
+    }
+  }, [isVisualModeRequest, startStyling, originalHandleSubmit]);
 
   function resetToDefault() {
     // Track reset before clearing state

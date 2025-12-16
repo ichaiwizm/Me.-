@@ -6,6 +6,7 @@ import { ChatPanelHeader } from "./ChatPanelHeader";
 import { ChatToggleButton } from "./ChatToggleButton";
 import { PromptBar } from "./PromptBar";
 import { PromptSuggestions } from "./PromptSuggestions";
+import { AgenticProgress } from "./AgenticProgress";
 import { useChatPanel } from "@/lib/hooks/useChatPanel";
 import { useIsMobile, useChatPanelWidth } from "@/lib/hooks/useMediaQuery";
 import { useAnalytics } from "@/lib/hooks/useAnalytics";
@@ -201,6 +202,11 @@ export function ChatSidePanel({
           >
             {/* Header */}
             <ChatPanelHeader onClose={close} isMobile={isMobile} />
+
+            {/* Agentic styling progress */}
+            <div className="px-4 py-2">
+              <AgenticProgress />
+            </div>
 
             {/* Messages area - scrollable */}
             <ChatMessages

@@ -73,13 +73,13 @@ function sleep(ms: number): Promise<void> {
 
 /**
  * Get base URL for API calls
+ * In dev mode, Vite proxy handles /api routes
  */
 function getBaseUrl(): string {
   const env = import.meta as any;
-  return (
-    env.env?.VITE_SERVER_URL ||
-    (env.env?.DEV ? "http://localhost:3001" : "")
-  );
+  // If VITE_SERVER_URL is set, use it
+  // Otherwise, use empty string (Vite proxy will forward /api calls)
+  return env.env?.VITE_SERVER_URL || "";
 }
 
 // ============================================================================

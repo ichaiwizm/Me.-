@@ -112,22 +112,33 @@ type AgenticStylingContextType = {
 
 const AgenticStylingContext = createContext<AgenticStylingContextType | null>(null);
 
+// Debug logger
+const debug = (...args: unknown[]) => {
+  console.log("[AgenticStyling]", ...args);
+};
+
 export function AgenticStylingProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AgentLoopState>(DEFAULT_STATE);
   const abortRef = useRef<AbortController | null>(null);
 
   const updateState = useCallback((updates: Partial<AgentLoopState>) => {
+    debug("State update:", updates);
     setState((prev) => ({ ...prev, ...updates }));
   }, []);
 
   const startStyling = useCallback(async (prompt: string) => {
+    debug("=== STARTING AGENTIC STYLING ===");
+    debug("Prompt:", prompt);
+
     // Cancel any existing session
     if (abortRef.current) {
+      debug("Aborting previous session");
       abortRef.current.abort();
     }
     abortRef.current = new AbortController();
 
     // Clear previous styles
+    debug("Clearing previous styles");
     clearAgenticStyles();
     clearAllAnimations();
 
@@ -136,6 +147,8 @@ export function AgenticStylingProvider({ children }: { children: ReactNode }) {
       { role: "system", content: AGENTIC_SYSTEM_PROMPT },
       { role: "user", content: prompt },
     ];
+
+    debug("Initial history created, starting with system prompt and user message");
 
     setState({
       status: "running",
@@ -156,25 +169,44 @@ export function AgenticStylingProvider({ children }: { children: ReactNode }) {
 
     while (continueLoop && iteration < 10) {
       if (signal.aborted) {
+        debug("Session aborted by user");
         updateState({ status: "cancelled" });
         return;
       }
 
       iteration++;
+      debug(`\n=== ITERATION ${iteration}/10 ===`);
       updateState({ iteration, status: "waiting_for_ai" });
 
       try {
+        debug("Sending request to API...");
+        debug("History length:", history.length);
+
         const aiResponse = await sendAgenticChat(history, {
           signal,
           timeout: 30000,
         });
 
+        debug("AI Response received:", aiResponse.substring(0, 500) + "...");
+
         history = [...history, { role: "assistant", content: aiResponse }];
 
+        debug("Parsing commands from response...");
         const parseResult = parseAgenticCommands(aiResponse);
+        debug("Parse result:", {
+          commandCount: parseResult.commands.length,
+          hasInspection: parseResult.hasInspectionCommands,
+          hasStyling: parseResult.hasStylingCommands,
+          isFinished: parseResult.isFinished,
+          wantsContinue: parseResult.wantsToContinue,
+          errors: parseResult.errors,
+        });
+
         updateState({ status: "processing_commands", conversationHistory: history });
 
+        debug("Executing commands...");
         const results = executeAgenticCommands(parseResult.commands);
+        debug("Execution results:", results);
 
         // Track styles
         const newStyles: AppliedStyle[] = [];
@@ -201,6 +233,8 @@ export function AgenticStylingProvider({ children }: { children: ReactNode }) {
           }
         }
 
+        debug("New styles applied:", newStyles.length, "New animations:", newAnimations.length);
+
         setState((prev) => ({
           ...prev,
           appliedStyles: [...prev.appliedStyles, ...newStyles],
@@ -211,6 +245,8 @@ export function AgenticStylingProvider({ children }: { children: ReactNode }) {
         // Check finish
         if (isFinished(results)) {
           const modeName = getFinishedModeName(results);
+          debug("=== STYLING FINISHED ===");
+          debug("Mode name:", modeName);
           updateState({ status: "completed", visualModeName: modeName || "Custom Style" });
           continueLoop = false;
           break;
@@ -218,6 +254,7 @@ export function AgenticStylingProvider({ children }: { children: ReactNode }) {
 
         // Check size limit
         if (getTotalCSSSize() > 50000) {
+          debug("CSS size limit exceeded!");
           updateState({ status: "error", error: "CSS size limit exceeded" });
           continueLoop = false;
           break;
@@ -229,15 +266,19 @@ export function AgenticStylingProvider({ children }: { children: ReactNode }) {
         const hasStyles = parseResult.hasStylingCommands;
 
         continueLoop = wantsContinue || hasInspection || (hasStyles && !parseResult.isFinished);
+        debug("Continue decision:", { continueLoop, hasInspection, wantsContinue, hasStyles });
 
         if (continueLoop) {
           const resultsMessage = formatResultsForAI(results);
+          debug("Formatting results for AI, length:", resultsMessage.length);
           history = [...history, { role: "tool_result", content: resultsMessage }];
           updateState({ conversationHistory: history });
         } else if (!parseResult.isFinished) {
+          debug("Implicit completion (no explicit finish command)");
           updateState({ status: "completed", visualModeName: "Custom Style" });
         }
       } catch (error) {
+        debug("ERROR in iteration:", error);
         updateState({
           status: "error",
           error: error instanceof Error ? error.message : "Unknown error",
@@ -247,16 +288,21 @@ export function AgenticStylingProvider({ children }: { children: ReactNode }) {
     }
 
     if (iteration >= 10 && continueLoop) {
+      debug("Max iterations reached!");
       updateState({ status: "error", error: "Maximum iterations reached" });
     }
+
+    debug("=== AGENTIC STYLING SESSION ENDED ===");
   }, [updateState]);
 
   const cancelStyling = useCallback(() => {
+    debug("Cancel styling requested");
     abortRef.current?.abort();
     updateState({ status: "cancelled" });
   }, [updateState]);
 
   const resetStyling = useCallback(() => {
+    debug("Reset styling requested");
     abortRef.current?.abort();
     clearAgenticStyles();
     clearAllAnimations();
