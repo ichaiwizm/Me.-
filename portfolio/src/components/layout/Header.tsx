@@ -171,13 +171,9 @@ export function Header({ onReset, currentPage = "accueil", onNavigate, isChatOpe
               </motion.div>
             )}
             <LanguageSwitcher />
-            {/* Hide theme & visual mode switchers when a visual mode is active */}
-            {!isVisualModeActive && (
-              <>
-                <ThemeSwitcher />
-                <VisualModeSwitcher />
-              </>
-            )}
+            {/* Hide theme switcher when visual mode is active, but keep visual mode switcher */}
+            {!isVisualModeActive && <ThemeSwitcher />}
+            <VisualModeSwitcher />
           </div>
         </div>
       </div>

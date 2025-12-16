@@ -59,7 +59,7 @@ function App() {
   const { isVisualModeActive, visualModeId, exitVisualMode } = useVisualMode();
   const { languageId } = useI18n();
   const isMobile = useIsMobile();
-  const { isOpen: isChatOpen, toggle: toggleChat, close: closeChat } = useChatPanel();
+  const { isOpen: isChatOpen, toggle: toggleChat, close: closeChat, open: openChat } = useChatPanel();
   const chatPanelWidth = useChatPanelWidth();
 
   // GA4 Analytics tracking hooks
@@ -181,24 +181,26 @@ function App() {
     const handler = (e: any) => {
       const prompt = e?.detail?.prompt as string | undefined;
       if (!prompt) return;
-      // Send the AI-generated visual mode request to chat
+      // Open chat panel first, then send the AI-generated visual mode request
+      openChat();
       handleSubmit(prompt);
     };
     window.addEventListener("app:ai-visual-mode", handler as any);
     return () => window.removeEventListener("app:ai-visual-mode", handler as any);
-  }, [handleSubmit]);
+  }, [handleSubmit, openChat]);
 
   // Listen for inline suggestion clicks from HomePage
   useEffect(() => {
     const handler = (e: any) => {
       const prompt = e?.detail?.prompt as string | undefined;
       if (!prompt) return;
-      // Send the inline suggestion to chat
+      // Open chat panel first, then send the inline suggestion
+      openChat();
       handleSubmit(prompt);
     };
     window.addEventListener("app:inline-suggestion", handler as any);
     return () => window.removeEventListener("app:inline-suggestion", handler as any);
-  }, [handleSubmit]);
+  }, [handleSubmit, openChat]);
 
   // Render la page actuelle with animation wrapper
   const renderPage = () => {

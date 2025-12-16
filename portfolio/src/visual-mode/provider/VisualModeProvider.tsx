@@ -1,7 +1,7 @@
 import React from "react";
 import { VisualModeContext, type VisualModeContextValue } from "./VisualModeContext";
 import type { VisualModeId } from "../config/visual-mode-definitions";
-import { VISUAL_MODE_DEFINITIONS } from "../config/visual-mode-definitions";
+import { VISUAL_MODE_DEFINITIONS, isValidVisualModeId } from "../config/visual-mode-definitions";
 import {
   applyVisualModeToDocument,
   clearVisualModeFromDocument,
@@ -12,19 +12,44 @@ type VisualModeProviderProps = {
 };
 
 /**
+ * Helper to update URL with mode parameter
+ */
+function updateUrlWithMode(modeId: VisualModeId | null) {
+  const url = new URL(window.location.href);
+  if (modeId) {
+    url.searchParams.set("mode", modeId);
+  } else {
+    url.searchParams.delete("mode");
+  }
+  window.history.replaceState({}, "", url.toString());
+}
+
+/**
  * Provider for the Visual Mode system.
- * State is NOT persisted - resets on page refresh (it's a temporary "trip").
+ * State is NOT persisted in localStorage - but can be shared via URL params.
  */
 export function VisualModeProvider({ children }: VisualModeProviderProps) {
-  // No localStorage - intentionally temporary
+  // No localStorage - intentionally temporary (but shareable via URL)
   const [visualModeId, setVisualModeIdState] = React.useState<VisualModeId | null>(null);
+
+  // Check URL params on mount for shared mode links
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const modeParam = params.get("mode");
+
+    if (modeParam && isValidVisualModeId(modeParam)) {
+      setVisualModeIdState(modeParam);
+    }
+  }, []);
 
   const setVisualModeId = React.useCallback((id: VisualModeId | null) => {
     setVisualModeIdState(id);
+    updateUrlWithMode(id);
   }, []);
 
   const exitVisualMode = React.useCallback(() => {
     setVisualModeIdState(null);
+    updateUrlWithMode(null);
   }, []);
 
   // Apply/clear visual mode when state changes

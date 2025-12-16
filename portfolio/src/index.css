@@ -355,3 +355,41 @@ html.dynamic-visual-mode-transitioning * {
 html.dynamic-visual-mode-active {
   /* This class is used to detect if a dynamic mode is active */
 }
+
+/* ============================================
+   VISUAL MODE SWITCHER DISCOVERABILITY
+   ============================================ */
+
+/* Periodic sparkles glow - triggers every ~45s */
+@keyframes sparkles-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  25% {
+    box-shadow: 0 0 8px 2px var(--primary), 0 0 16px 4px color-mix(in srgb, var(--accent) 50%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 12px 3px var(--primary), 0 0 24px 6px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+  75% {
+    box-shadow: 0 0 8px 2px var(--primary), 0 0 16px 4px color-mix(in srgb, var(--accent) 50%, transparent);
+  }
+}
+
+.animate-sparkles-glow {
+  animation: sparkles-glow 1.5s ease-in-out;
+}
+
+/* Proximity glow - when cursor is near the button */
+@keyframes proximity-glow {
+  0%, 100% {
+    box-shadow: 0 0 6px 1px color-mix(in srgb, var(--primary) 60%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 10px 2px var(--primary), 0 0 18px 4px color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+}
+
+.sparkles-proximity-glow {
+  animation: proximity-glow 1.2s ease-in-out infinite;
+}
