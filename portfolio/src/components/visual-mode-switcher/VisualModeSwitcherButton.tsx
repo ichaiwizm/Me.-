@@ -15,7 +15,7 @@ export function VisualModeSwitcherButton({ onClick, isOpen }: VisualModeSwitcher
   const { t } = useTranslation("common");
   const [isGlowing, setIsGlowing] = useState(false);
   const [isNearCursor, setIsNearCursor] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Periodic glow effect (Feature 3a)
   useEffect(() => {
@@ -30,9 +30,9 @@ export function VisualModeSwitcherButton({ onClick, isOpen }: VisualModeSwitcher
 
   // Cursor proximity detection (Feature 3d)
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!buttonRef.current) return;
+    if (!containerRef.current) return;
 
-    const rect = buttonRef.current.getBoundingClientRect();
+    const rect = containerRef.current.getBoundingClientRect();
     const buttonCenterX = rect.left + rect.width / 2;
     const buttonCenterY = rect.top + rect.height / 2;
 
@@ -61,18 +61,19 @@ export function VisualModeSwitcherButton({ onClick, isOpen }: VisualModeSwitcher
       : "";
 
   return (
-    <Button
-      ref={buttonRef}
-      variant="outline"
-      size="icon"
-      onClick={onClick}
-      aria-label={t("aria.visualModeSwitcher")}
-      aria-expanded={isOpen}
-      className={`transition-transform hover:scale-105 ${glowClass}`}
-    >
-      <Sparkles
-        className={`h-4 w-4 ${isOpen ? "rotate-12 scale-110 transition-transform" : "transition-transform"}`}
-      />
-    </Button>
+    <div ref={containerRef} className="inline-block">
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={onClick}
+        aria-label={t("aria.visualModeSwitcher")}
+        aria-expanded={isOpen}
+        className={`transition-transform hover:scale-105 ${glowClass}`}
+      >
+        <Sparkles
+          className={`h-4 w-4 ${isOpen ? "rotate-12 scale-110 transition-transform" : "transition-transform"}`}
+        />
+      </Button>
+    </div>
   );
 }
