@@ -43,29 +43,29 @@ Les suggestions doivent:
 RÉPONDS EN JSON UNIQUEMENT, format:
 ["suggestion1", "suggestion2", "suggestion3", "suggestion4", "suggestion5", "suggestion6"]`,
 
-  visualMode: `TASK: Generate an ULTRA-CREATIVE and UNEXPECTED visual mode request.
+  visualMode: `TASK: Generate an ULTRA-CREATIVE visual mode REQUEST.
+
+FORMAT: Start with "Mode visuel:" (FR) / "Visual mode:" (EN) / "מצב ויזואלי:" (HE) followed by a creative theme.
 
 RULES:
 - Be WEIRD, BOLD, SURPRISING
 - Mix improbable concepts
-- 5-10 words MAX
+- Theme: 5-10 words MAX
 - NO classic stuff (cyberpunk, synthwave, retro, neon, space, nature, vintage, vaporwave)
 
-EXAMPLES OF EXPECTED CREATIVITY LEVEL:
-- "Fever dream after midnight mode"
-- "70s refrigerator aesthetic"
-- "Police report style"
-- "Korean karaoke at 3am vibe"
-- "Cracked phone screen mode"
-- "Corporate PowerPoint 2003 aesthetic"
-- "Crumpled receipt style"
-- "Abandoned aquarium mode"
-- "Dentist waiting room ambiance"
-- "IKEA instruction manual style"
+EXAMPLES (format to follow):
+- "Mode visuel: fever dream après minuit"
+- "Visual mode: 70s refrigerator aesthetic"
+- "Mode visuel: procès-verbal de police"
+- "Visual mode: Korean karaoke at 3am"
+- "Mode visuel: écran de téléphone cassé"
+- "Visual mode: corporate PowerPoint 2003"
+- "Mode visuel: ticket de caisse froissé"
+- "Visual mode: abandoned aquarium"
 
 Be TRULY original. Surprise me.
 
-RESPOND ONLY WITH THE REQUEST, no quotes. LANGUAGE: {{LANG}}`
+RESPOND WITH THE FULL REQUEST (including "Mode visuel:" or "Visual mode:"), no quotes. LANGUAGE: {{LANG}}`
 };
 
 export default async function handler(req, res) {
