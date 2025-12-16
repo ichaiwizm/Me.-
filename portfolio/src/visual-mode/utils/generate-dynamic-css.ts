@@ -740,7 +740,7 @@ function generateEffects(s: DynamicStyleOptions): string {
   const effects = s.effects || [];
   const lines: string[] = [];
 
-  // Scanlines
+  // Scanlines (animated)
   if (effects.includes("scanlines")) {
     lines.push(`html.dynamic-visual-mode-active::after {
   content: '' !important;
@@ -748,20 +748,25 @@ function generateEffects(s: DynamicStyleOptions): string {
   inset: 0 !important;
   pointer-events: none !important;
   background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px) !important;
+  background-size: 100% 4px !important;
   z-index: 99999 !important;
+  animation: dvmScanlines 8s linear infinite !important;
 }`);
   }
 
-  // Noise
+  // Noise (animated)
   if (effects.includes("noise")) {
     lines.push(`html.dynamic-visual-mode-active::before {
   content: '' !important;
   position: fixed !important;
-  inset: 0 !important;
+  inset: -50% !important;
+  width: 200% !important;
+  height: 200% !important;
   pointer-events: none !important;
-  opacity: 0.03 !important;
+  opacity: 0.04 !important;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") !important;
   z-index: 99998 !important;
+  animation: dvmNoise 0.5s steps(8) infinite !important;
 }`);
   }
 
@@ -814,6 +819,34 @@ function generateKeyframes(): string {
 @keyframes dvmGlow {
   0%, 100% { opacity: 0.8; }
   50% { opacity: 1; }
+}
+
+@keyframes dvmScanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
+}
+
+@keyframes dvmNoise {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -2%); }
+  20% { transform: translate(2%, 2%); }
+  30% { transform: translate(-1%, 2%); }
+  40% { transform: translate(2%, -1%); }
+  50% { transform: translate(-2%, 1%); }
+  60% { transform: translate(1%, -2%); }
+  70% { transform: translate(-1%, -1%); }
+  80% { transform: translate(2%, 1%); }
+  90% { transform: translate(-2%, 2%); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes dvmFlicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+  97% { opacity: 1; }
 }`;
 }
 
