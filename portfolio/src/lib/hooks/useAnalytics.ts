@@ -121,10 +121,10 @@ export function useAnalytics() {
   }, []);
 
   const trackChatMessage = useCallback(
-    (messageLength: number, source: string) => {
+    (messageLength: number, source: string, messageContent?: string) => {
       const sourceVariant = source === 'standalone' ? 'standalone' : 'panel';
-      const hasCommand = false; // Will be determined at call site if needed
-      trackChatMessageSend(messageLength, sourceVariant, currentPageRef.current, hasCommand);
+      const hasCommand = messageContent ? messageContent.startsWith('/') : false;
+      trackChatMessageSend(messageLength, sourceVariant, currentPageRef.current, hasCommand, messageContent);
     },
     []
   );

@@ -35,7 +35,7 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
     if (!trimmed || loading || isGenerating) return
 
     // Track message before submission
-    trackChatMessage(trimmed.length, variant)
+    trackChatMessage(trimmed.length, variant, trimmed)
 
     // Clear field immediately after submit
     setValue("")
@@ -97,7 +97,7 @@ export function PromptBar({ onSubmit, loading, variant = "standalone" }: PromptB
         const data = await response.json()
         if (data.content) {
           // Send the AI-generated creative prompt
-          trackChatMessage(data.content.length, variant)
+          trackChatMessage(data.content.length, variant, data.content)
           await onSubmit(data.content)
         }
       }

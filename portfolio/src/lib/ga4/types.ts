@@ -69,6 +69,7 @@ export interface ChatMessageSendParams {
   device_type: DeviceType;
   has_command: boolean; // starts with /
   current_page: PageId;
+  message_content?: string; // truncated to 500 chars
 }
 
 export interface ChatSuggestionClickParams {

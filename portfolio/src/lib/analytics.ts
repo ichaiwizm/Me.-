@@ -6,6 +6,7 @@
 
 import { GA4_CONFIG, getPerformanceRating } from './ga4/config';
 import { ga4Session } from './ga4/session';
+import { trackGA4AsPlausible, initPlausible } from './plausible';
 import type { PageId } from './commands/types';
 import type {
   DeviceType,
@@ -113,13 +114,15 @@ function trackGA4<E extends GA4EventName>(
         'color: #4285f4; font-weight: bold; background: #e8f0fe; padding: 2px 6px; border-radius: 3px;',
         params
       );
-      return;
+    } else {
+      // In production: send to GA4
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', eventName, params as unknown as Record<string, unknown>);
+      }
     }
 
-    // In production: send to GA4
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', eventName, params as unknown as Record<string, unknown>);
-    }
+    // Also send to Plausible (handles its own debug mode)
+    trackGA4AsPlausible(eventName, params as unknown as Record<string, unknown>);
   } catch (error) {
     // Never crash the app for analytics issues
     if (GA4_CONFIG.DEBUG_MODE) {
@@ -138,12 +141,14 @@ export function initGA4(): void {
       '%c[GA4] Debug mode enabled - events logged to console',
       'color: #4285f4; font-weight: bold;'
     );
-    return;
+  } else {
+    if (typeof window.gtag !== 'function') {
+      console.warn('[GA4] gtag not found. Ensure script is loaded in index.html');
+    }
   }
 
-  if (typeof window.gtag !== 'function') {
-    console.warn('[GA4] gtag not found. Ensure script is loaded in index.html');
-  }
+  // Also initialize Plausible
+  initPlausible();
 }
 
 // ============================================================================
@@ -245,7 +250,8 @@ export function trackChatMessageSend(
   messageLength: number,
   sourceVariant: 'panel' | 'standalone',
   currentPage: PageId,
-  hasCommand: boolean = false
+  hasCommand: boolean = false,
+  messageContent?: string
 ): void {
   const messagePosition = ga4Session.incrementMessageCount();
   const timeSinceLastMessage = ga4Session.getTimeSinceLastMessage();
@@ -258,6 +264,7 @@ export function trackChatMessageSend(
     device_type: getDeviceType(),
     has_command: hasCommand,
     current_page: currentPage,
+    message_content: messageContent ? truncate(messageContent, 500) : undefined,
   };
 
   trackGA4('chat_message_send', params);
